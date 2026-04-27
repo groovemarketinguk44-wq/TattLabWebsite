@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TattLab Studios — Finance Options</title>
+  <link rel="icon" type="image/png" href="assets/favicon-32.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    .page-header {
+      padding: 140px 24px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-header h1 {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .page-header h1 span {
+      background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-header p {
+      color: var(--text-dim);
+      font-size: 17px;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* Plans grid */
+    .plans-section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+
+    .plan-card {
+      padding: 36px 28px;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .plan-card.featured {
+      background: rgba(13,12,28,0.92) !important;
+      border-color: rgba(139,92,246,0.5) !important;
+      box-shadow: 0 0 60px rgba(139,92,246,0.2), 0 24px 48px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #7c3aed, #a78bfa, #ec4899);
+    }
+
+    .plan-ref {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      opacity: 0.5;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .plan-card h3 {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .plan-rate {
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1;
+      margin: 16px 0 4px;
+      letter-spacing: -0.04em;
+    }
+
+    .plan-rate.zero {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .plan-rate-label {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 24px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .plan-divider {
+      height: 1px;
+      background: rgba(139,92,246,0.15);
+      margin: 24px 0;
+    }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .plan-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    .plan-features li .check {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(139,92,246,0.15);
+      border: 1px solid rgba(139,92,246,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    .plan-features li .check svg {
+      width: 10px;
+      height: 10px;
+    }
+
+    .plan-cta {
+      margin-top: 28px;
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      transition: all 0.2s;
+    }
+
+    .plan-cta.primary {
+      background: linear-gradient(135deg, #7c3aed, #0e7490);
+      color: #fff;
+      border: none;
+      box-shadow: 0 0 24px rgba(139,92,246,0.3);
+    }
+
+    .plan-cta.primary:hover {
+      box-shadow: 0 0 40px rgba(139,92,246,0.5);
+      transform: translateY(-1px);
+    }
+
+    .plan-cta.ghost {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid rgba(139,92,246,0.25);
+    }
+
+    .plan-cta.ghost:hover {
+      border-color: rgba(139,92,246,0.5);
+      color: var(--text);
+      background: rgba(139,92,246,0.06);
+    }
+
+    /* How it works */
+    .how-section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+    }
+
+    .how-section h2 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 48px;
+    }
+
+    .how-section h2 span {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+
+    /* connector line */
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 26px;
+      left: calc(12.5% + 12px);
+      right: calc(12.5% + 12px);
+      height: 1px;
+      background: linear-gradient(90deg, rgba(139,92,246,0.4), rgba(139,92,246,0.4));
+      z-index: 0;
+    }
+
+    .step {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .step-num {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(13,12,28,0.95);
+      border: 1px solid rgba(139,92,246,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent);
+      box-shadow: 0 0 20px rgba(139,92,246,0.2);
+    }
+
+    .step h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* FAQ */
+    .faq-section {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+    }
+
+    .faq-section h2 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 36px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(139,92,246,0.1);
+    }
+
+    .faq-q {
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      gap: 16px;
+      user-select: none;
+    }
+
+    .faq-q .arrow {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid rgba(139,92,246,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .faq-item.open .faq-q .arrow {
+      transform: rotate(180deg);
+      background: rgba(139,92,246,0.15);
+    }
+
+    .faq-a {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding-bottom 0.35s ease;
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 300px;
+      padding-bottom: 20px;
+    }
+
+    /* disclaimer */
+    .disclaimer {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+
+    .disclaimer-inner {
+      padding: 20px 24px;
+      border-radius: 12px;
+      background: rgba(239,68,68,0.04);
+      border: 1px solid rgba(239,68,68,0.15);
+      font-size: 12px;
+      color: var(--text-dimmer);
+      line-height: 1.6;
+      font-family: 'Space Mono', monospace;
+    }
+
+    @media (max-width: 900px) {
+      .plans-grid { grid-template-columns: 1fr; max-width: 440px; }
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-blobs"></div>
+  <div class="bg-grid"></div>
+
+  <nav class="pill-nav">
+    <div class="logo-pill"><img src="assets/logo.png" alt="TattLab"/></div>
+    <a href="index.html">Home</a>
+    <a href="where-are-we.html">Find Us</a>
+    <a href="finance.html" class="active">Finance</a>
+    <a href="contact.html" class="book-btn">Book Now</a>
+  </nav>
+
+  <div class="page-header">
+    <p class="lab-label" style="margin-bottom: 12px;">Finance // TLS-FIN</p>
+    <h1>Ink now,<br/><span>pay later.</span></h1>
+    <p>Great work shouldn't wait. We offer flexible finance options so you can get the tattoo you want without compromising on quality or rushing your budget.</p>
+  </div>
+
+  <div class="plans-section">
+    <div class="plans-grid">
+
+      <!-- Plan 1 -->
+      <div class="plan-card glass-card">
+        <span class="plan-ref">PLAN-001 // DEPOSIT</span>
+        <h3>Pay a Deposit</h3>
+        <p style="font-size:13px;color:var(--text-dim);line-height:1.5;margin-bottom:12px;">Simple, no-fuss reservation</p>
+        <div class="plan-rate zero">£50</div>
+        <div class="plan-rate-label">deposit to secure your slot</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>
+            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            Secures your booking date
+          </li>
+          <li>
+            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            Balance paid on the day
+          </li>
+          <li>
+            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            Card, cash or bank transfer
+          </li>
+          <li>
+            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            Deposit goes toward total cost
+          </li>
+        </ul>
+        <a href="contact.html" class="plan-cta ghost">Get Started</a>
+      </div>
+
+      <!-- Plan 2 — Featured -->
+      <div class="plan-card featured glass-card">
+        <div class="featured-badge"></div>
+        <span class="plan-ref">PLAN-002 // MOST POPULAR</span>
+        <h3>0% Finance</h3>
+        <p style="font-size:13px;color:var(--text-dim);line-height:1.5;margin-bottom:12px;">Spread the cost — interest free</p>
+        <div class="plan-rate zero">0%</div>
+        <div class="plan-rate-label">interest on approved plans</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>
+            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            Split cost over 3–12 months
+          </li>
+          <li>
+            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            Zero interest on approved plans
+          </li>
+          <li>
+            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            Available for bookings over £200
+          </li>
+          <li>
+            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            Quick online credit check
+          </li>
+          <li>
+            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            Book your session immediately on approval
+          </li>
+        </ul>
+        <a href="contact.html" class="plan-cta primary">Apply Now</a>
+      </div>
+
+      <!-- Plan 3 -->
+      <div class="plan-card glass-card">
+        <span class="plan-ref">PLAN-003 // KLARNA</span>
+        <h3>Pay in 3</h3>
+        <p style="font-size:13px;color:var(--text-dim);line-height:1.5;margin-bottom:12px;">Split into three easy payments</p>
+        <div class="plan-rate zero">÷3</div>
+        <div class="plan-rate-label">automatic instalments</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>
+            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            Pay 1/3 today, rest auto-charged
+          </li>
+          <li>
+            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            Powered by Klarna
+          </li>
+          <li>
+            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            No long-term commitment
+          </li>
+          <li>
+            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            Available at checkout
+          </li>
+        </ul>
+        <a href="contact.html" class="plan-cta ghost">Find Out More</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="how-section">
+    <p class="lab-label" style="margin-bottom:12px;">Process</p>
+    <h2>How <span>finance</span> works</h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>Choose your piece</h4>
+        <p>Book a consultation and agree on your design, size, and placement with your artist.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>Select a plan</h4>
+        <p>Pick the finance option that suits your budget — deposit, 0% or Pay in 3.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>Quick approval</h4>
+        <p>For 0% plans, a soft credit check is performed. Most applications approved in minutes.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>Get tattooed</h4>
+        <p>Your session is confirmed. Sit back, let the artist work, and pay on your terms.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <p class="lab-label" style="margin-bottom:12px;">Questions</p>
+    <h2>FAQ</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        Does applying for finance affect my credit score?
+        <span class="arrow"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </div>
+      <div class="faq-a">For 0% finance, we carry out a soft credit check during the application — this does not affect your credit score. A hard check is only performed if you proceed with a full credit agreement.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        Is there a minimum spend for finance?
+        <span class="arrow"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </div>
+      <div class="faq-a">The 0% finance option is available on bookings of £200 and above. The Pay in 3 option via Klarna has no minimum spend. Deposit plans are available for all bookings.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        What if I need to reschedule my appointment?
+        <span class="arrow"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </div>
+      <div class="faq-a">Finance plans are linked to your booking, not a specific date. If you need to reschedule, contact us at least 48 hours in advance and we'll move your appointment — your finance agreement stays in place.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        Can I pay off my finance plan early?
+        <span class="arrow"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </div>
+      <div class="faq-a">Yes — early repayment is always welcome and there are no penalties for settling your plan ahead of schedule.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        What ID do I need to apply?
+        <span class="arrow"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </div>
+      <div class="faq-a">You'll need to be 18+ and a UK resident. A valid form of photo ID (passport or driving licence) is required, along with proof of address dated within the last 3 months.</div>
+    </div>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <div class="disclaimer-inner">
+      DISCLAIMER // FIN-LEGAL — Finance is subject to status and credit approval. TattLab Studios acts as a credit broker, not a lender. 0% finance provided via an FCA-authorised lender. Pay in 3 powered by Klarna. Terms and conditions apply. Credit decisions are made by the lender, not TattLab Studios.
+    </div>
+  </div>
+
+  <footer>
+    <p><span class="f-accent">TattLab Studios</span> &nbsp;·&nbsp; Enfield, London &nbsp;·&nbsp; Where Science Meets Ink</p>
+    <p style="margin-top: 8px; font-size: 11px; opacity: 0.4;">© 2026 TattLab Studios. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TattLab Studios — Book a Session</title>
+  <link rel="icon" type="image/png" href="assets/favicon-32.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    .contact-layout {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 140px 24px 100px;
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* Left panel */
+    .contact-info h1 {
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .contact-info h1 span {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .contact-info .intro {
+      font-size: 16px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 340px;
+    }
+
+    .contact-detail {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .contact-detail .cd-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(139,92,246,0.1);
+      border: 1px solid rgba(139,92,246,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .contact-detail .cd-text h4 {
+      font-size: 11px;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      opacity: 0.7;
+      margin-bottom: 4px;
+      font-weight: 400;
+    }
+
+    .contact-detail .cd-text p {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* Form panel */
+    .contact-form-wrap {
+      position: sticky;
+      top: 100px;
+    }
+
+    .form-card {
+      padding: 40px 36px;
+      border-radius: 20px;
+    }
+
+    .form-card h2 {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .form-card .form-sub {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 32px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-field {
+      margin-bottom: 20px;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 11px;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(139,92,246,0.7);
+      margin-bottom: 8px;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%238b5cf6' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: rgba(255,255,255,0.2);
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: rgba(139,92,246,0.55);
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.1);
+    }
+
+    .form-field select option {
+      background: #0a0918;
+      color: var(--text);
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+
+    .form-field .char-hint {
+      font-size: 11px;
+      color: var(--text-dimmer);
+      margin-top: 6px;
+      font-family: 'Space Mono', monospace;
+      text-align: right;
+    }
+
+    /* Radio-style selectors */
+    .type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .type-opt {
+      padding: 10px 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(139,92,246,0.2);
+      background: rgba(255,255,255,0.02);
+      cursor: pointer;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-dim);
+      transition: all 0.18s;
+      user-select: none;
+    }
+
+    .type-opt:hover {
+      border-color: rgba(139,92,246,0.4);
+      color: var(--text);
+    }
+
+    .type-opt.selected {
+      border-color: rgba(139,92,246,0.7);
+      background: rgba(139,92,246,0.1);
+      color: var(--text);
+      box-shadow: 0 0 12px rgba(139,92,246,0.15);
+    }
+
+    .type-opt input { display: none; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #7c3aed, #0e7490);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      box-shadow: 0 0 28px rgba(139,92,246,0.3);
+      transition: box-shadow 0.2s, transform 0.15s;
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover {
+      box-shadow: 0 0 48px rgba(139,92,246,0.5);
+      transform: translateY(-2px);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Success state */
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .success-state .s-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(139,92,246,0.1);
+      border: 1px solid rgba(139,92,246,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow: 0 0 40px rgba(139,92,246,0.2);
+    }
+
+    .success-state h3 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .success-state p {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    /* required dot */
+    .req { color: var(--accent-cyan); margin-left: 2px; opacity: 0.7; }
+
+    /* Error */
+    .field-error {
+      font-size: 11px;
+      color: rgba(239,68,68,0.8);
+      margin-top: 5px;
+      font-family: 'Space Mono', monospace;
+      display: none;
+    }
+
+    .form-field.error input,
+    .form-field.error textarea,
+    .form-field.error select {
+      border-color: rgba(239,68,68,0.5) !important;
+    }
+
+    .form-field.error .field-error { display: block; }
+
+    @media (max-width: 860px) {
+      .contact-layout { grid-template-columns: 1fr; gap: 48px; padding-top: 120px; }
+      .contact-form-wrap { position: static; }
+      .form-row { grid-template-columns: 1fr; }
+      .type-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-blobs"></div>
+  <div class="bg-grid"></div>
+
+  <nav class="pill-nav">
+    <div class="logo-pill"><img src="assets/logo.png" alt="TattLab"/></div>
+    <a href="index.html">Home</a>
+    <a href="where-are-we.html">Find Us</a>
+    <a href="finance.html">Finance</a>
+    <a href="contact.html" class="book-btn active" style="background: linear-gradient(135deg,rgba(139,92,246,0.6),rgba(139,92,246,0.3));">Book Now</a>
+  </nav>
+
+  <div class="contact-layout">
+    <!-- Left info -->
+    <div class="contact-info">
+      <p class="lab-label" style="margin-bottom:12px;">Contact // TLS-MSG</p>
+      <h1>Let's talk<br/><span>about your ink.</span></h1>
+      <p class="intro">Tell us your idea, your placement, your budget. We'll get back to you within 24 hours to arrange a consultation or book you straight in.</p>
+
+      <div class="contact-detail">
+        <div class="cd-icon">
+          <svg width="18" height="18" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="cd-text">
+          <h4>Location</h4>
+          <p>Enfield, London<br/><span style="color:var(--text-dim);font-weight:400;font-size:13px;">Full address on booking confirmation</span></p>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="cd-icon">
+          <svg width="18" height="18" fill="none" stroke="#a78bfa" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m22 3-10 9L2 3"/></svg>
+        </div>
+        <div class="cd-text">
+          <h4>Instagram</h4>
+          <p>@tattlabstudios<br/><span style="color:var(--text-dim);font-weight:400;font-size:13px;">DMs open — fastest response here</span></p>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="cd-icon">
+          <svg width="18" height="18" fill="none" stroke="#ec4899" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="cd-text">
+          <h4>Response time</h4>
+          <p>Within 24 hours<br/><span style="color:var(--text-dim);font-weight:400;font-size:13px;">Mon–Sat, 10am–7pm</span></p>
+        </div>
+      </div>
+
+      <!-- Finance callout -->
+      <div class="glass-card" style="padding:20px 22px;border-radius:14px;margin-top:16px;border-color:rgba(139,92,246,0.2)!important;">
+        <div style="font-size:12px;font-family:'Space Mono',monospace;color:var(--accent-cyan);opacity:0.7;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">Finance available</div>
+        <div style="font-size:14px;color:var(--text-dim);line-height:1.5;">Need help spreading the cost? Ask us about 0% finance when you submit your enquiry.</div>
+        <a href="finance.html" style="display:inline-block;margin-top:12px;font-size:12px;color:var(--accent);text-decoration:none;font-weight:600;">View finance options →</a>
+      </div>
+    </div>
+
+    <!-- Right form -->
+    <div class="contact-form-wrap">
+      <div class="form-card glass-card">
+        <h2>Send an enquiry</h2>
+        <p class="form-sub">REF: TLS-BOOKING // All fields marked <span style="color:var(--accent-cyan)">◈</span> required</p>
+
+        <form id="contactForm" novalidate>
+
+          <div class="form-row">
+            <div class="form-field" id="field-name">
+              <label>Name <span class="req">◈</span></label>
+              <input type="text" name="name" placeholder="Your full name" autocomplete="name"/>
+              <div class="field-error">Name is required</div>
+            </div>
+            <div class="form-field" id="field-email">
+              <label>Email <span class="req">◈</span></label>
+              <input type="email" name="email" placeholder="your@email.com" autocomplete="email"/>
+              <div class="field-error">Valid email required</div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label>Phone</label>
+            <input type="tel" name="phone" placeholder="+44 7700 000000" autocomplete="tel"/>
+          </div>
+
+          <div class="form-field">
+            <label>Session type <span class="req">◈</span></label>
+            <div class="type-grid" id="typeGrid">
+              <label class="type-opt selected" data-val="custom">
+                <input type="radio" name="type" value="custom" checked/>
+                Custom piece
+              </label>
+              <label class="type-opt" data-val="coverup">
+                <input type="radio" name="type" value="coverup"/>
+                Cover-up
+              </label>
+              <label class="type-opt" data-val="walkin">
+                <input type="radio" name="type" value="walkin"/>
+                Walk-in
+              </label>
+              <label class="type-opt" data-val="touchup">
+                <input type="radio" name="type" value="touchup"/>
+                Touch-up
+              </label>
+              <label class="type-opt" data-val="consult">
+                <input type="radio" name="type" value="consult"/>
+                Consultation
+              </label>
+              <label class="type-opt" data-val="finance">
+                <input type="radio" name="type" value="finance"/>
+                Finance query
+              </label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label>Approx. budget</label>
+              <select name="budget">
+                <option value="" disabled selected>Select range</option>
+                <option value="under200">Under £200</option>
+                <option value="200-500">£200 – £500</option>
+                <option value="500-1000">£500 – £1,000</option>
+                <option value="1000+">£1,000+</option>
+                <option value="unsure">Not sure yet</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Placement</label>
+              <input type="text" name="placement" placeholder="e.g. forearm, ribs, chest"/>
+            </div>
+          </div>
+
+          <div class="form-field" id="field-message">
+            <label>Tell us about your idea <span class="req">◈</span></label>
+            <textarea name="message" placeholder="Describe your idea — style, references, inspiration, size... the more detail the better." maxlength="1000" id="msgArea"></textarea>
+            <div class="char-hint"><span id="charCount">0</span> / 1000</div>
+            <div class="field-error">Please describe your idea</div>
+          </div>
+
+          <div class="form-field" style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;">
+            <input type="checkbox" id="financeCheck" name="finance_interest" style="width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:#8b5cf6;"/>
+            <label for="financeCheck" style="font-size:13px;color:var(--text-dim);letter-spacing:0;text-transform:none;font-family:'Inter',sans-serif;cursor:pointer;font-weight:400;">I'm interested in finance options</label>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            Submit Enquiry →
+          </button>
+
+        </form>
+
+        <!-- Success -->
+        <div class="success-state" id="successState">
+          <div class="s-icon">
+            <svg width="32" height="32" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>Enquiry received.</h3>
+          <p>We'll be in touch within 24 hours.<br/>Check your inbox — and follow us on Instagram<br/><span style="color:var(--accent-cyan);">@tattlabstudios</span></p>
+          <a href="index.html" class="btn-ghost" style="margin-top:28px;display:inline-flex;">← Back to home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p><span class="f-accent">TattLab Studios</span> &nbsp;·&nbsp; Enfield, London &nbsp;·&nbsp; Where Science Meets Ink</p>
+    <p style="margin-top: 8px; font-size: 11px; opacity: 0.4;">© 2026 TattLab Studios. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Type selector
+    document.querySelectorAll('.type-opt').forEach(opt => {
+      opt.addEventListener('click', () => {
+        document.querySelectorAll('.type-opt').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+      });
+    });
+
+    // Char counter
+    const msgArea = document.getElementById('msgArea');
+    const charCount = document.getElementById('charCount');
+    msgArea.addEventListener('input', () => {
+      charCount.textContent = msgArea.value.length;
+    });
+
+    // Form validation + submit
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let valid = true;
+
+      const name = this.querySelector('[name="name"]');
+      const email = this.querySelector('[name="email"]');
+      const message = this.querySelector('[name="message"]');
+
+      // reset
+      ['field-name','field-email','field-message'].forEach(id => {
+        document.getElementById(id).classList.remove('error');
+      });
+
+      if (!name.value.trim()) {
+        document.getElementById('field-name').classList.add('error');
+        valid = false;
+      }
+
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRe.test(email.value.trim())) {
+        document.getElementById('field-email').classList.add('error');
+        valid = false;
+      }
+
+      if (!message.value.trim()) {
+        document.getElementById('field-message').classList.add('error');
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      // Simulate submit
+      const btn = this.querySelector('.submit-btn');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        document.getElementById('contactForm').style.display = 'none';
+        document.getElementById('successState').style.display = 'block';
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

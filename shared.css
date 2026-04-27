@@ -1,0 +1,293 @@
+/* ── TattLabStudios Website — Shared Styles ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg: #060610;
+  --bg2: #0a0918;
+  --card: rgba(13,12,28,0.85);
+  --card-border: rgba(139,92,246,0.25);
+  --accent: #8b5cf6;
+  --accent-cyan: #a78bfa;
+  --accent-pink: #c084fc;
+  --text: #eaeaf0;
+  --text-dim: rgba(234,234,240,0.5);
+  --text-dimmer: rgba(234,234,240,0.25);
+  --glow: rgba(139,92,246,0.3);
+  --glow-cyan: rgba(139,92,246,0.2);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Background blob layer */
+.bg-blobs {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(ellipse 90% 70% at -10% -10%, rgba(109,40,217,0.25) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 60% at 110% 110%, rgba(139,92,246,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(139,92,246,0.04) 0%, transparent 65%);
+}
+
+/* Lab grid overlay */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ── Floating Pill Nav ── */
+nav.pill-nav {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 8px;
+  background: rgba(13,12,28,0.92);
+  border: 1px solid rgba(139,92,246,0.3);
+  border-radius: 999px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 0 40px rgba(139,92,246,0.15), 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.07);
+}
+
+nav.pill-nav .logo-pill {
+  width: 32px;
+  height: 32px;
+  margin-right: 6px;
+  display: flex;
+  align-items: center;
+}
+
+nav.pill-nav .logo-pill img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+nav.pill-nav a {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-decoration: none;
+  padding: 7px 16px;
+  border-radius: 999px;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+nav.pill-nav a:hover {
+  color: var(--text);
+  background: rgba(139,92,246,0.12);
+}
+
+nav.pill-nav a.active {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(139,92,246,0.5), rgba(139,92,246,0.2));
+  box-shadow: 0 0 16px rgba(139,92,246,0.25);
+}
+
+nav.pill-nav .book-btn {
+  margin-left: 4px;
+  padding: 7px 18px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #7c3aed, #0e7490);
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 0 0 18px rgba(139,92,246,0.3);
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+
+nav.pill-nav .book-btn:hover {
+  background: linear-gradient(135deg, #7c3aed, #0e7490) !important;
+  box-shadow: 0 0 32px rgba(139,92,246,0.5) !important;
+  transform: translateY(-1px);
+}
+
+/* ── Glass Cards ── */
+.glass-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(139,92,246,0.06);
+}
+
+/* ── Lab label micro-type ── */
+.lab-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  opacity: 0.7;
+}
+
+/* ── Accent text ── */
+.text-accent { color: var(--accent); }
+.text-cyan { color: var(--accent-cyan); }
+.text-dim { color: var(--text-dim); }
+
+/* ── Section wrapper ── */
+.section-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.4); border-radius: 3px; }
+
+/* ── Crosshair decoration ── */
+.crosshair {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+}
+.crosshair::before, .crosshair::after {
+  content: '';
+  position: absolute;
+  background: var(--accent-cyan);
+  opacity: 0.4;
+}
+.crosshair::before { width: 1px; height: 100%; left: 50%; top: 0; }
+.crosshair::after  { height: 1px; width: 100%; top: 50%; left: 0; }
+
+/* ── Page content padding (below nav) ── */
+.page-content {
+  position: relative;
+  z-index: 1;
+  padding-top: 100px;
+}
+
+/* ── Footer ── */
+footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid rgba(139,92,246,0.12);
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--text-dimmer);
+  font-size: 13px;
+  font-family: 'Space Mono', monospace;
+}
+
+footer span.f-accent { color: rgba(139,92,246,0.6); }
+
+/* ── Molecule SVG nodes (decorative) ── */
+.mol-node {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 10px var(--accent-cyan);
+  position: absolute;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #7c3aed, #0e7490);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: box-shadow 0.2s, transform 0.15s;
+  box-shadow: 0 0 24px rgba(139,92,246,0.3);
+}
+.btn-primary:hover {
+  box-shadow: 0 0 42px rgba(139,92,246,0.5);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  background: transparent;
+  color: var(--text);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  border: 1px solid rgba(139,92,246,0.3);
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+.btn-ghost:hover {
+  border-color: rgba(139,92,246,0.6);
+  background: rgba(139,92,246,0.08);
+  transform: translateY(-2px);
+}
+
+/* ── Stat badges ── */
+.stat-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-badge .val {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-badge .lbl {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dimmer);
+}
+
+@media (max-width: 700px) {
+  nav.pill-nav { top: 12px; padding: 5px 6px; gap: 2px; }
+  nav.pill-nav a { padding: 6px 10px; font-size: 12px; }
+  nav.pill-nav .book-btn { padding: 6px 12px; }
+  nav.pill-nav .logo-pill { margin-right: 2px; }
+}
