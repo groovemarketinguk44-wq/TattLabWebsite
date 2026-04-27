@@ -87,6 +87,7 @@ nav.pill-nav .logo-pill img {
   width: 32px;
   height: 32px;
   object-fit: contain;
+  border-radius: 50%;
 }
 
 nav.pill-nav a {
