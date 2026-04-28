@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TattLab Studios — Book a Session</title>
+  <title>TattLabStudios — Book a Session</title>
   <link rel="icon" type="image/png" href="assets/favicon-32.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
@@ -16,12 +16,11 @@
       margin: 0 auto;
       padding: 140px 24px 100px;
       display: grid;
-      grid-template-columns: 1fr 1.5fr;
+      grid-template-columns: 1fr 1.6fr;
       gap: 64px;
       align-items: start;
     }
 
-    /* Left panel */
     .contact-info h1 {
       font-size: clamp(36px, 5vw, 60px);
       font-weight: 900;
@@ -31,7 +30,7 @@
     }
 
     .contact-info h1 span {
-      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -83,16 +82,9 @@
       line-height: 1.4;
     }
 
-    /* Form panel */
-    .contact-form-wrap {
-      position: sticky;
-      top: 100px;
-    }
+    .contact-form-wrap { position: sticky; top: 100px; }
 
-    .form-card {
-      padding: 40px 36px;
-      border-radius: 20px;
-    }
+    .form-card { padding: 40px 36px; border-radius: 20px; }
 
     .form-card h2 {
       font-size: 22px;
@@ -102,7 +94,7 @@
     }
 
     .form-card .form-sub {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-dim);
       margin-bottom: 32px;
       font-family: 'Space Mono', monospace;
@@ -114,9 +106,7 @@
       gap: 16px;
     }
 
-    .form-field {
-      margin-bottom: 20px;
-    }
+    .form-field { margin-bottom: 18px; }
 
     .form-field label {
       display: block;
@@ -125,10 +115,10 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: rgba(139,92,246,0.7);
-      margin-bottom: 8px;
+      margin-bottom: 7px;
     }
 
-    .form-field input,
+    .form-field input:not([type="checkbox"]):not([type="radio"]),
     .form-field select,
     .form-field textarea {
       width: 100%;
@@ -152,83 +142,121 @@
       padding-right: 36px;
     }
 
-    .form-field input::placeholder,
-    .form-field textarea::placeholder {
-      color: rgba(255,255,255,0.2);
-    }
+    .form-field input:not([type="checkbox"]):not([type="radio"])::placeholder,
+    .form-field textarea::placeholder { color: rgba(255,255,255,0.2); }
 
-    .form-field input:focus,
+    .form-field input:not([type="checkbox"]):not([type="radio"]):focus,
     .form-field select:focus,
     .form-field textarea:focus {
       border-color: rgba(139,92,246,0.55);
       box-shadow: 0 0 0 3px rgba(139,92,246,0.1);
     }
 
-    .form-field select option {
-      background: #0a0918;
-      color: var(--text);
-    }
+    .form-field select option { background: #0a0918; color: var(--text); }
+    .form-field textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
 
-    .form-field textarea {
-      resize: vertical;
-      min-height: 120px;
-      line-height: 1.6;
-    }
-
-    .form-field .char-hint {
-      font-size: 11px;
-      color: var(--text-dimmer);
-      margin-top: 6px;
-      font-family: 'Space Mono', monospace;
-      text-align: right;
-    }
-
-    /* Radio-style selectors */
-    .type-grid {
+    /* Contact method radio */
+    .contact-method-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 8px;
-      margin-bottom: 20px;
     }
 
-    .type-opt {
-      padding: 10px 8px;
+    .cm-opt {
+      padding: 11px 12px;
       border-radius: 10px;
       border: 1px solid rgba(139,92,246,0.2);
       background: rgba(255,255,255,0.02);
       cursor: pointer;
       text-align: center;
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-dim);
       transition: all 0.18s;
       user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
     }
 
-    .type-opt:hover {
-      border-color: rgba(139,92,246,0.4);
-      color: var(--text);
-    }
+    .cm-opt:hover { border-color: rgba(139,92,246,0.4); color: var(--text); }
 
-    .type-opt.selected {
+    .cm-opt.selected {
       border-color: rgba(139,92,246,0.7);
       background: rgba(139,92,246,0.1);
       color: var(--text);
       box-shadow: 0 0 12px rgba(139,92,246,0.15);
     }
 
-    .type-opt input { display: none; }
+    .cm-opt input { display: none; }
+
+    /* File upload */
+    .file-upload-wrap {
+      position: relative;
+      border: 1px dashed rgba(139,92,246,0.3);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .file-upload-wrap:hover {
+      border-color: rgba(139,92,246,0.55);
+      background: rgba(139,92,246,0.04);
+    }
+
+    .file-upload-wrap input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: none;
+      background: none;
+    }
+
+    .file-upload-wrap .fu-label {
+      font-size: 13px;
+      color: var(--text-dim);
+      pointer-events: none;
+    }
+
+    .file-upload-wrap .fu-label span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .file-upload-wrap .fu-hint {
+      font-size: 11px;
+      color: var(--text-dimmer);
+      margin-top: 4px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    #fileName {
+      font-size: 12px;
+      color: var(--accent-cyan);
+      margin-top: 8px;
+      font-family: 'Space Mono', monospace;
+      min-height: 16px;
+    }
 
     .submit-btn {
       width: 100%;
       padding: 15px;
-      background: linear-gradient(135deg, #7c3aed, #0e7490);
+      background: linear-gradient(135deg, #7c3aed, #5b21b6);
       color: #fff;
       font-size: 15px;
       font-weight: 700;
       border: none;
       border-radius: 12px;
       cursor: pointer;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       box-shadow: 0 0 28px rgba(139,92,246,0.3);
       transition: box-shadow 0.2s, transform 0.15s;
       margin-top: 8px;
@@ -239,11 +267,8 @@
       transform: translateY(-2px);
     }
 
-    .submit-btn:active {
-      transform: scale(0.98);
-    }
+    .submit-btn:active { transform: scale(0.98); }
 
-    /* Success state */
     .success-state {
       display: none;
       text-align: center;
@@ -263,45 +288,89 @@
       box-shadow: 0 0 40px rgba(139,92,246,0.2);
     }
 
-    .success-state h3 {
-      font-size: 24px;
-      font-weight: 800;
-      margin-bottom: 12px;
-      letter-spacing: -0.02em;
-    }
+    .success-state h3 { font-size: 24px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .success-state p { font-size: 14px; color: var(--text-dim); line-height: 1.7; }
 
-    .success-state p {
-      font-size: 14px;
-      color: var(--text-dim);
-      line-height: 1.7;
-    }
+    .req { color: var(--accent-cyan); margin-left: 2px; opacity: 0.8; }
 
-    /* required dot */
-    .req { color: var(--accent-cyan); margin-left: 2px; opacity: 0.7; }
-
-    /* Error */
-    .field-error {
-      font-size: 11px;
-      color: rgba(239,68,68,0.8);
-      margin-top: 5px;
-      font-family: 'Space Mono', monospace;
-      display: none;
-    }
-
+    .field-error { font-size: 11px; color: rgba(239,68,68,0.8); margin-top: 5px; font-family: 'Space Mono', monospace; display: none; }
     .form-field.error input,
     .form-field.error textarea,
-    .form-field.error select {
-      border-color: rgba(239,68,68,0.5) !important;
+    .form-field.error select { border-color: rgba(239,68,68,0.5) !important; }
+    .form-field.error .field-error { display: block; }
+
+    .section-divider {
+      height: 1px;
+      background: rgba(139,92,246,0.12);
+      margin: 24px 0 20px;
     }
 
-    .form-field.error .field-error { display: block; }
+    .form-section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(139,92,246,0.45);
+      margin-bottom: 16px;
+    }
 
     @media (max-width: 860px) {
       .contact-layout { grid-template-columns: 1fr; gap: 48px; padding-top: 120px; }
       .contact-form-wrap { position: static; }
       .form-row { grid-template-columns: 1fr; }
-      .type-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-method-grid { grid-template-columns: repeat(2, 1fr); }
     }
+
+    /* ── Optional label ── */
+    .optional-label {
+      font-size: 10px;
+      color: var(--text-dimmer);
+      font-family: 'Space Mono', monospace;
+      margin-left: 4px;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
+    }
+
+    /* ── Consent declarations ── */
+    .decl-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .decl-item input[type="checkbox"] {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      accent-color: #8b5cf6;
+      cursor: pointer;
+    }
+    .decl-item.error-decl span { color: rgba(239,68,68,0.75); }
+
+    /* ── Medical condition checkboxes ── */
+    .med-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-dim);
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(139,92,246,0.12);
+      background: rgba(255,255,255,0.02);
+      transition: all 0.15s;
+    }
+    .med-check:hover { border-color: rgba(139,92,246,0.3); color: var(--text); }
+    .med-check input { accent-color: #8b5cf6; }
+
+    /* ── Signature canvas ── */
+    #sigCanvas.active { box-shadow: 0 0 0 2px rgba(139,92,246,0.4); }
   </style>
 </head>
 <body>
@@ -313,7 +382,7 @@
     <a href="index.html">Home</a>
     <a href="where-are-we.html">Find Us</a>
     <a href="finance.html">Finance</a>
-    <a href="contact.html" class="book-btn active" style="background: linear-gradient(135deg,rgba(139,92,246,0.6),rgba(139,92,246,0.3));">Book Now</a>
+    <a href="contact.html" class="book-btn" style="background: linear-gradient(135deg,rgba(139,92,246,0.6),rgba(91,33,182,0.4));">Book Now</a>
   </nav>
 
   <div class="contact-layout">
@@ -321,7 +390,7 @@
     <div class="contact-info">
       <p class="lab-label" style="margin-bottom:12px;">Contact // TLS-MSG</p>
       <h1>Let's talk<br/><span>about your ink.</span></h1>
-      <p class="intro">Tell us your idea, your placement, your budget. We'll get back to you within 24 hours to arrange a consultation or book you straight in.</p>
+      <p class="intro">Tell us your idea, placement, and budget. We'll get back to you within 24 hours to arrange a consultation or book you straight in.</p>
 
       <div class="contact-detail">
         <div class="cd-icon">
@@ -329,34 +398,33 @@
         </div>
         <div class="cd-text">
           <h4>Location</h4>
-          <p>Enfield, London<br/><span style="color:var(--text-dim);font-weight:400;font-size:13px;">Full address on booking confirmation</span></p>
+          <p>171 Chase Side<br/>Enfield EN2 0PT</p>
         </div>
       </div>
 
       <div class="contact-detail">
         <div class="cd-icon">
-          <svg width="18" height="18" fill="none" stroke="#a78bfa" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m22 3-10 9L2 3"/></svg>
+          <svg width="18" height="18" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m22 3-10 9L2 3"/></svg>
         </div>
         <div class="cd-text">
           <h4>Instagram</h4>
-          <p>@tattlabstudios<br/><span style="color:var(--text-dim);font-weight:400;font-size:13px;">DMs open — fastest response here</span></p>
+          <p>@tattlabstudios<br/><span style="color:var(--text-dim);font-weight:400;font-size:13px;">DMs open — fastest response</span></p>
         </div>
       </div>
 
       <div class="contact-detail">
         <div class="cd-icon">
-          <svg width="18" height="18" fill="none" stroke="#ec4899" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <svg width="18" height="18" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
         <div class="cd-text">
-          <h4>Response time</h4>
-          <p>Within 24 hours<br/><span style="color:var(--text-dim);font-weight:400;font-size:13px;">Mon–Sat, 10am–7pm</span></p>
+          <h4>Hours</h4>
+          <p>Mon–Sat: 11am – 7pm<br/><span style="color:rgba(239,68,68,0.6);font-size:13px;font-weight:400;">Sunday: Closed</span></p>
         </div>
       </div>
 
-      <!-- Finance callout -->
-      <div class="glass-card" style="padding:20px 22px;border-radius:14px;margin-top:16px;border-color:rgba(139,92,246,0.2)!important;">
+      <div class="glass-card" style="padding:20px 22px;border-radius:14px;margin-top:16px;">
         <div style="font-size:12px;font-family:'Space Mono',monospace;color:var(--accent-cyan);opacity:0.7;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">Finance available</div>
-        <div style="font-size:14px;color:var(--text-dim);line-height:1.5;">Need help spreading the cost? Ask us about 0% finance when you submit your enquiry.</div>
+        <div style="font-size:14px;color:var(--text-dim);line-height:1.5;">Need help spreading the cost? Ask us about our payment plans — 0% options available.</div>
         <a href="finance.html" style="display:inline-block;margin-top:12px;font-size:12px;color:var(--accent);text-decoration:none;font-weight:600;">View finance options →</a>
       </div>
     </div>
@@ -364,170 +432,564 @@
     <!-- Right form -->
     <div class="contact-form-wrap">
       <div class="form-card glass-card">
-        <h2>Send an enquiry</h2>
-        <p class="form-sub">REF: TLS-BOOKING // All fields marked <span style="color:var(--accent-cyan)">◈</span> required</p>
+        <h2>Book a session</h2>
+        <p class="form-sub">Fields marked <span style="color:var(--accent-cyan)">*</span> are required</p>
 
         <form id="contactForm" novalidate>
 
+          <p class="form-section-label">Your details</p>
           <div class="form-row">
-            <div class="form-field" id="field-name">
-              <label>Name <span class="req">◈</span></label>
-              <input type="text" name="name" placeholder="Your full name" autocomplete="name"/>
-              <div class="field-error">Name is required</div>
+            <div class="form-field" id="field-fname">
+              <label>First name <span class="req">*</span></label>
+              <input type="text" name="fname" placeholder="First name" autocomplete="given-name"/>
+              <div class="field-error">Required</div>
             </div>
+            <div class="form-field" id="field-lname">
+              <label>Last name <span class="req">*</span></label>
+              <input type="text" name="lname" placeholder="Last name" autocomplete="family-name"/>
+              <div class="field-error">Required</div>
+            </div>
+          </div>
+
+          <div class="form-row">
             <div class="form-field" id="field-email">
-              <label>Email <span class="req">◈</span></label>
+              <label>Email <span class="req">*</span></label>
               <input type="email" name="email" placeholder="your@email.com" autocomplete="email"/>
               <div class="field-error">Valid email required</div>
             </div>
-          </div>
-
-          <div class="form-field">
-            <label>Phone</label>
-            <input type="tel" name="phone" placeholder="+44 7700 000000" autocomplete="tel"/>
-          </div>
-
-          <div class="form-field">
-            <label>Session type <span class="req">◈</span></label>
-            <div class="type-grid" id="typeGrid">
-              <label class="type-opt selected" data-val="custom">
-                <input type="radio" name="type" value="custom" checked/>
-                Custom piece
-              </label>
-              <label class="type-opt" data-val="coverup">
-                <input type="radio" name="type" value="coverup"/>
-                Cover-up
-              </label>
-              <label class="type-opt" data-val="walkin">
-                <input type="radio" name="type" value="walkin"/>
-                Walk-in
-              </label>
-              <label class="type-opt" data-val="touchup">
-                <input type="radio" name="type" value="touchup"/>
-                Touch-up
-              </label>
-              <label class="type-opt" data-val="consult">
-                <input type="radio" name="type" value="consult"/>
-                Consultation
-              </label>
-              <label class="type-opt" data-val="finance">
-                <input type="radio" name="type" value="finance"/>
-                Finance query
-              </label>
+            <div class="form-field" id="field-phone">
+              <label>Phone <span class="req">*</span></label>
+              <input type="tel" name="phone" placeholder="+44 7700 000000" autocomplete="tel"/>
+              <div class="field-error">Required</div>
             </div>
+          </div>
+
+          <div class="section-divider"></div>
+          <p class="form-section-label">Appointment details</p>
+
+          <div class="form-field" id="field-date">
+            <label>Preferred date of appointment <span class="req">*</span></label>
+            <input type="date" name="preferred_date"/>
+            <div class="field-error">Required</div>
           </div>
 
           <div class="form-row">
-            <div class="form-field">
-              <label>Approx. budget</label>
-              <select name="budget">
-                <option value="" disabled selected>Select range</option>
-                <option value="under200">Under £200</option>
-                <option value="200-500">£200 – £500</option>
-                <option value="500-1000">£500 – £1,000</option>
-                <option value="1000+">£1,000+</option>
-                <option value="unsure">Not sure yet</option>
-              </select>
+            <div class="form-field" id="field-size">
+              <label>Rough size <span class="req">*</span></label>
+              <input type="text" name="size" placeholder="e.g. 10cm × 8cm"/>
+              <div class="field-error">Required</div>
             </div>
-            <div class="form-field">
-              <label>Placement</label>
-              <input type="text" name="placement" placeholder="e.g. forearm, ribs, chest"/>
+            <div class="form-field" id="field-placement">
+              <label>Rough placement <span class="req">*</span></label>
+              <input type="text" name="placement" placeholder="e.g. forearm, ribs"/>
+              <div class="field-error">Required</div>
             </div>
           </div>
 
-          <div class="form-field" id="field-message">
-            <label>Tell us about your idea <span class="req">◈</span></label>
-            <textarea name="message" placeholder="Describe your idea — style, references, inspiration, size... the more detail the better." maxlength="1000" id="msgArea"></textarea>
-            <div class="char-hint"><span id="charCount">0</span> / 1000</div>
+          <div class="form-field" id="field-desc">
+            <label>Description of desired tattoo <span class="req">*</span></label>
+            <textarea name="description" placeholder="Describe your idea — style, references, inspiration, colours, details..."></textarea>
             <div class="field-error">Please describe your idea</div>
           </div>
 
-          <div class="form-field" style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;">
-            <input type="checkbox" id="financeCheck" name="finance_interest" style="width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:#8b5cf6;"/>
-            <label for="financeCheck" style="font-size:13px;color:var(--text-dim);letter-spacing:0;text-transform:none;font-family:'Inter',sans-serif;cursor:pointer;font-weight:400;">I'm interested in finance options</label>
+          <div class="form-field">
+            <label>Preferred artist <span class="optional-label">(optional — type a name if you have one)</span></label>
+            <input type="text" name="artist" placeholder="Leave blank if no preference"/>
           </div>
 
-          <button type="submit" class="submit-btn">
-            Submit Enquiry →
-          </button>
+          <div class="section-divider"></div>
+          <p class="form-section-label">Design reference</p>
+
+          <div class="form-field">
+            <label>Upload your design (optional)</label>
+            <div class="file-upload-wrap">
+              <input type="file" id="designUpload" name="design" accept="image/*,.pdf"/>
+              <p class="fu-label"><span>Click to upload</span> or drag and drop</p>
+              <p class="fu-hint">PNG, JPG, PDF — max 10MB</p>
+            </div>
+            <div id="fileName"></div>
+          </div>
+
+          <div class="section-divider"></div>
+          <p class="form-section-label">Preferred contact method <span class="req">*</span></p>
+
+          <div class="contact-method-grid" id="contactMethodGrid" style="margin-bottom:20px;">
+            <label class="cm-opt selected" data-val="phone">
+              <input type="radio" name="contact_method" value="phone" checked/>
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              Phone Call
+            </label>
+            <label class="cm-opt" data-val="whatsapp">
+              <input type="radio" name="contact_method" value="whatsapp"/>
+              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.122 1.526 5.854L.053 23.5a.5.5 0 00.624.624l5.688-1.485A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.65-.51-5.17-1.402l-.37-.222-3.375.881.901-3.289-.242-.381A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              WhatsApp
+            </label>
+            <label class="cm-opt" data-val="email">
+              <input type="radio" name="contact_method" value="email"/>
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m22 3-10 9L2 3"/></svg>
+              Email
+            </label>
+            <label class="cm-opt" data-val="text">
+              <input type="radio" name="contact_method" value="text"/>
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              Text Message
+            </label>
+          </div>
+
+          <button type="submit" class="submit-btn">Send Message</button>
 
         </form>
 
-        <!-- Success -->
+        <!-- After submit: consent check -->
+        <div class="success-state" id="consentCheck" style="display:none;padding:40px 20px;">
+          <div class="s-icon">
+            <svg width="28" height="28" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3 style="margin-bottom:10px;">Booking received!</h3>
+          <p style="margin-bottom:28px;">One last thing — have you already completed a consent form with us?</p>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn-primary" id="noConsent" style="flex:1;max-width:220px;justify-content:center;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:600;letter-spacing:0.02em;text-transform:none;">Complete it now</button>
+            <button class="btn-ghost" id="yesConsent" style="flex:1;max-width:220px;justify-content:center;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:600;">Already done ✓</button>
+          </div>
+        </div>
+
+        <!-- Final success -->
         <div class="success-state" id="successState">
           <div class="s-icon">
             <svg width="32" height="32" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
-          <h3>Enquiry received.</h3>
-          <p>We'll be in touch within 24 hours.<br/>Check your inbox — and follow us on Instagram<br/><span style="color:var(--accent-cyan);">@tattlabstudios</span></p>
+          <h3>All done!</h3>
+          <p>We'll be in touch within 24 hours via your preferred contact method.<br/>Follow us on Instagram<br/><span style="color:var(--accent);">@tattlabstudios</span></p>
           <a href="index.html" class="btn-ghost" style="margin-top:28px;display:inline-flex;">← Back to home</a>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- ── CONSENT FORM MODAL ── -->
+  <div id="consentModal" style="display:none;position:fixed;inset:0;z-index:2000;overflow-y:auto;padding:24px 16px;">
+    <div style="position:fixed;inset:0;background:rgba(6,6,16,0.88);backdrop-filter:blur(12px);" id="consentBackdrop"></div>
+    <div style="position:relative;z-index:1;max-width:720px;margin:0 auto;">
+      <div class="glass-card" style="padding:40px 36px;border-radius:20px;">
+
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;gap:16px;">
+          <div>
+            <p class="lab-label" style="margin-bottom:8px;">Consent Form // TLS-CON</p>
+            <h2 style="font-size:24px;font-weight:800;letter-spacing:-0.02em;">Client Consent &amp; Liability</h2>
+          </div>
+          <button id="closeConsent" style="flex-shrink:0;width:36px;height:36px;border-radius:50%;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.25);color:var(--text);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;">×</button>
+        </div>
+
+        <!-- Declarations -->
+        <div style="margin-bottom:28px;background:rgba(139,92,246,0.04);border:1px solid rgba(139,92,246,0.12);border-radius:14px;padding:24px;">
+          <p class="lab-label" style="margin-bottom:14px;">Please read and confirm each statement</p>
+          <div style="display:flex;flex-direction:column;gap:14px;" id="declarationsWrap">
+            <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I confirm that I have read and fully understand this tattoo client consent and liability form.</span></label>
+            <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I agree to comply with all instructions given by the tattoo artist regarding the care of my tattoo, including aftercare guidance.</span></label>
+            <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I understand that the tattooing process involves piercing the skin with a needle and depositing ink into the skin, which may cause pain, discomfort, swelling, and bleeding.</span></label>
+            <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I understand that there is a possibility of an allergic reaction to tattoo ink, and I confirm that I have informed the tattoo artist of any known allergies or medical conditions.</span></label>
+            <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I understand that the tattoo artist has explained the risks of infection and has provided instructions for proper aftercare.</span></label>
+            <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I understand that tattoos may not be removable completely and that any attempt at removal may cause scarring, skin discolouration, or other complications.</span></label>
+            <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I understand that the final result may vary from the initial design due to factors such as skin type, healing, and individual response.</span></label>
+            <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I hereby release the tattoo artist and TattLabStudios from any and all liability including injury, infection, allergic reaction, or damage to property arising from the tattoo process.</span></label>
+            <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I understand that the tattoo artist is not responsible for any medical expenses incurred as a result of complications.</span></label>
+            <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I confirm that I am 18 years of age or older and have provided valid photographic identification.</span></label>
+            <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I confirm that all information I have provided is accurate to the best of my knowledge.</span></label>
+          </div>
+        </div>
+
+        <form id="consentForm" novalidate>
+          <p class="lab-label" style="margin-bottom:14px;">Personal details</p>
+
+          <div class="form-row">
+            <div class="form-field" id="cf-fname">
+              <label>First name <span class="req">*</span></label>
+              <input type="text" name="cf_fname" placeholder="First name"/>
+              <div class="field-error">Required</div>
+            </div>
+            <div class="form-field" id="cf-lname">
+              <label>Last name <span class="req">*</span></label>
+              <input type="text" name="cf_lname" placeholder="Last name"/>
+              <div class="field-error">Required</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field" id="cf-dob">
+              <label>Date of birth <span class="req">*</span></label>
+              <input type="date" name="cf_dob"/>
+              <div class="field-error">Required</div>
+            </div>
+            <div class="form-field" id="cf-phone">
+              <label>Phone <span class="req">*</span></label>
+              <input type="tel" name="cf_phone" placeholder="+44 7700 000000"/>
+              <div class="field-error">Required</div>
+            </div>
+          </div>
+
+          <div class="form-field" id="cf-addr">
+            <label>Address <span class="req">*</span></label>
+            <input type="text" name="cf_addr" placeholder="Full address"/>
+            <div class="field-error">Required</div>
+          </div>
+
+          <div class="form-field" id="cf-email">
+            <label>Email <span class="req">*</span></label>
+            <input type="email" name="cf_email" placeholder="your@email.com"/>
+            <div class="field-error">Valid email required</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field" id="cf-apptdate">
+              <label>Date of appointment <span class="req">*</span></label>
+              <input type="date" name="cf_apptdate"/>
+              <div class="field-error">Required</div>
+            </div>
+            <div class="form-field" id="cf-price">
+              <label>Price agreed <span class="req">*</span></label>
+              <input type="text" name="cf_price" placeholder="e.g. £350"/>
+              <div class="field-error">Required</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field" id="cf-desc">
+              <label>Description of tattoo <span class="req">*</span></label>
+              <input type="text" name="cf_desc" placeholder="Brief description"/>
+              <div class="field-error">Required</div>
+            </div>
+            <div class="form-field" id="cf-placement">
+              <label>Placement <span class="req">*</span></label>
+              <input type="text" name="cf_placement" placeholder="e.g. left forearm"/>
+              <div class="field-error">Required</div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label>Artist name</label>
+            <input type="text" name="cf_artist" placeholder="Artist (if known)"/>
+          </div>
+
+          <div class="section-divider"></div>
+          <p class="lab-label" style="margin-bottom:14px;">Medical information</p>
+
+          <div class="form-field" id="cf-medical">
+            <label>Please check any medical conditions that apply <span class="req">*</span></label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;" id="medConditions">
+              <label class="med-check"><input type="checkbox" name="med" value="diabetes"/> Diabetes</label>
+              <label class="med-check"><input type="checkbox" name="med" value="highbp"/> High blood pressure</label>
+              <label class="med-check"><input type="checkbox" name="med" value="lowbp"/> Low blood pressure</label>
+              <label class="med-check"><input type="checkbox" name="med" value="heart"/> Heart disease</label>
+              <label class="med-check"><input type="checkbox" name="med" value="hemophilia"/> Hemophilia / bleeding disorder</label>
+              <label class="med-check"><input type="checkbox" name="med" value="hepatitis"/> Hepatitis A, B, or C</label>
+              <label class="med-check"><input type="checkbox" name="med" value="hiv"/> HIV / AIDS</label>
+              <label class="med-check"><input type="checkbox" name="med" value="skin"/> Skin conditions (Eczema, Psoriasis)</label>
+              <label class="med-check"><input type="checkbox" name="med" value="keloid"/> Keloid scarring</label>
+              <label class="med-check none-check" id="noneCheck"><input type="checkbox" name="med" value="none"/> None of the above</label>
+            </div>
+            <div class="field-error" id="medError" style="display:none;">Please select at least one option</div>
+          </div>
+
+          <div class="form-field">
+            <label>Any other medical conditions?</label>
+            <input type="text" name="cf_other_conditions" placeholder="List any others"/>
+          </div>
+
+          <div class="form-field">
+            <label>Medications taken regularly</label>
+            <input type="text" name="cf_medications" placeholder="List medications"/>
+          </div>
+
+          <div class="form-field" id="cf-allergies">
+            <label>Do you have any allergies? <span class="req">*</span></label>
+            <div style="display:flex;gap:12px;margin-top:4px;">
+              <label class="cm-opt" data-group="allergy" data-val="yes" style="flex:1;"><input type="radio" name="cf_allergies" value="yes"/> Yes</label>
+              <label class="cm-opt" data-group="allergy" data-val="no" style="flex:1;"><input type="radio" name="cf_allergies" value="no"/> No</label>
+            </div>
+            <div class="field-error" id="allergyError" style="display:none;">Required</div>
+          </div>
+          <div class="form-field" id="allergyDetails" style="display:none;">
+            <label>If yes, please give details</label>
+            <input type="text" name="cf_allergy_details" placeholder="Describe allergies"/>
+          </div>
+
+          <div class="form-field" id="cf-surgery">
+            <label>Surgery in the past year? <span class="req">*</span></label>
+            <div style="display:flex;gap:12px;margin-top:4px;">
+              <label class="cm-opt" data-group="surgery" data-val="yes" style="flex:1;"><input type="radio" name="cf_surgery" value="yes"/> Yes</label>
+              <label class="cm-opt" data-group="surgery" data-val="no" style="flex:1;"><input type="radio" name="cf_surgery" value="no"/> No</label>
+            </div>
+            <div class="field-error" id="surgeryError" style="display:none;">Required</div>
+          </div>
+          <div class="form-field" id="surgeryDetails" style="display:none;">
+            <label>If yes, please specify</label>
+            <input type="text" name="cf_surgery_details" placeholder="Describe surgery"/>
+          </div>
+
+          <div class="form-field" id="cf-reaction">
+            <label>Previous reaction to tattoo or piercing? <span class="req">*</span></label>
+            <div style="display:flex;gap:12px;margin-top:4px;">
+              <label class="cm-opt" data-group="reaction" data-val="yes" style="flex:1;"><input type="radio" name="cf_reaction" value="yes"/> Yes</label>
+              <label class="cm-opt" data-group="reaction" data-val="no" style="flex:1;"><input type="radio" name="cf_reaction" value="no"/> No</label>
+            </div>
+            <div class="field-error" id="reactionError" style="display:none;">Required</div>
+          </div>
+          <div class="form-field" id="reactionDetails" style="display:none;">
+            <label>If yes, please specify</label>
+            <input type="text" name="cf_reaction_details" placeholder="Describe reaction"/>
+          </div>
+
+          <div class="section-divider"></div>
+          <p class="lab-label" style="margin-bottom:14px;">ID &amp; Signature</p>
+
+          <div class="form-field" id="cf-id">
+            <label>Upload photo ID <span class="req">*</span></label>
+            <div class="file-upload-wrap">
+              <input type="file" id="idUpload" name="cf_id" accept="image/*,.pdf"/>
+              <p class="fu-label"><span>Click to upload</span> your ID</p>
+              <p class="fu-hint">Passport or driving licence — PNG, JPG, PDF</p>
+            </div>
+            <div id="idFileName"></div>
+            <div class="field-error" id="idError" style="display:none;">ID is required</div>
+          </div>
+
+          <div class="form-field" id="cf-sig">
+            <label>Client signature <span class="req">*</span></label>
+            <div style="border:1px solid rgba(139,92,246,0.25);border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.02);">
+              <canvas id="sigCanvas" width="600" height="140" style="width:100%;height:140px;cursor:crosshair;touch-action:none;display:block;"></canvas>
+            </div>
+            <div style="display:flex;justify-content:flex-end;margin-top:6px;">
+              <button type="button" id="clearSig" style="background:none;border:none;color:rgba(139,92,246,0.5);font-size:12px;font-family:'Space Mono',monospace;cursor:pointer;letter-spacing:0.06em;">Clear signature</button>
+            </div>
+            <div class="field-error" id="sigError" style="display:none;">Signature required</div>
+          </div>
+
+          <div class="form-field" id="cf-sigdate">
+            <label>Date <span class="req">*</span></label>
+            <input type="date" name="cf_sigdate"/>
+            <div class="field-error">Required</div>
+          </div>
+
+          <div id="consentFormError" style="display:none;padding:12px 16px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;font-size:13px;color:rgba(239,68,68,0.9);margin-bottom:16px;font-family:'Space Mono',monospace;">
+            Please complete all required fields and confirm all declarations above.
+          </div>
+
+          <button type="submit" class="submit-btn">Submit Consent Form</button>
+        </form>
+
+        <!-- Consent success -->
+        <div class="success-state" id="consentSuccess" style="display:none;">
+          <div class="s-icon"><svg width="32" height="32" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>Consent form submitted.</h3>
+          <p>Thank you — we have everything we need. See you at your appointment!</p>
+          <a href="index.html" class="btn-ghost" style="margin-top:28px;display:inline-flex;">← Back to home</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <footer>
-    <p><span class="f-accent">TattLab Studios</span> &nbsp;·&nbsp; Enfield, London &nbsp;·&nbsp; Where Science Meets Ink</p>
-    <p style="margin-top: 8px; font-size: 11px; opacity: 0.4;">© 2026 TattLab Studios. All rights reserved.</p>
+    <p><span class="f-accent">TattLabStudios</span> &nbsp;·&nbsp; 171 Chase Side, Enfield EN2 0PT &nbsp;·&nbsp; <a href="https://instagram.com/tattlabstudios" target="_blank" style="color:rgba(139,92,246,0.7);text-decoration:none;">@tattlabstudios</a></p>
+    <p style="margin-top:6px;opacity:0.5;">Where Science Meets Ink</p>
+    <p style="margin-top: 8px; font-size: 11px; opacity: 0.4;">© 2026 TattLabStudios. All rights reserved.</p>
   </footer>
 
   <script>
-    // Type selector
-    document.querySelectorAll('.type-opt').forEach(opt => {
+    // Contact method selector
+    document.querySelectorAll('.cm-opt').forEach(opt => {
       opt.addEventListener('click', () => {
-        document.querySelectorAll('.type-opt').forEach(o => o.classList.remove('selected'));
+        document.querySelectorAll('.cm-opt').forEach(o => o.classList.remove('selected'));
         opt.classList.add('selected');
       });
     });
 
-    // Char counter
-    const msgArea = document.getElementById('msgArea');
-    const charCount = document.getElementById('charCount');
-    msgArea.addEventListener('input', () => {
-      charCount.textContent = msgArea.value.length;
+    // File upload label
+    document.getElementById('designUpload').addEventListener('change', function() {
+      const fn = document.getElementById('fileName');
+      fn.textContent = this.files[0] ? '◈ ' + this.files[0].name : '';
     });
 
-    // Form validation + submit
+    // Form submit → show consent check
     document.getElementById('contactForm').addEventListener('submit', function(e) {
       e.preventDefault();
       let valid = true;
-
-      const name = this.querySelector('[name="name"]');
-      const email = this.querySelector('[name="email"]');
-      const message = this.querySelector('[name="message"]');
-
-      // reset
-      ['field-name','field-email','field-message'].forEach(id => {
-        document.getElementById(id).classList.remove('error');
+      const required = [
+        { id: 'field-fname', name: 'fname' },
+        { id: 'field-lname', name: 'lname' },
+        { id: 'field-email', name: 'email' },
+        { id: 'field-phone', name: 'phone' },
+        { id: 'field-date',  name: 'preferred_date' },
+        { id: 'field-size',  name: 'size' },
+        { id: 'field-placement', name: 'placement' },
+        { id: 'field-desc',  name: 'description' },
+      ];
+      required.forEach(f => document.getElementById(f.id).classList.remove('error'));
+      required.forEach(f => {
+        const el = this.querySelector('[name="' + f.name + '"]');
+        if (!el || !el.value.trim()) { document.getElementById(f.id).classList.add('error'); valid = false; }
       });
-
-      if (!name.value.trim()) {
-        document.getElementById('field-name').classList.add('error');
-        valid = false;
+      const email = this.querySelector('[name="email"]');
+      if (email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+        document.getElementById('field-email').classList.add('error'); valid = false;
       }
-
-      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRe.test(email.value.trim())) {
-        document.getElementById('field-email').classList.add('error');
-        valid = false;
-      }
-
-      if (!message.value.trim()) {
-        document.getElementById('field-message').classList.add('error');
-        valid = false;
-      }
-
       if (!valid) return;
-
-      // Simulate submit
       const btn = this.querySelector('.submit-btn');
-      btn.textContent = 'Sending...';
-      btn.disabled = true;
-
+      btn.textContent = 'Sending...'; btn.disabled = true;
       setTimeout(() => {
         document.getElementById('contactForm').style.display = 'none';
-        document.getElementById('successState').style.display = 'block';
-      }, 1000);
+        document.getElementById('consentCheck').style.display = 'block';
+      }, 900);
+    });
+
+    // Consent check buttons
+    document.getElementById('yesConsent').addEventListener('click', () => {
+      document.getElementById('consentCheck').style.display = 'none';
+      document.getElementById('successState').style.display = 'block';
+    });
+    document.getElementById('noConsent').addEventListener('click', () => {
+      document.getElementById('consentModal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    });
+
+    // Close consent modal
+    function closeConsentModal() {
+      document.getElementById('consentModal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    document.getElementById('closeConsent').addEventListener('click', closeConsentModal);
+    document.getElementById('consentBackdrop').addEventListener('click', closeConsentModal);
+
+    // Radio toggles for consent form yes/no fields
+    document.querySelectorAll('.cm-opt[data-group]').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const g = opt.dataset.group;
+        document.querySelectorAll('.cm-opt[data-group="' + g + '"]').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        // show/hide detail fields
+        if (g === 'allergy')  document.getElementById('allergyDetails').style.display  = opt.dataset.val === 'yes' ? 'block' : 'none';
+        if (g === 'surgery')  document.getElementById('surgeryDetails').style.display  = opt.dataset.val === 'yes' ? 'block' : 'none';
+        if (g === 'reaction') document.getElementById('reactionDetails').style.display = opt.dataset.val === 'yes' ? 'block' : 'none';
+      });
+    });
+
+    // None of the above clears other checkboxes
+    document.getElementById('noneCheck').querySelector('input').addEventListener('change', function() {
+      if (this.checked) {
+        document.querySelectorAll('#medConditions input[type="checkbox"]:not(#noneCheck input)').forEach(cb => cb.checked = false);
+      }
+    });
+    document.querySelectorAll('#medConditions input[type="checkbox"]:not(#noneCheck input)').forEach(cb => {
+      cb.addEventListener('change', function() {
+        if (this.checked) document.getElementById('noneCheck').querySelector('input').checked = false;
+      });
+    });
+
+    // ID upload
+    document.getElementById('idUpload').addEventListener('change', function() {
+      document.getElementById('idFileName').textContent = this.files[0] ? '◈ ' + this.files[0].name : '';
+    });
+
+    // Signature canvas
+    (function() {
+      const canvas = document.getElementById('sigCanvas');
+      const ctx = canvas.getContext('2d');
+      let drawing = false, hasSig = false;
+
+      function getPos(e) {
+        const r = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / r.width;
+        const scaleY = canvas.height / r.height;
+        const src = e.touches ? e.touches[0] : e;
+        return { x: (src.clientX - r.left) * scaleX, y: (src.clientY - r.top) * scaleY };
+      }
+
+      ctx.strokeStyle = '#a78bfa';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      canvas.addEventListener('mousedown',  e => { drawing = true; hasSig = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); canvas.classList.add('active'); });
+      canvas.addEventListener('mousemove',  e => { if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+      canvas.addEventListener('mouseup',    () => { drawing = false; canvas.classList.remove('active'); });
+      canvas.addEventListener('mouseleave', () => { drawing = false; canvas.classList.remove('active'); });
+      canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; hasSig = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }, { passive: false });
+      canvas.addEventListener('touchmove',  e => { e.preventDefault(); if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }, { passive: false });
+      canvas.addEventListener('touchend',   () => { drawing = false; });
+
+      document.getElementById('clearSig').addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        hasSig = false;
+      });
+
+      window._sigHasSig = () => hasSig;
+    })();
+
+    // Consent form submit
+    document.getElementById('consentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let valid = true;
+
+      // Check all declarations ticked
+      const decls = document.querySelectorAll('.decl-cb');
+      let allTicked = true;
+      decls.forEach(cb => { if (!cb.checked) { allTicked = false; cb.closest('.decl-item').classList.add('error-decl'); } else cb.closest('.decl-item').classList.remove('error-decl'); });
+      if (!allTicked) valid = false;
+
+      // Required text fields
+      const reqFields = [
+        { id: 'cf-fname',   name: 'cf_fname' },
+        { id: 'cf-lname',   name: 'cf_lname' },
+        { id: 'cf-dob',     name: 'cf_dob' },
+        { id: 'cf-phone',   name: 'cf_phone' },
+        { id: 'cf-addr',    name: 'cf_addr' },
+        { id: 'cf-email',   name: 'cf_email' },
+        { id: 'cf-apptdate',name: 'cf_apptdate' },
+        { id: 'cf-price',   name: 'cf_price' },
+        { id: 'cf-desc',    name: 'cf_desc' },
+        { id: 'cf-placement',name:'cf_placement' },
+        { id: 'cf-sigdate', name: 'cf_sigdate' },
+      ];
+      reqFields.forEach(f => document.getElementById(f.id).classList.remove('error'));
+      reqFields.forEach(f => {
+        const el = this.querySelector('[name="' + f.name + '"]');
+        if (!el || !el.value.trim()) { document.getElementById(f.id).classList.add('error'); valid = false; }
+      });
+
+      // Medical conditions — at least one checked
+      const medChecked = document.querySelectorAll('#medConditions input[type="checkbox"]:checked').length > 0;
+      document.getElementById('medError').style.display = medChecked ? 'none' : 'block';
+      if (!medChecked) valid = false;
+
+      // Yes/No radios
+      [['cf_allergies','allergyError'],['cf_surgery','surgeryError'],['cf_reaction','reactionError']].forEach(([name, errId]) => {
+        const checked = this.querySelector('[name="' + name + '"]:checked');
+        document.getElementById(errId).style.display = checked ? 'none' : 'block';
+        if (!checked) valid = false;
+      });
+
+      // ID upload
+      const idFile = document.getElementById('idUpload').files[0];
+      document.getElementById('idError').style.display = idFile ? 'none' : 'block';
+      if (!idFile) valid = false;
+
+      // Signature
+      const sigOk = window._sigHasSig && window._sigHasSig();
+      document.getElementById('sigError').style.display = sigOk ? 'none' : 'block';
+      if (!sigOk) valid = false;
+
+      document.getElementById('consentFormError').style.display = valid ? 'none' : 'block';
+      if (!valid) return;
+
+      const btn = this.querySelector('.submit-btn');
+      btn.textContent = 'Submitting...'; btn.disabled = true;
+      setTimeout(() => {
+        this.style.display = 'none';
+        document.getElementById('consentSuccess').style.display = 'block';
+        document.getElementById('consentCheck').style.display = 'none';
+        document.getElementById('successState').style.display = 'none';
+        document.body.style.overflow = '';
+      }, 900);
     });
   </script>
 </body>

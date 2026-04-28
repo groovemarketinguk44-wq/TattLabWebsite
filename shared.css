@@ -135,12 +135,12 @@ nav.pill-nav .book-btn:hover {
 
 /* ── Glass Cards ── */
 .glass-card {
-  background: var(--card);
-  border: 1px solid var(--card-border);
+  background: rgba(28,24,52,0.94);
+  border: 1px solid rgba(139,92,246,0.28);
   border-radius: 16px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(139,92,246,0.06);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 8px 32px rgba(0,0,0,0.35), 0 0 0 0.5px rgba(139,92,246,0.08);
 }
 
 /* ── Lab label micro-type ── */
@@ -171,6 +171,28 @@ nav.pill-nav .book-btn:hover {
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.4); border-radius: 3px; }
+
+/* ── Kill autofill white box ── */
+input[type="text"]:-webkit-autofill,
+input[type="text"]:-webkit-autofill:hover,
+input[type="text"]:-webkit-autofill:focus,
+input[type="email"]:-webkit-autofill,
+input[type="email"]:-webkit-autofill:hover,
+input[type="email"]:-webkit-autofill:focus,
+input[type="tel"]:-webkit-autofill,
+input[type="tel"]:-webkit-autofill:hover,
+input[type="tel"]:-webkit-autofill:focus,
+input[type="date"]:-webkit-autofill,
+input[type="month"]:-webkit-autofill,
+select:-webkit-autofill,
+textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px rgba(13,12,28,0.95) inset !important;
+  box-shadow: 0 0 0 1000px rgba(13,12,28,0.95) inset !important;
+  -webkit-text-fill-color: #eaeaf0 !important;
+  caret-color: #eaeaf0;
+  border-color: rgba(139,92,246,0.2) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
 
 /* ── Crosshair decoration ── */
 .crosshair {

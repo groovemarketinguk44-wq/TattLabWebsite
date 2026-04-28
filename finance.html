@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TattLab Studios — Finance Options</title>
+  <title>TattLabStudios — Finance Options</title>
   <link rel="icon" type="image/png" href="assets/favicon-32.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
@@ -26,7 +26,7 @@
     }
 
     .page-header h1 span {
-      background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -35,335 +35,330 @@
     .page-header p {
       color: var(--text-dim);
       font-size: 17px;
-      max-width: 560px;
+      max-width: 600px;
       line-height: 1.7;
     }
 
-    /* Plans grid */
-    .plans-section {
+    /* ── Info section ── */
+    .finance-info {
       position: relative;
       z-index: 1;
       max-width: 1100px;
       margin: 0 auto;
-      padding: 0 24px 80px;
+      padding: 0 24px 60px;
     }
 
-    .plans-grid {
+    .finance-info-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-bottom: 60px;
-    }
-
-    .plan-card {
-      padding: 36px 28px;
-      border-radius: 20px;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .plan-card:hover {
-      transform: translateY(-4px);
-    }
-
-    .plan-card.featured {
-      background: rgba(13,12,28,0.92) !important;
-      border-color: rgba(139,92,246,0.5) !important;
-      box-shadow: 0 0 60px rgba(139,92,246,0.2), 0 24px 48px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1) !important;
-    }
-
-    .featured-badge {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #7c3aed, #a78bfa, #ec4899);
-    }
-
-    .plan-ref {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent-cyan);
-      opacity: 0.5;
-      margin-bottom: 20px;
-      display: block;
-    }
-
-    .plan-card h3 {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 6px;
-    }
-
-    .plan-rate {
-      font-size: 48px;
-      font-weight: 900;
-      line-height: 1;
-      margin: 16px 0 4px;
-      letter-spacing: -0.04em;
-    }
-
-    .plan-rate.zero {
-      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .plan-rate-label {
-      font-size: 13px;
-      color: var(--text-dim);
-      margin-bottom: 24px;
-      font-family: 'Space Mono', monospace;
-    }
-
-    .plan-divider {
-      height: 1px;
-      background: rgba(139,92,246,0.15);
-      margin: 24px 0;
-    }
-
-    .plan-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .plan-features li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 14px;
-      color: var(--text-dim);
-      line-height: 1.4;
-    }
-
-    .plan-features li .check {
-      flex-shrink: 0;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: rgba(139,92,246,0.15);
-      border: 1px solid rgba(139,92,246,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 1px;
-    }
-
-    .plan-features li .check svg {
-      width: 10px;
-      height: 10px;
-    }
-
-    .plan-cta {
-      margin-top: 28px;
-      width: 100%;
-      padding: 13px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      display: block;
-      transition: all 0.2s;
-    }
-
-    .plan-cta.primary {
-      background: linear-gradient(135deg, #7c3aed, #0e7490);
-      color: #fff;
-      border: none;
-      box-shadow: 0 0 24px rgba(139,92,246,0.3);
-    }
-
-    .plan-cta.primary:hover {
-      box-shadow: 0 0 40px rgba(139,92,246,0.5);
-      transform: translateY(-1px);
-    }
-
-    .plan-cta.ghost {
-      background: transparent;
-      color: var(--text-dim);
-      border: 1px solid rgba(139,92,246,0.25);
-    }
-
-    .plan-cta.ghost:hover {
-      border-color: rgba(139,92,246,0.5);
-      color: var(--text);
-      background: rgba(139,92,246,0.06);
-    }
-
-    /* How it works */
-    .how-section {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px 100px;
-    }
-
-    .how-section h2 {
-      font-size: 36px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
       margin-bottom: 48px;
     }
 
-    .how-section h2 span {
+    .fi-card {
+      padding: 36px 32px;
+      border-radius: 18px;
+    }
+
+    .fi-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    .fi-card h3 span {
       background: linear-gradient(135deg, #8b5cf6, #a78bfa);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      position: relative;
+    .fi-card p {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.7;
     }
 
-    /* connector line */
-    .steps-grid::before {
-      content: '';
-      position: absolute;
-      top: 26px;
-      left: calc(12.5% + 12px);
-      right: calc(12.5% + 12px);
-      height: 1px;
-      background: linear-gradient(90deg, rgba(139,92,246,0.4), rgba(139,92,246,0.4));
-      z-index: 0;
-    }
-
-    .step {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-    }
-
-    .step-num {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: rgba(13,12,28,0.95);
-      border: 1px solid rgba(139,92,246,0.4);
+    .fi-card ul {
+      list-style: none;
+      margin-top: 14px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      font-family: 'Space Mono', monospace;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--accent);
-      box-shadow: 0 0 20px rgba(139,92,246,0.2);
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .step h4 {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .step p {
-      font-size: 13px;
+    .fi-card ul li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 14px;
       color: var(--text-dim);
       line-height: 1.5;
     }
 
-    /* FAQ */
-    .faq-section {
+    .fi-card ul li .dot {
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 6px;
+      box-shadow: 0 0 8px rgba(139,92,246,0.5);
+    }
+
+    /* Highlight band */
+    .finance-highlight {
       position: relative;
       z-index: 1;
-      max-width: 800px;
+      max-width: 1100px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+    }
+
+    .finance-highlight-inner {
+      padding: 40px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(109,40,217,0.12), rgba(91,33,182,0.06));
+      border: 1px solid rgba(139,92,246,0.3);
+      box-shadow: 0 0 60px rgba(139,92,246,0.1), inset 0 1px 0 rgba(255,255,255,0.06);
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .fh-stat { text-align: center; }
+
+    .fh-stat .val {
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.04em;
+    }
+
+    .fh-stat .lbl {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dimmer);
+      margin-top: 6px;
+    }
+
+    .fh-divider {
+      width: 1px;
+      height: 60px;
+      background: rgba(139,92,246,0.2);
+      margin: 0 auto;
+    }
+
+    /* ── Application form ── */
+    .finance-form-section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 0 24px 100px;
     }
 
-    .faq-section h2 {
+    .finance-form-section h2 {
       font-size: 36px;
       font-weight: 800;
       letter-spacing: -0.03em;
-      margin-bottom: 36px;
+      margin-bottom: 8px;
     }
 
-    .faq-item {
-      border-bottom: 1px solid rgba(139,92,246,0.1);
+    .finance-form-section h2 span {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .faq-q {
-      padding: 20px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
+    .finance-form-section .form-intro {
       font-size: 15px;
-      font-weight: 600;
-      gap: 16px;
-      user-select: none;
-    }
-
-    .faq-q .arrow {
-      flex-shrink: 0;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      border: 1px solid rgba(139,92,246,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s, background 0.2s;
-    }
-
-    .faq-item.open .faq-q .arrow {
-      transform: rotate(180deg);
-      background: rgba(139,92,246,0.15);
-    }
-
-    .faq-a {
-      font-size: 14px;
       color: var(--text-dim);
-      line-height: 1.7;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease, padding-bottom 0.35s ease;
+      margin-bottom: 36px;
+      line-height: 1.6;
+      max-width: 640px;
     }
 
-    .faq-item.open .faq-a {
-      max-height: 300px;
-      padding-bottom: 20px;
+    .finance-form-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 48px;
+      align-items: start;
     }
+
+    .finance-aside { position: sticky; top: 100px; }
+
+    .fa-card {
+      padding: 28px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+
+    .fa-card h4 {
+      font-size: 13px;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      opacity: 0.7;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+
+    .fa-card p {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    /* form fields — reuse shared styles from contact */
+    .form-card { padding: 40px 36px; border-radius: 20px; }
+    .form-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.02em; }
+    .form-card .form-sub { font-size: 12px; color: var(--text-dim); margin-bottom: 28px; font-family: 'Space Mono', monospace; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-field { margin-bottom: 18px; }
+
+    .form-field label {
+      display: block;
+      font-size: 11px;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(139,92,246,0.7);
+      margin-bottom: 7px;
+    }
+
+    .form-field input:not([type="checkbox"]):not([type="radio"]),
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%238b5cf6' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    .form-field input:not([type="checkbox"]):not([type="radio"])::placeholder,
+    .form-field textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+    .form-field input:not([type="checkbox"]):not([type="radio"]):focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: rgba(139,92,246,0.55);
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.1);
+    }
+
+    .form-field select option { background: #0a0918; color: var(--text); }
+
+    .section-divider { height: 1px; background: rgba(139,92,246,0.12); margin: 24px 0 20px; }
+    .form-section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(139,92,246,0.45);
+      margin-bottom: 16px;
+    }
+
+    .req { color: var(--accent-cyan); margin-left: 2px; opacity: 0.8; }
+    .field-error { font-size: 11px; color: rgba(239,68,68,0.8); margin-top: 5px; font-family: 'Space Mono', monospace; display: none; }
+    .form-field.error input,
+    .form-field.error select { border-color: rgba(239,68,68,0.5) !important; }
+    .form-field.error .field-error { display: block; }
+
+    .optional-label {
+      font-size: 10px;
+      color: var(--text-dimmer);
+      font-family: 'Space Mono', monospace;
+      margin-left: 6px;
+      text-transform: lowercase;
+      letter-spacing: 0;
+    }
+
+    .conditional-block {
+      display: none;
+      padding: 20px;
+      background: rgba(139,92,246,0.04);
+      border: 1px solid rgba(139,92,246,0.12);
+      border-radius: 12px;
+      margin-bottom: 18px;
+    }
+
+    .conditional-block.visible { display: block; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #7c3aed, #5b21b6);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      box-shadow: 0 0 28px rgba(139,92,246,0.3);
+      transition: box-shadow 0.2s, transform 0.15s;
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover { box-shadow: 0 0 48px rgba(139,92,246,0.5); transform: translateY(-2px); }
+    .submit-btn:active { transform: scale(0.98); }
+
+    .success-state { display: none; text-align: center; padding: 60px 20px; }
+    .success-state .s-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.3);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px; box-shadow: 0 0 40px rgba(139,92,246,0.2);
+    }
+    .success-state h3 { font-size: 24px; font-weight: 800; margin-bottom: 12px; }
+    .success-state p { font-size: 14px; color: var(--text-dim); line-height: 1.7; }
 
     /* disclaimer */
     .disclaimer {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto 80px;
-      padding: 0 24px;
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto 80px; padding: 0 24px;
     }
-
     .disclaimer-inner {
-      padding: 20px 24px;
-      border-radius: 12px;
-      background: rgba(239,68,68,0.04);
-      border: 1px solid rgba(239,68,68,0.15);
-      font-size: 12px;
-      color: var(--text-dimmer);
-      line-height: 1.6;
+      padding: 20px 24px; border-radius: 12px;
+      background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.12);
+      font-size: 11px; color: var(--text-dimmer); line-height: 1.6;
       font-family: 'Space Mono', monospace;
     }
 
     @media (max-width: 900px) {
-      .plans-grid { grid-template-columns: 1fr; max-width: 440px; }
-      .steps-grid { grid-template-columns: repeat(2, 1fr); }
-      .steps-grid::before { display: none; }
+      .finance-info-grid { grid-template-columns: 1fr; }
+      .finance-highlight-inner { grid-template-columns: 1fr; gap: 20px; }
+      .fh-divider { width: 60px; height: 1px; }
+      .finance-form-wrap { grid-template-columns: 1fr; }
+      .finance-aside { position: static; }
+      .form-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -379,204 +374,273 @@
     <a href="contact.html" class="book-btn">Book Now</a>
   </nav>
 
+  <!-- Header -->
   <div class="page-header">
-    <p class="lab-label" style="margin-bottom: 12px;">Finance // TLS-FIN</p>
-    <h1>Ink now,<br/><span>pay later.</span></h1>
-    <p>Great work shouldn't wait. We offer flexible finance options so you can get the tattoo you want without compromising on quality or rushing your budget.</p>
+    <p class="lab-label" style="margin-bottom:12px;">Finance // TLS-FIN</p>
+    <h1>More ways<br/>to <span>pay.</span></h1>
+    <p>We offer flexible payment options so you can spread the cost of your tattoo. Payment plans available from 1–12 months, with Klarna also supported for secure, flexible payments.</p>
   </div>
 
-  <div class="plans-section">
-    <div class="plans-grid">
+  <!-- Info cards -->
+  <div class="finance-info">
+    <div class="finance-info-grid">
 
-      <!-- Plan 1 -->
-      <div class="plan-card glass-card">
-        <span class="plan-ref">PLAN-001 // DEPOSIT</span>
-        <h3>Pay a Deposit</h3>
-        <p style="font-size:13px;color:var(--text-dim);line-height:1.5;margin-bottom:12px;">Simple, no-fuss reservation</p>
-        <div class="plan-rate zero">£50</div>
-        <div class="plan-rate-label">deposit to secure your slot</div>
-        <div class="plan-divider"></div>
-        <ul class="plan-features">
-          <li>
-            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
-            Secures your booking date
-          </li>
-          <li>
-            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
-            Balance paid on the day
-          </li>
-          <li>
-            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
-            Card, cash or bank transfer
-          </li>
-          <li>
-            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
-            Deposit goes toward total cost
-          </li>
+      <div class="fi-card glass-card">
+        <span class="lab-label" style="display:block;margin-bottom:12px;">Payment Plans // 1–12 months</span>
+        <h3>Spread the <span>cost</span></h3>
+        <p>Pay for your tattoo over 1 to 12 months — you choose a term that works for your budget. To check eligibility you'll complete a short finance form involving a soft credit check only, which does not affect your credit score.</p>
+        <ul>
+          <li><span class="dot"></span>1 to 12 month terms available</li>
+          <li><span class="dot"></span>Soft credit check only — no impact on your score</li>
+          <li><span class="dot"></span>All terms shown clearly before you commit</li>
+          <li><span class="dot"></span>Available on bookings of £500 or more</li>
         </ul>
-        <a href="contact.html" class="plan-cta ghost">Get Started</a>
       </div>
 
-      <!-- Plan 2 — Featured -->
-      <div class="plan-card featured glass-card">
-        <div class="featured-badge"></div>
-        <span class="plan-ref">PLAN-002 // MOST POPULAR</span>
-        <h3>0% Finance</h3>
-        <p style="font-size:13px;color:var(--text-dim);line-height:1.5;margin-bottom:12px;">Spread the cost — interest free</p>
-        <div class="plan-rate zero">0%</div>
-        <div class="plan-rate-label">interest on approved plans</div>
-        <div class="plan-divider"></div>
-        <ul class="plan-features">
-          <li>
-            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
-            Split cost over 3–12 months
-          </li>
-          <li>
-            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
-            Zero interest on approved plans
-          </li>
-          <li>
-            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
-            Available for bookings over £200
-          </li>
-          <li>
-            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
-            Quick online credit check
-          </li>
-          <li>
-            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
-            Book your session immediately on approval
-          </li>
+      <div class="fi-card glass-card">
+        <span class="lab-label" style="display:block;margin-bottom:12px;">Klarna // Flexible Payments</span>
+        <h3>Pay with <span>Klarna</span></h3>
+        <p>We support Klarna for secure, flexible payments. Split your total into manageable instalments at checkout. Klarna's Pay in 3 lets you spread cost across 3 interest-free payments automatically.</p>
+        <ul>
+          <li><span class="dot"></span>Pay in 3 interest-free instalments</li>
+          <li><span class="dot"></span>First payment today, rest auto-charged</li>
+          <li><span class="dot"></span>Secure and fully managed by Klarna</li>
+          <li><span class="dot"></span>No hidden fees</li>
         </ul>
-        <a href="contact.html" class="plan-cta primary">Apply Now</a>
-      </div>
-
-      <!-- Plan 3 -->
-      <div class="plan-card glass-card">
-        <span class="plan-ref">PLAN-003 // KLARNA</span>
-        <h3>Pay in 3</h3>
-        <p style="font-size:13px;color:var(--text-dim);line-height:1.5;margin-bottom:12px;">Split into three easy payments</p>
-        <div class="plan-rate zero">÷3</div>
-        <div class="plan-rate-label">automatic instalments</div>
-        <div class="plan-divider"></div>
-        <ul class="plan-features">
-          <li>
-            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
-            Pay 1/3 today, rest auto-charged
-          </li>
-          <li>
-            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
-            Powered by Klarna
-          </li>
-          <li>
-            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
-            No long-term commitment
-          </li>
-          <li>
-            <span class="check"><svg fill="none" stroke="#8b5cf6" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
-            Available at checkout
-          </li>
-        </ul>
-        <a href="contact.html" class="plan-cta ghost">Find Out More</a>
       </div>
 
     </div>
-  </div>
 
-  <!-- How it works -->
-  <div class="how-section">
-    <p class="lab-label" style="margin-bottom:12px;">Process</p>
-    <h2>How <span>finance</span> works</h2>
-    <div class="steps-grid">
-      <div class="step">
-        <div class="step-num">01</div>
-        <h4>Choose your piece</h4>
-        <p>Book a consultation and agree on your design, size, and placement with your artist.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h4>Select a plan</h4>
-        <p>Pick the finance option that suits your budget — deposit, 0% or Pay in 3.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h4>Quick approval</h4>
-        <p>For 0% plans, a soft credit check is performed. Most applications approved in minutes.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">04</div>
-        <h4>Get tattooed</h4>
-        <p>Your session is confirmed. Sit back, let the artist work, and pay on your terms.</p>
+    <!-- Stats highlight -->
+    <div class="finance-highlight">
+      <div class="finance-highlight-inner">
+        <div class="fh-stat">
+          <div class="val">0%</div>
+          <div class="lbl">Impact on credit score</div>
+        </div>
+        <div class="fh-divider"></div>
+        <div class="fh-stat">
+          <div class="val">12</div>
+          <div class="lbl">Months max term</div>
+        </div>
+        <div class="fh-divider"></div>
+        <div class="fh-stat">
+          <div class="val">Soft</div>
+          <div class="lbl">Credit check only</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- FAQ -->
-  <div class="faq-section">
-    <p class="lab-label" style="margin-bottom:12px;">Questions</p>
-    <h2>FAQ</h2>
+  <!-- Application form -->
+  <div class="finance-form-section">
+    <p class="lab-label" style="margin-bottom:12px;">Apply // TLS-FIN-APP</p>
+    <h2>Finance <span>application</span></h2>
+    <p class="form-intro">Complete the form below to apply for a payment plan. We'll review your details and get back to you within 24 hours with your options. Fields marked <span style="color:var(--accent-cyan)">*</span> are required.</p>
 
-    <div class="faq-item">
-      <div class="faq-q">
-        Does applying for finance affect my credit score?
-        <span class="arrow"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+    <div class="finance-form-wrap">
+      <!-- Aside info -->
+      <div class="finance-aside">
+        <div class="fa-card glass-card">
+          <h4>What happens next?</h4>
+          <p>We review your application and contact you within 24 hours with your available options and terms. No obligation until you agree.</p>
+        </div>
+        <div class="fa-card glass-card">
+          <h4>Soft check only</h4>
+          <p>The credit check carried out is a soft search — it is not visible to other lenders and will not affect your credit score in any way.</p>
+        </div>
+        <div class="fa-card glass-card">
+          <h4>Secure &amp; private</h4>
+          <p>Your data is handled securely and only used to process your finance application. We do not share your details with third parties.</p>
+        </div>
       </div>
-      <div class="faq-a">For 0% finance, we carry out a soft credit check during the application — this does not affect your credit score. A hard check is only performed if you proceed with a full credit agreement.</div>
-    </div>
 
-    <div class="faq-item">
-      <div class="faq-q">
-        Is there a minimum spend for finance?
-        <span class="arrow"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
-      </div>
-      <div class="faq-a">The 0% finance option is available on bookings of £200 and above. The Pay in 3 option via Klarna has no minimum spend. Deposit plans are available for all bookings.</div>
-    </div>
+      <!-- Form -->
+      <div class="form-card glass-card">
+        <h3>Your details</h3>
+        <p class="form-sub">REF: TLS-FIN-APP // All fields marked <span style="color:var(--accent-cyan)">*</span> required</p>
 
-    <div class="faq-item">
-      <div class="faq-q">
-        What if I need to reschedule my appointment?
-        <span class="arrow"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
-      </div>
-      <div class="faq-a">Finance plans are linked to your booking, not a specific date. If you need to reschedule, contact us at least 48 hours in advance and we'll move your appointment — your finance agreement stays in place.</div>
-    </div>
+        <form id="financeForm" novalidate>
 
-    <div class="faq-item">
-      <div class="faq-q">
-        Can I pay off my finance plan early?
-        <span class="arrow"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
-      </div>
-      <div class="faq-a">Yes — early repayment is always welcome and there are no penalties for settling your plan ahead of schedule.</div>
-    </div>
+          <p class="form-section-label">Personal details</p>
+          <div class="form-row">
+            <div class="form-field" id="ff-fname">
+              <label>First name <span class="req">*</span></label>
+              <input type="text" name="fname" placeholder="First name"/>
+              <div class="field-error">Required</div>
+            </div>
+            <div class="form-field" id="ff-lname">
+              <label>Last name <span class="req">*</span></label>
+              <input type="text" name="lname" placeholder="Last name"/>
+              <div class="field-error">Required</div>
+            </div>
+          </div>
 
-    <div class="faq-item">
-      <div class="faq-q">
-        What ID do I need to apply?
-        <span class="arrow"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+          <div class="form-row">
+            <div class="form-field" id="ff-email">
+              <label>Email <span class="req">*</span></label>
+              <input type="email" name="email" placeholder="your@email.com"/>
+              <div class="field-error">Valid email required</div>
+            </div>
+            <div class="form-field" id="ff-phone">
+              <label>Phone <span class="req">*</span></label>
+              <input type="tel" name="phone" placeholder="+44 7700 000000"/>
+              <div class="field-error">Required</div>
+            </div>
+          </div>
+
+          <div class="section-divider"></div>
+          <p class="form-section-label">Current address</p>
+
+          <div class="form-field" id="ff-addr1">
+            <label>First line of address <span class="req">*</span></label>
+            <input type="text" name="addr1" placeholder="e.g. 12 Example Street"/>
+            <div class="field-error">Required</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field" id="ff-postcode">
+              <label>Post code <span class="req">*</span></label>
+              <input type="text" name="postcode" placeholder="e.g. EN2 0PT"/>
+              <div class="field-error">Required</div>
+            </div>
+            <div class="form-field" id="ff-lived">
+              <label>How long lived here <span class="req">*</span></label>
+              <select name="lived_here">
+                <option value="" disabled selected>Select</option>
+                <option value="under6m">Under 6 months</option>
+                <option value="6m-1y">6 months – 1 year</option>
+                <option value="1-2y">1 – 2 years</option>
+                <option value="2-3y">2 – 3 years</option>
+                <option value="3y+">3+ years</option>
+              </select>
+              <div class="field-error">Required</div>
+            </div>
+          </div>
+
+          <div class="form-field" id="ff-movein">
+            <label>When did you move in? <span class="req">*</span></label>
+            <input type="month" name="movein"/>
+            <div class="field-error">Required</div>
+          </div>
+
+          <!-- Conditional: previous address if under 3 years -->
+          <div class="conditional-block" id="prevAddrBlock">
+            <p class="form-section-label" style="margin-bottom:14px;">Previous address (if less than 3 years at current address)</p>
+
+            <div class="form-field">
+              <label>Previous address <span class="optional-label">(if applicable)</span></label>
+              <input type="text" name="prev_addr" placeholder="First line of previous address"/>
+            </div>
+
+            <div class="form-field">
+              <label>When did you move into previous address? <span class="optional-label">(if applicable)</span></label>
+              <input type="month" name="prev_movein"/>
+            </div>
+          </div>
+
+          <div class="section-divider"></div>
+          <p class="form-section-label">Finance term</p>
+
+          <div class="form-field" id="ff-months">
+            <label>Over how many months? (1–12) <span class="req">*</span></label>
+            <select name="months">
+              <option value="" disabled selected>Select term</option>
+              <option value="1">1 month</option>
+              <option value="2">2 months</option>
+              <option value="3">3 months</option>
+              <option value="4">4 months</option>
+              <option value="5">5 months</option>
+              <option value="6">6 months</option>
+              <option value="7">7 months</option>
+              <option value="8">8 months</option>
+              <option value="9">9 months</option>
+              <option value="10">10 months</option>
+              <option value="11">11 months</option>
+              <option value="12">12 months</option>
+            </select>
+            <div class="field-error">Please select a term</div>
+          </div>
+
+          <button type="submit" class="submit-btn">Submit Application</button>
+
+        </form>
+
+        <div class="success-state" id="finSuccessState">
+          <div class="s-icon">
+            <svg width="32" height="32" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>Application received.</h3>
+          <p>We'll review your details and be in touch within 24 hours with your available options.<br/><br/>No commitment until you've reviewed and agreed the terms.</p>
+          <a href="index.html" class="btn-ghost" style="margin-top:28px;display:inline-flex;">← Back to home</a>
+        </div>
       </div>
-      <div class="faq-a">You'll need to be 18+ and a UK resident. A valid form of photo ID (passport or driving licence) is required, along with proof of address dated within the last 3 months.</div>
     </div>
   </div>
 
   <!-- Disclaimer -->
   <div class="disclaimer">
     <div class="disclaimer-inner">
-      DISCLAIMER // FIN-LEGAL — Finance is subject to status and credit approval. TattLab Studios acts as a credit broker, not a lender. 0% finance provided via an FCA-authorised lender. Pay in 3 powered by Klarna. Terms and conditions apply. Credit decisions are made by the lender, not TattLab Studios.
+      DISCLAIMER // FIN-LEGAL — Finance is subject to status and credit approval. TattLabStudios acts as a credit broker, not a lender. Payment plans are provided via an FCA-authorised lender. Klarna services are provided by Klarna Bank AB. A soft credit check is performed during the application process — this does not affect your credit score. All terms and options will be shown clearly before you commit. Terms and conditions apply.
     </div>
   </div>
 
   <footer>
-    <p><span class="f-accent">TattLab Studios</span> &nbsp;·&nbsp; Enfield, London &nbsp;·&nbsp; Where Science Meets Ink</p>
-    <p style="margin-top: 8px; font-size: 11px; opacity: 0.4;">© 2026 TattLab Studios. All rights reserved.</p>
+    <p><span class="f-accent">TattLabStudios</span> &nbsp;·&nbsp; 171 Chase Side, Enfield EN2 0PT &nbsp;·&nbsp; <a href="https://instagram.com/tattlabstudios" target="_blank" style="color:rgba(139,92,246,0.7);text-decoration:none;">@tattlabstudios</a></p>
+    <p style="margin-top:6px;opacity:0.5;">Where Science Meets Ink</p>
+    <p style="margin-top: 8px; font-size: 11px; opacity: 0.4;">© 2026 TattLabStudios. All rights reserved.</p>
   </footer>
 
   <script>
-    document.querySelectorAll('.faq-q').forEach(q => {
-      q.addEventListener('click', () => {
-        const item = q.parentElement;
-        const isOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-        if (!isOpen) item.classList.add('open');
+    // Show/hide previous address block based on tenure selection
+    document.querySelector('[name="lived_here"]').addEventListener('change', function() {
+      const short = ['under6m','6m-1y','1-2y','2-3y'].includes(this.value);
+      document.getElementById('prevAddrBlock').classList.toggle('visible', short);
+    });
+
+    // Form submit
+    document.getElementById('financeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let valid = true;
+
+      const required = [
+        { id: 'ff-fname',    name: 'fname' },
+        { id: 'ff-lname',    name: 'lname' },
+        { id: 'ff-email',    name: 'email' },
+        { id: 'ff-phone',    name: 'phone' },
+        { id: 'ff-addr1',    name: 'addr1' },
+        { id: 'ff-postcode', name: 'postcode' },
+        { id: 'ff-lived',    name: 'lived_here' },
+        { id: 'ff-movein',   name: 'movein' },
+        { id: 'ff-months',   name: 'months' },
+      ];
+
+      required.forEach(f => document.getElementById(f.id).classList.remove('error'));
+
+      required.forEach(f => {
+        const el = this.querySelector('[name="' + f.name + '"]');
+        if (!el || !el.value.trim()) {
+          document.getElementById(f.id).classList.add('error');
+          valid = false;
+        }
       });
+
+      const email = this.querySelector('[name="email"]');
+      if (email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+        document.getElementById('ff-email').classList.add('error');
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      const btn = this.querySelector('.submit-btn');
+      btn.textContent = 'Submitting...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        document.getElementById('financeForm').style.display = 'none';
+        document.getElementById('finSuccessState').style.display = 'block';
+      }, 900);
     });
   </script>
 </body>
