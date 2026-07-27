@@ -3,7 +3,20 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TattLabStudios — Where Science Meets Ink</title>
+  <title>TattLabStudios | Tattoo Studio Enfield, North London</title>
+  <meta name="description" content="TattLabStudios — Enfield's premier tattoo studio. Expert artists specialising in realism, fine line, blackwork & colour tattoos. 171 Chase Side, Enfield EN2 0PT. Book online today."/>
+  <meta name="keywords" content="tattoo studio Enfield, tattoo artists Enfield, tattoo shop Enfield, tattoo North London, realism tattoo Enfield, fine line tattoo Enfield"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://www.tattlabstudios.co.uk/"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="TattLabStudios | Tattoo Studio Enfield, North London"/>
+  <meta property="og:description" content="Enfield's premier tattoo studio. Expert artists, precision work, 0% finance available. Book your session online."/>
+  <meta property="og:url" content="https://www.tattlabstudios.co.uk/"/>
+  <meta property="og:image" content="https://www.tattlabstudios.co.uk/assets/logo.png"/>
+  <meta property="og:site_name" content="TattLabStudios"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="TattLabStudios | Tattoo Studio Enfield"/>
+  <meta name="twitter:description" content="Enfield's premier tattoo studio. Expert artists, precision work, 0% finance available."/>
   <link rel="icon" type="image/png" href="assets/favicon-32.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
@@ -102,20 +115,18 @@
 
     /* Striped placeholder */
     .specimen-img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
-      background: repeating-linear-gradient(
-        -45deg,
-        rgba(139,92,246,0.04) 0px,
-        rgba(139,92,246,0.04) 1px,
-        transparent 1px,
-        transparent 24px
-      );
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
+      overflow: hidden;
+    }
+
+    /* Shift widget up to clip header, scale to push footer out of card */
+    .specimen-img .elfsight-app-c34425b1-1b5c-4495-badc-0c95b6f7b2bf {
+      margin-top: -340px;
+      transform: scale(1.28);
+      transform-origin: top center;
     }
 
     .specimen-placeholder-label {
@@ -597,10 +608,11 @@
 
   <!-- NAV -->
   <nav class="pill-nav">
-    <div class="logo-pill"><img src="assets/logo.png" alt="TattLab"/></div>
+    <a href="/" class="logo-pill"><img src="assets/logo.png" alt="TattLab"/></a>
     <a href="/" class="active">Home</a>
     <a href="/where-are-we">Find Us</a>
     <a href="/finance">Finance</a>
+    <a href="/consent">Consent</a>
     <a href="/contact" class="book-btn">Book Now</a>
   </nav>
 
@@ -634,7 +646,8 @@
       <!-- Right specimen card -->
       <div class="hero-specimen">
         <div class="specimen-card">
-          <div class="specimen-img" style="background-image: url('assets/portfolio-1.jpg'); background-size: cover; background-position: center 65%; display: block;">
+          <div class="specimen-img">
+            <div class="elfsight-app-c34425b1-1b5c-4495-badc-0c95b6f7b2bf" data-elfsight-app-lazy></div>
           </div>
           <div class="corner corner-tl"></div>
           <div class="corner corner-tr"></div>
@@ -742,33 +755,9 @@
       <!-- Embed slot: paste your Elfsight / Behold / SnapWidget code inside this div -->
       <div class="insta-embed-slot" id="instaEmbed">
 
-        <!-- ════════════════════════════════════════════════════════
-             INSTAGRAM FEED EMBED
-             Replace everything inside this comment with your embed code.
-
-             Recommended free services:
-             • Elfsight  → elfsight.com  (copy their <script> + widget tag here)
-             • Behold    → behold.so     (copy their <div> + <script> here)
-             • SnapWidget→ snapwidget.com (copy their <iframe> here)
-
-             Once pasted, the placeholder grid below will be replaced.
-             ════════════════════════════════════════════════════════ -->
-
-        <!-- PLACEHOLDER grid shown until embed code is added -->
-        <div class="insta-placeholder-grid">
-          <div class="insta-ph-cell"><span>Post</span></div>
-          <div class="insta-ph-cell"><span>Post</span></div>
-          <div class="insta-ph-cell"><span>Post</span></div>
-          <div class="insta-ph-cell"><span>Post</span></div>
-          <div class="insta-ph-cell"><span>Post</span></div>
-          <div class="insta-ph-cell"><span>Post</span></div>
-          <div class="insta-ph-cell"><span>Post</span></div>
-          <div class="insta-ph-cell"><span>Post</span></div>
-        </div>
-        <p class="insta-embed-hint">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:inline;vertical-align:middle;margin-right:6px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          Paste your Instagram embed code above to replace this placeholder with your live feed.
-        </p>
+        <!-- Elfsight Instagram Feed | Untitled Instagram Feed -->
+        <script src="https://elfsightcdn.com/platform.js" async></script>
+        <div class="elfsight-app-4c9d3efa-ba83-4e3d-b583-dcfd6adb4060" data-elfsight-app-lazy></div>
 
       </div>
     </div>
@@ -883,10 +872,34 @@
 
   <!-- FOOTER -->
   <footer>
-    <p><span class="f-accent">TattLabStudios</span> &nbsp;·&nbsp; 171 Chase Side, Enfield EN2 0PT &nbsp;·&nbsp; <a href="https://instagram.com/tattlabstudios" target="_blank" style="color:rgba(139,92,246,0.7);text-decoration:none;">@tattlabstudios</a></p>
-    <p style="margin-top:6px;opacity:0.5;">Where Science Meets Ink</p>
-    <p style="margin-top: 8px; font-size: 11px; opacity: 0.4;">© 2026 TattLabStudios. All rights reserved.</p>
-  </footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>TattLabStudios</h4>
+      <p>171 Chase Side<br/>Enfield EN2 0PT</p>
+      <a href="https://instagram.com/tattlabstudios" target="_blank">@tattlabstudios</a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="/">Home</a>
+      <a href="/contact">Book Now</a>
+      <a href="/finance">Finance</a>
+      <a href="/where-are-we">Find Us</a>
+      <a href="/consent">Consent Form</a>
+      <a href="/blog">Blog</a>
+      </div>
+    <div class="footer-col">
+      <h4>Areas We Serve</h4>
+      <a href="/tattoo-studio-north-london">North London</a>
+      <a href="/tattoo-studio-edmonton">Edmonton</a>
+      <a href="/tattoo-studio-barnet">Barnet</a>
+      <a href="/tattoo-studio-palmers-green">Palmers Green</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span><span class="f-accent">TattLabStudios</span> &nbsp;·&nbsp; Where Science Meets Ink</span>
+    <span style="opacity:0.4;">© 2026 TattLabStudios. All rights reserved.</span>
+  </div>
+</footer>
 
   <script>
     // Molecule canvas animation
@@ -963,6 +976,41 @@
     resize();
     initNodes();
     tick();
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TattooShop",
+    "name": "TattLabStudios",
+    "description": "Premier tattoo studio in Enfield, North London. Expert artists specialising in realism, fine line, blackwork and colour tattoos.",
+    "url": "https://www.tattlabstudios.co.uk",
+    "logo": "https://www.tattlabstudios.co.uk/assets/logo.png",
+    "image": "https://www.tattlabstudios.co.uk/assets/logo.png",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "171 Chase Side",
+      "addressLocality": "Enfield",
+      "postalCode": "EN2 0PT",
+      "addressRegion": "London",
+      "addressCountry": "GB"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 51.6524,
+      "longitude": -0.0796
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        "opens": "11:00",
+        "closes": "19:00"
+      }
+    ],
+    "priceRange": "££",
+    "servesCuisine": null,
+    "sameAs": ["https://www.instagram.com/tattlabstudios"]
+  }
   </script>
 </body>
 </html>

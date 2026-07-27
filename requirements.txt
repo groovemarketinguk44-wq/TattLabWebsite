@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+twilio
+python-multipart
+fpdf2
+httpx
+Pillow

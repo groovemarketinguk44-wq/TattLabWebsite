@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TattLabStudios — Book a Session</title>
+  <title>Book a Tattoo Session | TattLabStudios Enfield</title>
+  <meta name="description" content="Book your tattoo session at TattLabStudios, Enfield. Tell us your idea — placement, size, style — and we'll be in touch within 24 hours. Finance options available."/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://www.tattlabstudios.co.uk/contact"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Book a Tattoo Session | TattLabStudios Enfield"/>
+  <meta property="og:description" content="Book your tattoo session at TattLabStudios, Enfield. Tell us your idea and we'll be in touch within 24 hours."/>
+  <meta property="og:url" content="https://www.tattlabstudios.co.uk/contact"/>
+  <meta property="og:image" content="https://www.tattlabstudios.co.uk/assets/logo.png"/>
   <link rel="icon" type="image/png" href="assets/favicon-32.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
@@ -378,10 +386,11 @@
   <div class="bg-grid"></div>
 
   <nav class="pill-nav">
-    <div class="logo-pill"><img src="assets/logo.png" alt="TattLab"/></div>
+    <a href="/" class="logo-pill"><img src="assets/logo.png" alt="TattLab"/></a>
     <a href="/">Home</a>
     <a href="/where-are-we">Find Us</a>
     <a href="/finance">Finance</a>
+    <a href="/consent">Consent</a>
     <a href="/contact" class="book-btn" style="background: linear-gradient(135deg,rgba(139,92,246,0.6),rgba(91,33,182,0.4));">Book Now</a>
   </nav>
 
@@ -774,6 +783,7 @@
             Please complete all required fields and confirm all declarations above.
           </div>
 
+          <input type="hidden" name="cf_signature" id="sigData"/>
           <button type="submit" class="submit-btn">Submit Consent Form</button>
         </form>
 
@@ -790,16 +800,48 @@
   </div>
 
   <footer>
-    <p><span class="f-accent">TattLabStudios</span> &nbsp;·&nbsp; 171 Chase Side, Enfield EN2 0PT &nbsp;·&nbsp; <a href="https://instagram.com/tattlabstudios" target="_blank" style="color:rgba(139,92,246,0.7);text-decoration:none;">@tattlabstudios</a></p>
-    <p style="margin-top:6px;opacity:0.5;">Where Science Meets Ink</p>
-    <p style="margin-top: 8px; font-size: 11px; opacity: 0.4;">© 2026 TattLabStudios. All rights reserved.</p>
-  </footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>TattLabStudios</h4>
+      <p>171 Chase Side<br/>Enfield EN2 0PT</p>
+      <a href="https://instagram.com/tattlabstudios" target="_blank">@tattlabstudios</a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="/">Home</a>
+      <a href="/contact">Book Now</a>
+      <a href="/finance">Finance</a>
+      <a href="/where-are-we">Find Us</a>
+      <a href="/consent">Consent Form</a>
+      <a href="/blog">Blog</a>
+      </div>
+    <div class="footer-col">
+      <h4>Areas We Serve</h4>
+      <a href="/tattoo-studio-north-london">North London</a>
+      <a href="/tattoo-studio-edmonton">Edmonton</a>
+      <a href="/tattoo-studio-barnet">Barnet</a>
+      <a href="/tattoo-studio-palmers-green">Palmers Green</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span><span class="f-accent">TattLabStudios</span> &nbsp;·&nbsp; Where Science Meets Ink</span>
+    <span style="opacity:0.4;">© 2026 TattLabStudios. All rights reserved.</span>
+  </div>
+</footer>
 
   <script>
-    // Contact method selector
-    document.querySelectorAll('.cm-opt').forEach(opt => {
+    // Auto-open consent modal if linked directly (?consent)
+    if (new URLSearchParams(window.location.search).has('consent')) {
+      document.getElementById('consentModal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Contact method selector (booking form only — excludes data-group yes/no buttons)
+    document.querySelectorAll('.cm-opt:not([data-group])').forEach(opt => {
       opt.addEventListener('click', () => {
-        document.querySelectorAll('.cm-opt').forEach(o => o.classList.remove('selected'));
+        const radio = opt.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+        document.querySelectorAll('.cm-opt:not([data-group])').forEach(o => o.classList.remove('selected'));
         opt.classList.add('selected');
       });
     });
@@ -836,10 +878,17 @@
       if (!valid) return;
       const btn = this.querySelector('.submit-btn');
       btn.textContent = 'Sending...'; btn.disabled = true;
-      setTimeout(() => {
-        document.getElementById('contactForm').style.display = 'none';
-        document.getElementById('consentCheck').style.display = 'block';
-      }, 900);
+      const fd = new FormData(this);
+      fetch('/submit', { method: 'POST', body: fd })
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(() => {
+          document.getElementById('contactForm').style.display = 'none';
+          document.getElementById('successState').style.display = 'block';
+        })
+        .catch(() => {
+          btn.textContent = 'Send Message'; btn.disabled = false;
+          alert('Something went wrong — please try again.');
+        });
     });
 
     // Consent check buttons
@@ -863,10 +912,11 @@
     // Radio toggles for consent form yes/no fields
     document.querySelectorAll('.cm-opt[data-group]').forEach(opt => {
       opt.addEventListener('click', () => {
+        const radio = opt.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
         const g = opt.dataset.group;
         document.querySelectorAll('.cm-opt[data-group="' + g + '"]').forEach(o => o.classList.remove('selected'));
         opt.classList.add('selected');
-        // show/hide detail fields
         if (g === 'allergy')  document.getElementById('allergyDetails').style.display  = opt.dataset.val === 'yes' ? 'block' : 'none';
         if (g === 'surgery')  document.getElementById('surgeryDetails').style.display  = opt.dataset.val === 'yes' ? 'block' : 'none';
         if (g === 'reaction') document.getElementById('reactionDetails').style.display = opt.dataset.val === 'yes' ? 'block' : 'none';
@@ -983,13 +1033,21 @@
 
       const btn = this.querySelector('.submit-btn');
       btn.textContent = 'Submitting...'; btn.disabled = true;
-      setTimeout(() => {
-        this.style.display = 'none';
-        document.getElementById('consentSuccess').style.display = 'block';
-        document.getElementById('consentCheck').style.display = 'none';
-        document.getElementById('successState').style.display = 'none';
-        document.body.style.overflow = '';
-      }, 900);
+      document.getElementById('sigData').value = document.getElementById('sigCanvas').toDataURL('image/png');
+      const fd = new FormData(this);
+      fetch('/submit-consent', { method: 'POST', body: fd })
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(() => {
+          this.style.display = 'none';
+          document.getElementById('consentSuccess').style.display = 'block';
+          document.getElementById('consentCheck').style.display = 'none';
+          document.getElementById('successState').style.display = 'none';
+          document.body.style.overflow = '';
+        })
+        .catch(() => {
+          btn.textContent = 'Submit Consent Form'; btn.disabled = false;
+          alert('Something went wrong — please try again.');
+        });
     });
   </script>
 </body>

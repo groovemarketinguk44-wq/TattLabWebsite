@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Client Consent Form | TattLabStudios</title>
+  <meta name="description" content="Complete your TattLabStudios client consent and liability form online before your tattoo appointment. Quick, secure, and paperless."/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://www.tattlabstudios.co.uk/consent"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Client Consent Form | TattLabStudios"/>
+  <meta property="og:description" content="Complete your TattLabStudios consent form online before your appointment. Quick, secure, and paperless."/>
+  <meta property="og:url" content="https://www.tattlabstudios.co.uk/consent"/>
+  <meta property="og:image" content="https://www.tattlabstudios.co.uk/assets/logo.png"/>
+  <link rel="icon" type="image/png" href="assets/favicon-32.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    .consent-layout {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 120px 24px 100px;
+    }
+
+    .form-card { padding: 40px 36px; border-radius: 20px; }
+
+    .form-card h2 {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .form-card .form-sub {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 32px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-field { margin-bottom: 18px; }
+
+    .form-field label {
+      display: block;
+      font-size: 11px;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(139,92,246,0.7);
+      margin-bottom: 7px;
+    }
+
+    .form-field input:not([type="checkbox"]):not([type="radio"]),
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-field input:not([type="checkbox"]):not([type="radio"])::placeholder,
+    .form-field textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+    .form-field input:not([type="checkbox"]):not([type="radio"]):focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: rgba(139,92,246,0.55);
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.1);
+    }
+
+    .section-divider {
+      height: 1px;
+      background: rgba(139,92,246,0.12);
+      margin: 24px 0 20px;
+    }
+
+    .req { color: var(--accent-cyan); margin-left: 2px; opacity: 0.8; }
+
+    .field-error { font-size: 11px; color: rgba(239,68,68,0.8); margin-top: 5px; font-family: 'Space Mono', monospace; display: none; }
+    .form-field.error input,
+    .form-field.error textarea,
+    .form-field.error select { border-color: rgba(239,68,68,0.5) !important; }
+    .form-field.error .field-error { display: block; }
+
+    .cm-opt {
+      padding: 11px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(139,92,246,0.2);
+      background: rgba(255,255,255,0.02);
+      cursor: pointer;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-dim);
+      transition: all 0.18s;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+    }
+    .cm-opt:hover { border-color: rgba(139,92,246,0.4); color: var(--text); }
+    .cm-opt.selected {
+      border-color: rgba(139,92,246,0.7);
+      background: rgba(139,92,246,0.1);
+      color: var(--text);
+      box-shadow: 0 0 12px rgba(139,92,246,0.15);
+    }
+    .cm-opt input { display: none; }
+
+    .decl-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .decl-item input[type="checkbox"] {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      accent-color: #8b5cf6;
+      cursor: pointer;
+    }
+    .decl-item.error-decl span { color: rgba(239,68,68,0.75); }
+
+    .med-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-dim);
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(139,92,246,0.12);
+      background: rgba(255,255,255,0.02);
+      transition: all 0.15s;
+    }
+    .med-check:hover { border-color: rgba(139,92,246,0.3); color: var(--text); }
+    .med-check input { accent-color: #8b5cf6; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #7c3aed, #5b21b6);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      box-shadow: 0 0 28px rgba(139,92,246,0.3);
+      transition: box-shadow 0.2s, transform 0.15s;
+      margin-top: 8px;
+    }
+    .submit-btn:hover { box-shadow: 0 0 48px rgba(139,92,246,0.5); transform: translateY(-2px); }
+    .submit-btn:active { transform: scale(0.98); }
+
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .success-state .s-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: rgba(139,92,246,0.1);
+      border: 1px solid rgba(139,92,246,0.3);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow: 0 0 40px rgba(139,92,246,0.2);
+    }
+    .success-state h3 { font-size: 24px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .success-state p { font-size: 14px; color: var(--text-dim); line-height: 1.7; }
+
+    #sigCanvas.active { box-shadow: 0 0 0 2px rgba(139,92,246,0.4); }
+
+    .file-upload-wrap {
+      position: relative;
+      border: 1px dashed rgba(139,92,246,0.3);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: rgba(255,255,255,0.02);
+    }
+    .file-upload-wrap:hover { border-color: rgba(139,92,246,0.55); background: rgba(139,92,246,0.04); }
+    .file-upload-wrap input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer;
+      width: 100%; height: 100%; padding: 0; border: none; background: none;
+    }
+    .file-upload-wrap .fu-label { font-size: 13px; color: var(--text-dim); pointer-events: none; }
+    .file-upload-wrap .fu-label span { color: var(--accent); font-weight: 600; }
+    .file-upload-wrap .fu-hint { font-size: 11px; color: var(--text-dimmer); margin-top: 4px; font-family: 'Space Mono', monospace; }
+
+    .form-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b5cf6' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+    .form-field select option { background: #1a0e35; color: #e2d9f3; }
+
+    .artist-step-card {
+      display: none;
+      text-align: center;
+      padding: 40px 20px 32px;
+    }
+    .artist-step-icon {
+      width: 68px; height: 68px; border-radius: 50%;
+      background: rgba(139,92,246,0.08);
+      border: 1px solid rgba(139,92,246,0.3);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 0 36px rgba(139,92,246,0.2);
+    }
+    .artist-step-name {
+      font-size: 38px; font-weight: 900;
+      color: var(--accent);
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+    .artist-recap {
+      background: rgba(139,92,246,0.04);
+      border: 1px solid rgba(139,92,246,0.12);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin: 24px 0;
+      text-align: left;
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 2;
+    }
+
+    @media (max-width: 600px) {
+      .form-card { padding: 28px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .consent-layout { padding-top: 100px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-blobs"></div>
+  <div class="bg-grid"></div>
+
+  <nav class="pill-nav">
+    <a href="/" class="logo-pill"><img src="assets/logo.png" alt="TattLab"/></a>
+    <a href="/">Home</a>
+    <a href="/where-are-we">Find Us</a>
+    <a href="/finance">Finance</a>
+    <a href="/consent" class="active">Consent</a>
+    <a href="/contact" class="book-btn">Book Now</a>
+  </nav>
+
+  <div class="consent-layout">
+    <div class="form-card glass-card">
+      <p class="lab-label" style="margin-bottom:8px;">Consent Form // TLS-CON</p>
+      <h2>Client Consent &amp; Liability</h2>
+      <p class="form-sub">Fields marked <span style="color:var(--accent-cyan)">*</span> are required</p>
+
+      <!-- Declarations -->
+      <div style="margin-bottom:28px;background:rgba(139,92,246,0.04);border:1px solid rgba(139,92,246,0.12);border-radius:14px;padding:24px;">
+        <p class="lab-label" style="margin-bottom:14px;">Please read and confirm each statement</p>
+        <div style="display:flex;flex-direction:column;gap:14px;" id="declarationsWrap">
+          <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I confirm that I have read and fully understand this tattoo client consent and liability form.</span></label>
+          <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I agree to comply with all instructions given by the tattoo artist regarding the care of my tattoo, including aftercare guidance.</span></label>
+          <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I understand that the tattooing process involves piercing the skin with a needle and depositing ink into the skin, which may cause pain, discomfort, swelling, and bleeding.</span></label>
+          <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I understand that there is a possibility of an allergic reaction to tattoo ink, and I confirm that I have informed the tattoo artist of any known allergies or medical conditions.</span></label>
+          <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I understand that the tattoo artist has explained the risks of infection and has provided instructions for proper aftercare.</span></label>
+          <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I understand that tattoos may not be removable completely and that any attempt at removal may cause scarring, skin discolouration, or other complications.</span></label>
+          <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I understand that the final result may vary from the initial design due to factors such as skin type, healing, and individual response.</span></label>
+          <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I hereby release the tattoo artist and TattLabStudios from any and all liability including injury, infection, allergic reaction, or damage to property arising from the tattoo process.</span></label>
+          <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I understand that the tattoo artist is not responsible for any medical expenses incurred as a result of complications.</span></label>
+          <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I confirm that I am 18 years of age or older and have provided valid photographic identification.</span></label>
+          <label class="decl-item"><input type="checkbox" class="decl-cb" required/><span>I confirm that all information I have provided is accurate to the best of my knowledge.</span></label>
+        </div>
+      </div>
+
+      <form id="consentForm" novalidate>
+        <p class="lab-label" style="margin-bottom:14px;">Personal details</p>
+
+        <div class="form-row">
+          <div class="form-field" id="cf-fname">
+            <label>First name <span class="req">*</span></label>
+            <input type="text" name="cf_fname" placeholder="First name" autocomplete="given-name"/>
+            <div class="field-error">Required</div>
+          </div>
+          <div class="form-field" id="cf-lname">
+            <label>Last name <span class="req">*</span></label>
+            <input type="text" name="cf_lname" placeholder="Last name" autocomplete="family-name"/>
+            <div class="field-error">Required</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field" id="cf-dob">
+            <label>Date of birth <span class="req">*</span></label>
+            <input type="date" name="cf_dob"/>
+            <div class="field-error">Required</div>
+          </div>
+          <div class="form-field" id="cf-phone">
+            <label>Phone <span class="req">*</span></label>
+            <input type="tel" name="cf_phone" placeholder="+44 7700 000000" autocomplete="tel"/>
+            <div class="field-error">Required</div>
+          </div>
+        </div>
+
+        <div class="form-field" id="cf-addr">
+          <label>Address <span class="req">*</span></label>
+          <input type="text" name="cf_addr" placeholder="Full address" autocomplete="street-address"/>
+          <div class="field-error">Required</div>
+        </div>
+
+        <div class="form-field" id="cf-email">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" name="cf_email" placeholder="your@email.com" autocomplete="email"/>
+          <div class="field-error">Valid email required</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field" id="cf-apptdate">
+            <label>Date of appointment <span class="req">*</span></label>
+            <input type="date" name="cf_apptdate"/>
+            <div class="field-error">Required</div>
+          </div>
+          <div class="form-field" id="cf-price">
+            <label>Price agreed <span class="req">*</span></label>
+            <input type="text" name="cf_price" placeholder="e.g. £350"/>
+            <div class="field-error">Required</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field" id="cf-desc">
+            <label>Description of tattoo <span class="req">*</span></label>
+            <input type="text" name="cf_desc" placeholder="Brief description"/>
+            <div class="field-error">Required</div>
+          </div>
+          <div class="form-field" id="cf-placement">
+            <label>Placement <span class="req">*</span></label>
+            <input type="text" name="cf_placement" placeholder="e.g. left forearm"/>
+            <div class="field-error">Required</div>
+          </div>
+        </div>
+
+        <div class="form-field" id="cf-artist">
+          <label>Artist <span class="req">*</span></label>
+          <select name="cf_artist">
+            <option value="">— Select artist —</option>
+            <option value="Rizz">Rizz</option>
+            <option value="Huss">Huss</option>
+            <option value="RJ">RJ</option>
+            <option value="Vicky">Vicky</option>
+            <option value="Meg">Meg</option>
+          </select>
+          <div class="field-error">Please select an artist</div>
+        </div>
+
+        <div class="section-divider"></div>
+        <p class="lab-label" style="margin-bottom:14px;">Medical information</p>
+
+        <div class="form-field" id="cf-medical">
+          <label>Please check any medical conditions that apply <span class="req">*</span></label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;" id="medConditions">
+            <label class="med-check"><input type="checkbox" name="med" value="diabetes"/> Diabetes</label>
+            <label class="med-check"><input type="checkbox" name="med" value="highbp"/> High blood pressure</label>
+            <label class="med-check"><input type="checkbox" name="med" value="lowbp"/> Low blood pressure</label>
+            <label class="med-check"><input type="checkbox" name="med" value="heart"/> Heart disease</label>
+            <label class="med-check"><input type="checkbox" name="med" value="hemophilia"/> Hemophilia / bleeding disorder</label>
+            <label class="med-check"><input type="checkbox" name="med" value="hepatitis"/> Hepatitis A, B, or C</label>
+            <label class="med-check"><input type="checkbox" name="med" value="hiv"/> HIV / AIDS</label>
+            <label class="med-check"><input type="checkbox" name="med" value="skin"/> Skin conditions (Eczema, Psoriasis)</label>
+            <label class="med-check"><input type="checkbox" name="med" value="keloid"/> Keloid scarring</label>
+            <label class="med-check none-check" id="noneCheck"><input type="checkbox" name="med" value="none"/> None of the above</label>
+          </div>
+          <div class="field-error" id="medError" style="display:none;">Please select at least one option</div>
+        </div>
+
+        <div class="form-field">
+          <label>Any other medical conditions?</label>
+          <input type="text" name="cf_other_conditions" placeholder="List any others"/>
+        </div>
+
+        <div class="form-field">
+          <label>Medications taken regularly</label>
+          <input type="text" name="cf_medications" placeholder="List medications"/>
+        </div>
+
+        <div class="form-field" id="cf-allergies">
+          <label>Do you have any allergies? <span class="req">*</span></label>
+          <div style="display:flex;gap:12px;margin-top:4px;">
+            <label class="cm-opt" data-group="allergy" data-val="yes" style="flex:1;"><input type="radio" name="cf_allergies" value="yes"/> Yes</label>
+            <label class="cm-opt" data-group="allergy" data-val="no" style="flex:1;"><input type="radio" name="cf_allergies" value="no"/> No</label>
+          </div>
+          <div class="field-error" id="allergyError" style="display:none;">Required</div>
+        </div>
+        <div class="form-field" id="allergyDetails" style="display:none;">
+          <label>If yes, please give details</label>
+          <input type="text" name="cf_allergy_details" placeholder="Describe allergies"/>
+        </div>
+
+        <div class="form-field" id="cf-surgery">
+          <label>Surgery in the past year? <span class="req">*</span></label>
+          <div style="display:flex;gap:12px;margin-top:4px;">
+            <label class="cm-opt" data-group="surgery" data-val="yes" style="flex:1;"><input type="radio" name="cf_surgery" value="yes"/> Yes</label>
+            <label class="cm-opt" data-group="surgery" data-val="no" style="flex:1;"><input type="radio" name="cf_surgery" value="no"/> No</label>
+          </div>
+          <div class="field-error" id="surgeryError" style="display:none;">Required</div>
+        </div>
+        <div class="form-field" id="surgeryDetails" style="display:none;">
+          <label>If yes, please specify</label>
+          <input type="text" name="cf_surgery_details" placeholder="Describe surgery"/>
+        </div>
+
+        <div class="form-field" id="cf-reaction">
+          <label>Previous reaction to tattoo or piercing? <span class="req">*</span></label>
+          <div style="display:flex;gap:12px;margin-top:4px;">
+            <label class="cm-opt" data-group="reaction" data-val="yes" style="flex:1;"><input type="radio" name="cf_reaction" value="yes"/> Yes</label>
+            <label class="cm-opt" data-group="reaction" data-val="no" style="flex:1;"><input type="radio" name="cf_reaction" value="no"/> No</label>
+          </div>
+          <div class="field-error" id="reactionError" style="display:none;">Required</div>
+        </div>
+        <div class="form-field" id="reactionDetails" style="display:none;">
+          <label>If yes, please specify</label>
+          <input type="text" name="cf_reaction_details" placeholder="Describe reaction"/>
+        </div>
+
+        <div class="section-divider"></div>
+        <p class="lab-label" style="margin-bottom:14px;">ID &amp; Signature</p>
+
+        <div class="form-field" id="cf-id">
+          <label>Upload photo ID <span class="req">*</span></label>
+          <div class="file-upload-wrap">
+            <input type="file" id="idUpload" name="cf_id" accept="image/*,.pdf"/>
+            <p class="fu-label"><span>Click to upload</span> your ID</p>
+            <p class="fu-hint">Passport or driving licence — PNG, JPG, PDF</p>
+          </div>
+          <div id="idFileName"></div>
+          <div class="field-error" id="idError" style="display:none;">ID is required</div>
+        </div>
+
+        <div class="form-field" id="cf-sig">
+          <label>Client signature <span class="req">*</span></label>
+          <div style="border:1px solid rgba(139,92,246,0.25);border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.02);">
+            <canvas id="sigCanvas" width="600" height="140" style="width:100%;height:140px;cursor:crosshair;touch-action:none;display:block;"></canvas>
+          </div>
+          <div style="display:flex;justify-content:flex-end;margin-top:6px;">
+            <button type="button" id="clearSig" style="background:none;border:none;color:rgba(139,92,246,0.5);font-size:12px;font-family:'Space Mono',monospace;cursor:pointer;letter-spacing:0.06em;">Clear signature</button>
+          </div>
+          <div class="field-error" id="sigError" style="display:none;">Signature required</div>
+        </div>
+
+        <div class="form-field" id="cf-sigdate">
+          <label>Date <span class="req">*</span></label>
+          <input type="date" name="cf_sigdate"/>
+          <div class="field-error">Required</div>
+        </div>
+
+        <div id="consentFormError" style="display:none;padding:12px 16px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;font-size:13px;color:rgba(239,68,68,0.9);margin-bottom:16px;font-family:'Space Mono',monospace;">
+          Please complete all required fields and confirm all declarations above.
+        </div>
+
+        <input type="hidden" name="cf_signature" id="sigData"/>
+        <button type="submit" class="submit-btn">Submit Consent Form</button>
+      </form>
+
+      <!-- Artist counter-sign step -->
+      <div class="artist-step-card" id="artistSignStep">
+        <p class="lab-label" style="margin-bottom:16px;">Step 2 of 2 // Artist Counter-Signature</p>
+        <div class="artist-step-icon">
+          <svg width="28" height="28" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3 style="font-size:22px;font-weight:800;margin-bottom:6px;letter-spacing:-0.02em;">Pass the device to</h3>
+        <div class="artist-step-name" id="artistNameDisplay"></div>
+        <p style="font-size:13px;color:var(--text-dim);font-family:'Space Mono',monospace;">Please review and counter-sign below</p>
+        <div class="artist-recap" id="clientSummary"></div>
+        <div class="form-field" style="text-align:left;">
+          <label>Artist signature <span class="req">*</span></label>
+          <div style="border:1px solid rgba(139,92,246,0.25);border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.02);">
+            <canvas id="artistSigCanvas" width="600" height="140" style="width:100%;height:140px;cursor:crosshair;touch-action:none;display:block;"></canvas>
+          </div>
+          <div style="display:flex;justify-content:flex-end;margin-top:6px;">
+            <button type="button" id="clearArtistSig" style="background:none;border:none;color:rgba(139,92,246,0.5);font-size:12px;font-family:'Space Mono',monospace;cursor:pointer;letter-spacing:0.06em;">Clear signature</button>
+          </div>
+          <div class="field-error" id="artistSigError" style="display:none;">Artist signature required</div>
+        </div>
+        <div id="artistStepError" style="display:none;padding:12px 16px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;font-size:13px;color:rgba(239,68,68,0.9);margin-bottom:16px;font-family:'Space Mono',monospace;">
+          Artist signature is required to complete the form.
+        </div>
+        <button type="button" id="completeSubmitBtn" class="submit-btn">Complete &amp; Submit Form</button>
+      </div>
+
+      <div class="success-state" id="consentSuccess">
+        <div class="s-icon"><svg width="32" height="32" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <h3>Consent form submitted.</h3>
+        <p>Thank you — we have everything we need. See you at your appointment!</p>
+        <a href="/" class="btn-ghost" style="margin-top:28px;display:inline-flex;">← Back to home</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>TattLabStudios</h4>
+      <p>171 Chase Side<br/>Enfield EN2 0PT</p>
+      <a href="https://instagram.com/tattlabstudios" target="_blank">@tattlabstudios</a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="/">Home</a>
+      <a href="/contact">Book Now</a>
+      <a href="/finance">Finance</a>
+      <a href="/where-are-we">Find Us</a>
+      <a href="/consent">Consent Form</a>
+      <a href="/blog">Blog</a>
+      </div>
+    <div class="footer-col">
+      <h4>Areas We Serve</h4>
+      <a href="/tattoo-studio-north-london">North London</a>
+      <a href="/tattoo-studio-edmonton">Edmonton</a>
+      <a href="/tattoo-studio-barnet">Barnet</a>
+      <a href="/tattoo-studio-palmers-green">Palmers Green</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span><span class="f-accent">TattLabStudios</span> &nbsp;·&nbsp; Where Science Meets Ink</span>
+    <span style="opacity:0.4;">© 2026 TattLabStudios. All rights reserved.</span>
+  </div>
+</footer>
+
+  <script>
+    // Yes/No radio toggles
+    document.querySelectorAll('.cm-opt[data-group]').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const radio = opt.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+        const g = opt.dataset.group;
+        document.querySelectorAll('.cm-opt[data-group="' + g + '"]').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        if (g === 'allergy')  document.getElementById('allergyDetails').style.display  = opt.dataset.val === 'yes' ? 'block' : 'none';
+        if (g === 'surgery')  document.getElementById('surgeryDetails').style.display  = opt.dataset.val === 'yes' ? 'block' : 'none';
+        if (g === 'reaction') document.getElementById('reactionDetails').style.display = opt.dataset.val === 'yes' ? 'block' : 'none';
+      });
+    });
+
+    // None of the above clears other checkboxes
+    document.getElementById('noneCheck').querySelector('input').addEventListener('change', function() {
+      if (this.checked) {
+        document.querySelectorAll('#medConditions input[type="checkbox"]:not(#noneCheck input)').forEach(cb => cb.checked = false);
+      }
+    });
+    document.querySelectorAll('#medConditions input[type="checkbox"]:not(#noneCheck input)').forEach(cb => {
+      cb.addEventListener('change', function() {
+        if (this.checked) document.getElementById('noneCheck').querySelector('input').checked = false;
+      });
+    });
+
+    // ID upload label
+    document.getElementById('idUpload').addEventListener('change', function() {
+      document.getElementById('idFileName').textContent = this.files[0] ? '◈ ' + this.files[0].name : '';
+    });
+
+    // Signature canvas
+    (function() {
+      const canvas = document.getElementById('sigCanvas');
+      const ctx = canvas.getContext('2d');
+      let drawing = false, hasSig = false;
+      function getPos(e) {
+        const r = canvas.getBoundingClientRect();
+        const src = e.touches ? e.touches[0] : e;
+        return { x: (src.clientX - r.left) * (canvas.width / r.width), y: (src.clientY - r.top) * (canvas.height / r.height) };
+      }
+      ctx.strokeStyle = '#a78bfa'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      canvas.addEventListener('mousedown',  e => { drawing = true; hasSig = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); canvas.classList.add('active'); });
+      canvas.addEventListener('mousemove',  e => { if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+      canvas.addEventListener('mouseup',    () => { drawing = false; canvas.classList.remove('active'); });
+      canvas.addEventListener('mouseleave', () => { drawing = false; canvas.classList.remove('active'); });
+      canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; hasSig = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }, { passive: false });
+      canvas.addEventListener('touchmove',  e => { e.preventDefault(); if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }, { passive: false });
+      canvas.addEventListener('touchend',   () => { drawing = false; });
+      document.getElementById('clearSig').addEventListener('click', () => { ctx.clearRect(0, 0, canvas.width, canvas.height); hasSig = false; });
+      window._sigHasSig = () => hasSig;
+    })();
+
+    // Artist counter-signature canvas
+    (function() {
+      const canvas = document.getElementById('artistSigCanvas');
+      const ctx = canvas.getContext('2d');
+      let drawing = false, hasSig = false;
+      function getPos(e) {
+        const r = canvas.getBoundingClientRect();
+        const src = e.touches ? e.touches[0] : e;
+        return { x: (src.clientX - r.left) * (canvas.width / r.width), y: (src.clientY - r.top) * (canvas.height / r.height) };
+      }
+      ctx.strokeStyle = '#a78bfa'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      canvas.addEventListener('mousedown',  e => { drawing = true; hasSig = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); canvas.classList.add('active'); });
+      canvas.addEventListener('mousemove',  e => { if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+      canvas.addEventListener('mouseup',    () => { drawing = false; canvas.classList.remove('active'); });
+      canvas.addEventListener('mouseleave', () => { drawing = false; canvas.classList.remove('active'); });
+      canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; hasSig = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }, { passive: false });
+      canvas.addEventListener('touchmove',  e => { e.preventDefault(); if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }, { passive: false });
+      canvas.addEventListener('touchend',   () => { drawing = false; });
+      document.getElementById('clearArtistSig').addEventListener('click', () => { ctx.clearRect(0, 0, canvas.width, canvas.height); hasSig = false; });
+      window._artistSigHasSig = () => hasSig;
+    })();
+
+    // Complete & Submit button
+    document.getElementById('completeSubmitBtn').addEventListener('click', function() {
+      const artistHasSig = window._artistSigHasSig && window._artistSigHasSig();
+      document.getElementById('artistSigError').style.display = artistHasSig ? 'none' : 'block';
+      document.getElementById('artistStepError').style.display = artistHasSig ? 'none' : 'block';
+      if (!artistHasSig) return;
+
+      window._pendingFD.append('cf_artist_signature', document.getElementById('artistSigCanvas').toDataURL('image/png'));
+
+      this.textContent = 'Submitting...';
+      this.disabled = true;
+
+      fetch('/submit-consent', { method: 'POST', body: window._pendingFD })
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(() => {
+          document.getElementById('artistSignStep').style.display = 'none';
+          document.getElementById('consentSuccess').style.display = 'block';
+        })
+        .catch(() => {
+          this.textContent = 'Complete & Submit Form';
+          this.disabled = false;
+          alert('Something went wrong — please try again.');
+        });
+    });
+
+    // Form submit
+    document.getElementById('consentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let valid = true;
+
+      const decls = document.querySelectorAll('.decl-cb');
+      let allTicked = true;
+      decls.forEach(cb => { if (!cb.checked) { allTicked = false; cb.closest('.decl-item').classList.add('error-decl'); } else cb.closest('.decl-item').classList.remove('error-decl'); });
+      if (!allTicked) valid = false;
+
+      const reqFields = [
+        { id: 'cf-fname', name: 'cf_fname' }, { id: 'cf-lname', name: 'cf_lname' },
+        { id: 'cf-dob', name: 'cf_dob' }, { id: 'cf-phone', name: 'cf_phone' },
+        { id: 'cf-addr', name: 'cf_addr' }, { id: 'cf-email', name: 'cf_email' },
+        { id: 'cf-apptdate', name: 'cf_apptdate' }, { id: 'cf-price', name: 'cf_price' },
+        { id: 'cf-desc', name: 'cf_desc' }, { id: 'cf-placement', name: 'cf_placement' },
+        { id: 'cf-artist', name: 'cf_artist' }, { id: 'cf-sigdate', name: 'cf_sigdate' },
+      ];
+      reqFields.forEach(f => document.getElementById(f.id).classList.remove('error'));
+      reqFields.forEach(f => {
+        const el = this.querySelector('[name="' + f.name + '"]');
+        if (!el || !el.value.trim()) { document.getElementById(f.id).classList.add('error'); valid = false; }
+      });
+
+      const medChecked = document.querySelectorAll('#medConditions input[type="checkbox"]:checked').length > 0;
+      document.getElementById('medError').style.display = medChecked ? 'none' : 'block';
+      if (!medChecked) valid = false;
+
+      [['cf_allergies','allergyError'],['cf_surgery','surgeryError'],['cf_reaction','reactionError']].forEach(([name, errId]) => {
+        const checked = this.querySelector('[name="' + name + '"]:checked');
+        document.getElementById(errId).style.display = checked ? 'none' : 'block';
+        if (!checked) valid = false;
+      });
+
+      const idFile = document.getElementById('idUpload').files[0];
+      document.getElementById('idError').style.display = idFile ? 'none' : 'block';
+      if (!idFile) valid = false;
+
+      const sigOk = window._sigHasSig && window._sigHasSig();
+      document.getElementById('sigError').style.display = sigOk ? 'none' : 'block';
+      if (!sigOk) valid = false;
+
+      document.getElementById('consentFormError').style.display = valid ? 'none' : 'block';
+      if (!valid) return;
+
+      // Capture client signature and snapshot the FormData before hiding the form
+      document.getElementById('sigData').value = document.getElementById('sigCanvas').toDataURL('image/png');
+      window._pendingFD = new FormData(this);
+
+      const artistName = this.querySelector('[name="cf_artist"]').value;
+      const clientName = (this.querySelector('[name="cf_fname"]').value + ' ' + this.querySelector('[name="cf_lname"]').value).trim();
+      const apptDate   = this.querySelector('[name="cf_apptdate"]').value;
+      const placement  = this.querySelector('[name="cf_placement"]').value;
+      const price      = this.querySelector('[name="cf_price"]').value;
+
+      document.getElementById('artistNameDisplay').textContent = artistName;
+      document.getElementById('clientSummary').innerHTML =
+        '<strong style="color:var(--text)">Client:</strong> ' + clientName + '<br>' +
+        '<strong style="color:var(--text)">Appointment:</strong> ' + apptDate + '<br>' +
+        '<strong style="color:var(--text)">Placement:</strong> ' + placement + ' &mdash; ' + price;
+
+      this.style.display = 'none';
+      document.getElementById('declarationsWrap').closest('div').style.display = 'none';
+      document.getElementById('artistSignStep').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

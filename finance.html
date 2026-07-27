@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TattLabStudios — Finance Options</title>
+  <title>Tattoo Finance & Payment Plans | TattLabStudios Enfield</title>
+  <meta name="description" content="Spread the cost of your tattoo with 0% finance at TattLabStudios, Enfield. Klarna also available. Don't let budget hold back your dream tattoo — apply online today."/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://www.tattlabstudios.co.uk/finance"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Tattoo Finance & Payment Plans | TattLabStudios Enfield"/>
+  <meta property="og:description" content="0% finance and Klarna available at TattLabStudios Enfield. Spread the cost of your tattoo — apply online today."/>
+  <meta property="og:url" content="https://www.tattlabstudios.co.uk/finance"/>
+  <meta property="og:image" content="https://www.tattlabstudios.co.uk/assets/logo.png"/>
   <link rel="icon" type="image/png" href="assets/favicon-32.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
@@ -367,10 +375,11 @@
   <div class="bg-grid"></div>
 
   <nav class="pill-nav">
-    <div class="logo-pill"><img src="assets/logo.png" alt="TattLab"/></div>
+    <a href="/" class="logo-pill"><img src="assets/logo.png" alt="TattLab"/></a>
     <a href="/">Home</a>
     <a href="/where-are-we">Find Us</a>
     <a href="/finance" class="active">Finance</a>
+    <a href="/consent">Consent</a>
     <a href="/contact" class="book-btn">Book Now</a>
   </nav>
 
@@ -407,6 +416,39 @@
           <li><span class="dot"></span>Secure and fully managed by Klarna</li>
           <li><span class="dot"></span>No hidden fees</li>
         </ul>
+
+        <button type="button" id="klarnaToggle" onclick="toggleKlarna()" style="margin-top:20px;width:100%;padding:12px 16px;background:linear-gradient(135deg,rgba(255,182,213,0.15),rgba(255,105,180,0.1));border:1px solid rgba(255,105,180,0.35);border-radius:10px;color:#f9a8d4;font-size:13px;font-weight:600;cursor:pointer;letter-spacing:0.04em;display:flex;align-items:center;justify-content:space-between;transition:all 0.2s;">
+          <span>Request Klarna Payment Link</span>
+          <svg id="klarnaChevron" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="transition:transform 0.2s;"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+
+        <div id="klarnaForm" style="display:none;margin-top:12px;padding:20px;background:rgba(255,105,180,0.04);border:1px solid rgba(255,105,180,0.15);border-radius:10px;">
+          <p style="font-size:12px;color:var(--text-dim);margin-bottom:16px;font-family:'Space Mono',monospace;letter-spacing:0.04em;">Leave your details and we'll send you a Klarna payment link directly.</p>
+          <form id="klarnaRequestForm" novalidate>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+              <div class="form-field" id="kf-fname" style="margin-bottom:0;">
+                <label>First name <span class="req">*</span></label>
+                <input type="text" name="kfname" placeholder="First name"/>
+                <div class="field-error">Required</div>
+              </div>
+              <div class="form-field" id="kf-lname" style="margin-bottom:0;">
+                <label>Last name <span class="req">*</span></label>
+                <input type="text" name="klname" placeholder="Last name"/>
+                <div class="field-error">Required</div>
+              </div>
+            </div>
+            <div class="form-field" id="kf-phone" style="margin-bottom:16px;">
+              <label>Contact number <span class="req">*</span></label>
+              <input type="tel" name="kphone" placeholder="+44 7700 000000"/>
+              <div class="field-error">Required</div>
+            </div>
+            <button type="submit" id="klarnaSubmitBtn" style="width:100%;padding:11px;background:linear-gradient(135deg,rgba(255,105,180,0.5),rgba(219,39,119,0.4));border:1px solid rgba(255,105,180,0.4);border-radius:8px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;letter-spacing:0.04em;transition:all 0.2s;">Send Request</button>
+          </form>
+          <div id="klarnaSuccess" style="display:none;text-align:center;padding:16px 0;">
+            <svg width="28" height="28" fill="none" stroke="#f9a8d4" stroke-width="1.8" viewBox="0 0 24 24" style="margin-bottom:8px;"><polyline points="20 6 9 17 4 12"/></svg>
+            <p style="font-size:13px;color:var(--text-dim);">Got it — we'll send your Klarna link shortly.</p>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -586,12 +628,66 @@
   </div>
 
   <footer>
-    <p><span class="f-accent">TattLabStudios</span> &nbsp;·&nbsp; 171 Chase Side, Enfield EN2 0PT &nbsp;·&nbsp; <a href="https://instagram.com/tattlabstudios" target="_blank" style="color:rgba(139,92,246,0.7);text-decoration:none;">@tattlabstudios</a></p>
-    <p style="margin-top:6px;opacity:0.5;">Where Science Meets Ink</p>
-    <p style="margin-top: 8px; font-size: 11px; opacity: 0.4;">© 2026 TattLabStudios. All rights reserved.</p>
-  </footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>TattLabStudios</h4>
+      <p>171 Chase Side<br/>Enfield EN2 0PT</p>
+      <a href="https://instagram.com/tattlabstudios" target="_blank">@tattlabstudios</a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="/">Home</a>
+      <a href="/contact">Book Now</a>
+      <a href="/finance">Finance</a>
+      <a href="/where-are-we">Find Us</a>
+      <a href="/consent">Consent Form</a>
+      <a href="/blog">Blog</a>
+      </div>
+    <div class="footer-col">
+      <h4>Areas We Serve</h4>
+      <a href="/tattoo-studio-north-london">North London</a>
+      <a href="/tattoo-studio-edmonton">Edmonton</a>
+      <a href="/tattoo-studio-barnet">Barnet</a>
+      <a href="/tattoo-studio-palmers-green">Palmers Green</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span><span class="f-accent">TattLabStudios</span> &nbsp;·&nbsp; Where Science Meets Ink</span>
+    <span style="opacity:0.4;">© 2026 TattLabStudios. All rights reserved.</span>
+  </div>
+</footer>
 
   <script>
+    // Klarna dropdown toggle
+    function toggleKlarna() {
+      const form = document.getElementById('klarnaForm');
+      const chevron = document.getElementById('klarnaChevron');
+      const open = form.style.display === 'block';
+      form.style.display = open ? 'none' : 'block';
+      chevron.style.transform = open ? '' : 'rotate(180deg)';
+    }
+
+    // Klarna form submit
+    document.getElementById('klarnaRequestForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let valid = true;
+      [['kf-fname','kfname'],['kf-lname','klname'],['kf-phone','kphone']].forEach(([id, name]) => {
+        const el = this.querySelector('[name="' + name + '"]');
+        document.getElementById(id).classList.toggle('error', !el.value.trim());
+        if (!el.value.trim()) valid = false;
+      });
+      if (!valid) return;
+      const btn = document.getElementById('klarnaSubmitBtn');
+      btn.textContent = 'Sending...'; btn.disabled = true;
+      fetch('/submit-klarna', { method: 'POST', body: new FormData(this) })
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(() => {
+          document.getElementById('klarnaRequestForm').style.display = 'none';
+          document.getElementById('klarnaSuccess').style.display = 'block';
+        })
+        .catch(() => { btn.textContent = 'Send Request'; btn.disabled = false; alert('Something went wrong — please try again.'); });
+    });
+
     // Show/hide previous address block based on tenure selection
     document.querySelector('[name="lived_here"]').addEventListener('change', function() {
       const short = ['under6m','6m-1y','1-2y','2-3y'].includes(this.value);
@@ -637,10 +733,17 @@
       btn.textContent = 'Submitting...';
       btn.disabled = true;
 
-      setTimeout(() => {
-        document.getElementById('financeForm').style.display = 'none';
-        document.getElementById('finSuccessState').style.display = 'block';
-      }, 900);
+      fetch('/submit-finance', { method: 'POST', body: new FormData(this) })
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(() => {
+          document.getElementById('financeForm').style.display = 'none';
+          document.getElementById('finSuccessState').style.display = 'block';
+        })
+        .catch(() => {
+          btn.textContent = 'Submit Application';
+          btn.disabled = false;
+          alert('Something went wrong — please try again.');
+        });
     });
   </script>
 </body>
