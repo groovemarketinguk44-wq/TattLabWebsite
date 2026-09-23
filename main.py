@@ -34,6 +34,31 @@ NOTIFY_EMAIL_BOOKING  = os.environ.get("NOTIFY_EMAIL_BOOKING", "tattlabstudios@g
 NOTIFY_EMAIL_CONSENT  = os.environ.get("NOTIFY_EMAIL_CONSENT", "tlsconsent@gmail.com")
 NOTIFY_EMAIL_FINANCE  = os.environ.get("NOTIFY_EMAIL_FINANCE",  "tlsfinanceform@gmail.com")
 
+# ── Booking app consent intake (best-effort, never blocks the form) ──────────
+BOOKING_APP_URL     = os.environ.get("BOOKING_APP_URL", "https://tattlabstudios.fly.dev")
+CONSENT_INTAKE_KEY  = os.environ.get("CONSENT_INTAKE_KEY", "")
+
+
+def send_consent_intake(fields: dict, id_bytes: bytes | None, id_name: str | None):
+    """Mirror this consent submission into the booking app's Customers dashboard.
+    Best-effort only — the PDF email above is the source of truth and must never
+    be affected by this failing or timing out."""
+    if not CONSENT_INTAKE_KEY:
+        return
+    try:
+        files = {}
+        if id_bytes and id_name:
+            files["id_photo"] = (id_name, id_bytes)
+        httpx.post(
+            f"{BOOKING_APP_URL}/api/public/consent-intake",
+            data=fields,
+            files=files or None,
+            headers={"X-Intake-Key": CONSENT_INTAKE_KEY},
+            timeout=15,
+        )
+    except Exception as e:
+        print(f"Consent intake mirror failed: {e}", flush=True)
+
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -457,6 +482,22 @@ async def submit_consent(
 
     background_tasks.add_task(send_email, NOTIFY_EMAIL_CONSENT, f"Consent Form: {name}", wa_body, attachments)
     background_tasks.add_task(send_sms, wa_body)
+    background_tasks.add_task(
+        send_consent_intake,
+        {
+            "fname": cf_fname, "lname": cf_lname, "dob": cf_dob, "phone": cf_phone,
+            "address": cf_addr, "email": cf_email,
+            "appointment_date": cf_apptdate, "price_agreed": cf_price,
+            "tattoo_description": cf_desc, "placement": cf_placement, "artist_name": cf_artist,
+            "medical_conditions": med,
+            "other_conditions": cf_other_conditions, "medications": cf_medications,
+            "allergies": cf_allergies, "allergy_details": cf_allergy_details,
+            "surgery": cf_surgery, "surgery_detail": cf_surgery_details,
+            "reaction": cf_reaction, "reaction_detail": cf_reaction_details,
+            "signature_data": cf_signature,
+        },
+        id_bytes, id_name,
+    )
 
     return {"status": "ok"}
 
