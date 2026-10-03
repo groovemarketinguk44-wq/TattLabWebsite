@@ -1,4 +1,3 @@
-import base64
 import io
 import os
 import smtplib
@@ -14,7 +13,7 @@ from PIL import Image as PILImage
 
 import httpx
 from fastapi import BackgroundTasks, FastAPI, File, Form, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fpdf import FPDF
 
@@ -31,36 +30,8 @@ GMAIL_USER            = os.environ.get("GMAIL_USER",           "")
 GMAIL_PASSWORD        = os.environ.get("GMAIL_APP_PASSWORD",   "")
 NOTIFY_EMAIL          = os.environ.get("NOTIFY_EMAIL",         GMAIL_USER)
 NOTIFY_EMAIL_BOOKING  = os.environ.get("NOTIFY_EMAIL_BOOKING", "tattlabstudios@gmail.com")
-NOTIFY_EMAIL_CONSENT  = os.environ.get("NOTIFY_EMAIL_CONSENT", "tlsconsent@gmail.com")
 NOTIFY_EMAIL_FINANCE  = os.environ.get("NOTIFY_EMAIL_FINANCE",  "tlsfinanceform@gmail.com")
 
-# ── Booking app consent intake (best-effort, never blocks the form) ──────────
-BOOKING_APP_URL     = os.environ.get("BOOKING_APP_URL", "https://tattlabstudios.fly.dev")
-CONSENT_INTAKE_KEY  = os.environ.get("CONSENT_INTAKE_KEY", "")
-
-
-def send_consent_intake(fields: dict, id_bytes: bytes | None, id_name: str | None):
-    """Mirror this consent submission into the booking app's Customers dashboard.
-    Best-effort only — the PDF email above is the source of truth and must never
-    be affected by this failing or timing out."""
-    if not CONSENT_INTAKE_KEY:
-        return
-    try:
-        files = {}
-        if id_bytes and id_name:
-            files["id_photo"] = (id_name, id_bytes)
-        httpx.post(
-            f"{BOOKING_APP_URL}/api/public/consent-intake",
-            data=fields,
-            files=files or None,
-            headers={"X-Intake-Key": CONSENT_INTAKE_KEY},
-            timeout=15,
-        )
-    except Exception as e:
-        print(f"Consent intake mirror failed: {e}", flush=True)
-
-
-# ── Helpers ───────────────────────────────────────────────────────────────────
 
 def send_email(to: str, subject: str, body: str, attachments: list[tuple[str, bytes]] | None = None):
     msg = MIMEMultipart()
@@ -173,29 +144,6 @@ class TattLabPDF(FPDF):
         self._box(108, y, 92, h, label2, val2)
         self.set_y(y + h + 2)
 
-    def sig_block(self, title: str, sig_bytes: bytes | None, date_str: str, name: str = ""):
-        self._ensure_space(90)  # keep the whole block together on one page
-        self._sec(title)
-        if name:
-            self.fld("Name", name)
-        y = self.get_y()
-        sig_h = 46
-        self.set_fill_color(*self._FLD_B)
-        self.set_draw_color(*self._FLD_E)
-        self.set_line_width(0.2)
-        self.rect(10, y, 190, sig_h, style="FD")
-        self.set_xy(12, y + 2)
-        self.set_font("Helvetica", "", 6.5)
-        self.set_text_color(*self._LBL)
-        self.cell(0, 3.5, "SIGNATURE")
-        if sig_bytes:
-            try:
-                self.image(io.BytesIO(sig_bytes), x=14, y=y + 7, w=110)
-            except Exception:
-                pass
-        self.set_y(y + sig_h + 2)
-        self.fld("Date", date_str)
-
     def embed_image(self, title: str, img_bytes: bytes, img_name: str):
         ext = img_name.rsplit(".", 1)[-1].lower() if img_name else ""
         if ext not in ("jpg", "jpeg", "png"):
@@ -283,75 +231,6 @@ def build_booking_pdf(d: dict, design_bytes: bytes | None, design_name: str | No
     return bytes(pdf.output())
 
 
-def build_consent_pdf(
-    d: dict,
-    sig_bytes: bytes | None,
-    id_name: str | None,
-    artist_sig_bytes: bytes | None = None,
-    id_bytes: bytes | None = None,
-) -> bytes:
-    pdf = TattLabPDF()
-    pdf.set_auto_page_break(False)
-    pdf.add_page()
-
-    pdf.set_font("Helvetica", "B", 14)
-    pdf.set_text_color(20, 10, 40)
-    pdf.cell(130, 8, "Client Consent Form")
-    pdf.set_font("Helvetica", "", 8)
-    pdf.set_text_color(130, 110, 160)
-    pdf.cell(60, 8, f"Submitted: {datetime.now().strftime('%d %b %Y  %H:%M')}", align="R", new_x="LMARGIN", new_y="NEXT")
-    pdf.ln(2)
-
-    pdf._sec("Client Details")
-    pdf.fld2("First Name", d["cf_fname"], "Last Name", d["cf_lname"])
-    pdf.fld2("Date of Birth", d["cf_dob"], "Phone", d["cf_phone"])
-    pdf.fld("Email", d["cf_email"])
-    pdf.fld("Address", d["cf_addr"], h=15)
-
-    pdf._sec("Appointment Details")
-    pdf.fld2("Appointment Date", d["cf_apptdate"], "Price Agreed", d["cf_price"])
-    pdf.fld2("Description of Tattoo", d["cf_desc"], "Placement", d["cf_placement"])
-    pdf.fld("Artist", d["cf_artist"] or "-")
-
-    pdf._sec("Medical Information")
-    conditions = d["med"] if isinstance(d["med"], list) else [d["med"]]
-    cond_str = ", ".join(c for c in conditions if c) or "None declared"
-    pdf.fld("Medical Conditions", cond_str)
-    if d.get("cf_other_conditions"):
-        pdf.fld("Other Conditions", d["cf_other_conditions"])
-    if d.get("cf_medications"):
-        pdf.fld("Medications", d["cf_medications"])
-    pdf.fld2("Allergies", d["cf_allergies"].capitalize(), "Allergy Details", d.get("cf_allergy_details") or "-")
-    pdf.fld2("Surgery (past year)", d["cf_surgery"].capitalize(), "Surgery Details", d.get("cf_surgery_details") or "-")
-    pdf.fld2("Previous Reaction", d["cf_reaction"].capitalize(), "Reaction Details", d.get("cf_reaction_details") or "-")
-
-    pdf._sec("Declarations")
-    y = pdf.get_y()
-    pdf.set_fill_color(*TattLabPDF._FLD_B)
-    pdf.set_draw_color(*TattLabPDF._FLD_E)
-    pdf.set_line_width(0.2)
-    pdf.rect(10, y, 190, 12, style="FD")
-    pdf.set_xy(12.5, y + 2.5)
-    pdf.set_font("Helvetica", "", 6.5)
-    pdf.set_text_color(*TattLabPDF._LBL)
-    pdf.cell(0, 3.5, "STATUS")
-    pdf.set_xy(12.5, y + 7)
-    pdf.set_font("Helvetica", "B", 9)
-    pdf.set_text_color(*TattLabPDF._VAL)
-    pdf.cell(0, 4, f"All declarations confirmed by client on {d['cf_sigdate']}")
-    pdf.set_y(y + 14)
-
-    if id_bytes and id_name:
-        pdf.embed_image("Photo ID", id_bytes, id_name)
-    elif id_name:
-        pdf.fld("Photo ID", id_name)
-
-    pdf.sig_block("Client Signature", sig_bytes, d["cf_sigdate"])
-    pdf.sig_block("Artist Counter-Signature", artist_sig_bytes, d["cf_sigdate"], name=d.get("cf_artist") or "")
-
-    return bytes(pdf.output())
-
-
 # ── Endpoints ─────────────────────────────────────────────────────────────────
 
 @app.post("/submit")
@@ -408,95 +287,6 @@ async def submit_booking(
         f"Booking Enquiry: {name}",
         wa_body,
         attachments,
-    )
-
-    return {"status": "ok"}
-
-
-@app.post("/submit-consent")
-async def submit_consent(
-    background_tasks:    BackgroundTasks,
-    cf_fname:            str       = Form(...),
-    cf_lname:            str       = Form(...),
-    cf_dob:              str       = Form(...),
-    cf_phone:            str       = Form(...),
-    cf_addr:             str       = Form(...),
-    cf_email:            str       = Form(...),
-    cf_apptdate:         str       = Form(...),
-    cf_price:            str       = Form(...),
-    cf_desc:             str       = Form(...),
-    cf_placement:        str       = Form(...),
-    cf_artist:           str       = Form(""),
-    med:                 List[str] = Form([]),
-    cf_other_conditions: str       = Form(""),
-    cf_medications:      str       = Form(""),
-    cf_allergies:        str       = Form(...),
-    cf_allergy_details:  str       = Form(""),
-    cf_surgery:          str       = Form(...),
-    cf_surgery_details:  str       = Form(""),
-    cf_reaction:         str       = Form(...),
-    cf_reaction_details: str       = Form(""),
-    cf_sigdate:          str       = Form(...),
-    cf_signature:         str       = Form(""),  # base64 PNG from client canvas
-    cf_artist_signature:  str       = Form(""),  # base64 PNG from artist counter-sign canvas
-    cf_id: Optional[UploadFile] = File(None),
-):
-    name = f"{cf_fname} {cf_lname}".strip()
-    wa_body = f"📋 CONSENT FORM — {name}\nAppt: {cf_apptdate} | {cf_placement}"
-
-    sig_bytes = None
-    if cf_signature and "," in cf_signature:
-        try:
-            sig_bytes = base64.b64decode(cf_signature.split(",", 1)[1])
-        except Exception:
-            pass
-
-    artist_sig_bytes = None
-    if cf_artist_signature and "," in cf_artist_signature:
-        try:
-            artist_sig_bytes = base64.b64decode(cf_artist_signature.split(",", 1)[1])
-        except Exception:
-            pass
-
-    id_bytes, id_name = None, None
-    if cf_id and cf_id.filename:
-        id_bytes = await cf_id.read()
-        id_name  = cf_id.filename
-
-    pdf_bytes = build_consent_pdf({
-        "cf_fname": cf_fname, "cf_lname": cf_lname, "cf_dob": cf_dob,
-        "cf_phone": cf_phone, "cf_addr": cf_addr, "cf_email": cf_email,
-        "cf_apptdate": cf_apptdate, "cf_price": cf_price,
-        "cf_desc": cf_desc, "cf_placement": cf_placement, "cf_artist": cf_artist,
-        "med": med,
-        "cf_other_conditions": cf_other_conditions, "cf_medications": cf_medications,
-        "cf_allergies": cf_allergies, "cf_allergy_details": cf_allergy_details,
-        "cf_surgery": cf_surgery, "cf_surgery_details": cf_surgery_details,
-        "cf_reaction": cf_reaction, "cf_reaction_details": cf_reaction_details,
-        "cf_sigdate": cf_sigdate,
-    }, sig_bytes, id_name, artist_sig_bytes, id_bytes)
-
-    attachments = [(f"consent_{name.replace(' ', '_')}.pdf", pdf_bytes)]
-    if id_bytes and id_name:
-        attachments.append((id_name, id_bytes))
-
-    background_tasks.add_task(send_email, NOTIFY_EMAIL_CONSENT, f"Consent Form: {name}", wa_body, attachments)
-    background_tasks.add_task(send_sms, wa_body)
-    background_tasks.add_task(
-        send_consent_intake,
-        {
-            "fname": cf_fname, "lname": cf_lname, "dob": cf_dob, "phone": cf_phone,
-            "address": cf_addr, "email": cf_email,
-            "appointment_date": cf_apptdate, "price_agreed": cf_price,
-            "tattoo_description": cf_desc, "placement": cf_placement, "artist_name": cf_artist,
-            "medical_conditions": med,
-            "other_conditions": cf_other_conditions, "medications": cf_medications,
-            "allergies": cf_allergies, "allergy_details": cf_allergy_details,
-            "surgery": cf_surgery, "surgery_detail": cf_surgery_details,
-            "reaction": cf_reaction, "reaction_detail": cf_reaction_details,
-            "signature_data": cf_signature,
-        },
-        id_bytes, id_name,
     )
 
     return {"status": "ok"}
@@ -564,8 +354,9 @@ def contact(): return FileResponse("contact.html")
 @app.get("/finance")
 def finance(): return FileResponse("finance.html")
 
+# Consent form retired — send old links/bookmarks to the booking page
 @app.get("/consent")
-def consent(): return FileResponse("consent.html")
+def consent(): return RedirectResponse("/contact", status_code=301)
 
 @app.get("/where-are-we")
 def where_are_we(): return FileResponse("where-are-we.html")
