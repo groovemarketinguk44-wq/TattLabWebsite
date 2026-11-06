@@ -19,6 +19,16 @@ from fpdf import FPDF
 
 app = FastAPI()
 
+
+@app.middleware("http")
+async def bare_domain_to_www(request, call_next):
+    # tattlabstudios.co.uk → https://www.tattlabstudios.co.uk in one 301 (keeps path + query)
+    if (request.headers.get("host") or "").split(":")[0] == "tattlabstudios.co.uk":
+        from fastapi.responses import RedirectResponse
+        url = "https://www.tattlabstudios.co.uk" + request.url.path + (("?" + request.url.query) if request.url.query else "")
+        return RedirectResponse(url, status_code=301)
+    return await call_next(request)
+
 # ── Twilio SMS ────────────────────────────────────────────────────────────────
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "")
 TWILIO_AUTH_TOKEN  = os.environ.get("TWILIO_AUTH_TOKEN",  "")
