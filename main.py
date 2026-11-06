@@ -385,6 +385,9 @@ def blog_aftercare(): return FileResponse("blog/tattoo-aftercare-guide.html")
 @app.get("/blog/how-much-does-a-tattoo-cost-in-london")
 def blog_cost(): return FileResponse("blog/how-much-does-a-tattoo-cost-in-london.html")
 
+@app.get("/llms.txt")
+def llms(): return FileResponse("llms.txt", media_type="text/plain; charset=utf-8")
+
 @app.get("/robots.txt")
 def robots(): return FileResponse("robots.txt", media_type="text/plain")
 
