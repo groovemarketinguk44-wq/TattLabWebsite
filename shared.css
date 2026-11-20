@@ -134,11 +134,13 @@ body::after {
 .brand { display: flex; align-items: center; flex-shrink: 0; text-decoration: none; }
 .brand img {
   height: 48px; width: auto;
-  mix-blend-mode: screen;           /* drops the logo's black box */
+  filter: drop-shadow(0 0 10px rgba(167,139,250,0.35)); /* transparent logo with a soft lab glow */
   transition: height 0.4s var(--ease-cine), transform 0.3s;
 }
 .site-header.is-scrolled .brand img { height: 40px; }
-.brand:hover img { transform: rotate(-3deg) scale(1.04); }
+.brand:hover img { transform: rotate(-3deg) scale(1.04); filter: drop-shadow(0 0 14px rgba(232,121,249,0.6)); }
+.brand img { transition: height 0.4s var(--ease-cine), transform 0.3s, filter 0.3s; animation: logoIn 1.2s var(--ease-cine) 0.2s backwards; }
+@keyframes logoIn { from { opacity: 0; filter: blur(8px) drop-shadow(0 0 0 transparent); transform: scale(0.9); } }
 
 .site-nav { display: flex; align-items: center; gap: 6px; margin-left: auto; }
 .site-nav a {
@@ -402,7 +404,7 @@ footer {
   transition: color 0.2s, transform 0.3s var(--ease-cine);
 }
 .footer-col a:hover { color: var(--text); transform: translateX(3px); }
-.footer-logo { height: 64px; width: auto; mix-blend-mode: screen; margin-bottom: 16px; }
+.footer-logo { height: 64px; width: auto; margin-bottom: 16px; }
 
 .footer-bottom {
   max-width: var(--max); margin: 0 auto;
