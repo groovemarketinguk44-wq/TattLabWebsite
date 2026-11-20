@@ -408,4 +408,3 @@ def sitemap(): return FileResponse("sitemap.xml", media_type="application/xml")
 def shared_css(): return FileResponse("shared.css", media_type="text/css")
 
 app.mount("/assets",  StaticFiles(directory="assets"),  name="assets")
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
