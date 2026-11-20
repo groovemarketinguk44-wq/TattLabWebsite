@@ -2,6 +2,7 @@ import io
 import os
 import smtplib
 import ssl
+import time
 from datetime import datetime
 from email import encoders
 from email.mime.base import MIMEBase
@@ -13,7 +14,7 @@ from PIL import Image as PILImage
 
 import httpx
 from fastapi import BackgroundTasks, FastAPI, File, Form, UploadFile
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fpdf import FPDF
 
@@ -403,6 +404,81 @@ def blog_cost(): return FileResponse("blog/how-much-does-a-tattoo-cost-in-london
 
 @app.get("/llms.txt")
 def llms(): return FileResponse("llms.txt", media_type="text/plain; charset=utf-8")
+
+# ── Instagram feed ────────────────────────────────────────────────────────────
+# Latest posts straight from Instagram (Instagram API with Instagram Login).
+# Set the IG_ACCESS_TOKEN secret on Fly (long-lived token, valid 60 days). The app
+# renews it in memory once a day while running; replace the secret every ~50 days
+# to be safe. Without a token the homepage falls back to the Elfsight widget.
+IG_ACCESS_TOKEN = os.environ.get("IG_ACCESS_TOKEN", "").strip()
+_ig_cache = {"at": 0.0, "posts": None}
+_ig_token = {"value": IG_ACCESS_TOKEN, "refreshed_at": 0.0}
+
+
+async def _ig_refresh_token(client):
+    """Extend the long-lived token (Instagram allows this once it is 24h old)."""
+    if time.time() - _ig_token["refreshed_at"] < 86400:
+        return
+    _ig_token["refreshed_at"] = time.time()
+    try:
+        r = await client.get(
+            "https://graph.instagram.com/refresh_access_token",
+            params={"grant_type": "ig_refresh_token", "access_token": _ig_token["value"]},
+        )
+        if r.status_code == 200 and r.json().get("access_token"):
+            _ig_token["value"] = r.json()["access_token"]
+            days = int(r.json().get("expires_in", 0)) // 86400
+            print(f"[instagram] token renewed, valid ~{days} days")
+        else:
+            print(f"[instagram] token renew skipped: {r.status_code} {r.text[:160]}")
+    except Exception as exc:
+        print(f"[instagram] token renew failed: {type(exc).__name__}")
+IG_CACHE_SECONDS = 900
+
+
+@app.get("/api/instagram")
+async def instagram_feed():
+    if not IG_ACCESS_TOKEN:
+        return JSONResponse({"configured": False, "posts": []}, headers={"Cache-Control": "public, max-age=300"})
+
+    now = time.time()
+    if _ig_cache["posts"] is None or now - _ig_cache["at"] > IG_CACHE_SECONDS:
+        try:
+            async with httpx.AsyncClient(timeout=8) as client:
+                await _ig_refresh_token(client)
+                r = await client.get(
+                    "https://graph.instagram.com/me/media",
+                    params={
+                        "fields": "id,caption,media_type,media_url,thumbnail_url,permalink,timestamp",
+                        "limit": 12,
+                        "access_token": _ig_token["value"],
+                    },
+                )
+            if r.status_code != 200:
+                # don't log the request URL: it contains the token
+                raise RuntimeError(f"Instagram API returned {r.status_code}: {r.text[:200]}")
+            posts = []
+            for m in r.json().get("data", []):
+                image = m.get("thumbnail_url") if m.get("media_type") == "VIDEO" else m.get("media_url")
+                if not image or not m.get("permalink"):
+                    continue
+                posts.append({
+                    "id": m.get("id"),
+                    "type": m.get("media_type"),
+                    "image": image,
+                    "permalink": m["permalink"],
+                    "caption": (m.get("caption") or "")[:220],
+                    "timestamp": m.get("timestamp"),
+                })
+            _ig_cache.update(at=now, posts=posts)
+        except Exception as exc:
+            print(f"[instagram] feed refresh failed: {type(exc).__name__}: {str(exc)[:240]}")
+            if _ig_cache["posts"] is None:
+                return JSONResponse({"configured": True, "error": True, "posts": []}, headers={"Cache-Control": "no-store"})
+            _ig_cache["at"] = now - IG_CACHE_SECONDS + 120   # keep serving the last good copy, retry in 2 min
+
+    return JSONResponse({"configured": True, "posts": _ig_cache["posts"]}, headers={"Cache-Control": "public, max-age=300"})
+
 
 @app.get("/robots.txt")
 def robots(): return FileResponse("robots.txt", media_type="text/plain")

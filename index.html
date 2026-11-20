@@ -224,6 +224,51 @@
       min-height: 320px;
     }
 
+    .insta-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    }
+    .insta-grid a {
+      position: relative; display: block; aspect-ratio: 1; overflow: hidden;
+      border-radius: 14px; background: var(--surface);
+      opacity: 0; transform: translateY(18px) scale(0.97);
+      animation: instaIn 0.9s var(--ease-cine) both; animation-delay: var(--d, 0s);
+    }
+    @keyframes instaIn { to { opacity: 1; transform: none; } }
+    .insta-grid img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.8s var(--ease-cine), filter 0.6s;
+    }
+    .insta-grid a::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(0deg, rgba(7,6,11,0.85), transparent 55%);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .insta-grid a:hover img, .insta-grid a:focus-visible img { transform: scale(1.08); filter: saturate(1.15); }
+    .insta-grid a:hover::after, .insta-grid a:focus-visible::after { opacity: 1; }
+    .insta-grid .cap {
+      position: absolute; left: 12px; right: 12px; bottom: 10px; z-index: 1;
+      font-size: 13px; line-height: 1.4; color: #fff;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+      opacity: 0; transform: translateY(8px); transition: opacity 0.4s, transform 0.5s var(--ease-cine);
+    }
+    .insta-grid a:hover .cap, .insta-grid a:focus-visible .cap { opacity: 1; transform: none; }
+    .insta-grid .reel {
+      position: absolute; top: 10px; right: 10px; z-index: 1;
+      width: 28px; height: 28px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: rgba(7,6,11,0.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      color: #fff; font-size: 11px;
+    }
+    .insta-skel {
+      aspect-ratio: 1; border-radius: 14px;
+      background: linear-gradient(100deg, rgba(255,255,255,0.03) 30%, rgba(167,139,250,0.10) 50%, rgba(255,255,255,0.03) 70%) 0 0 / 300% 100%;
+      animation: skel 1.6s linear infinite;
+    }
+    @keyframes skel { to { background-position: -150% 0; } }
+    .insta-grid.is-fallback { display: block; }
+    @media (max-width: 900px) { .insta-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; } .insta-grid a, .insta-skel { border-radius: 10px; } }
+    @media (max-width: 520px) { .insta-grid { gap: 4px; } .insta-grid .cap { display: none; } }
+
     /* ── Finance feature ── */
     .finance-feature {
       display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center;
@@ -417,9 +462,11 @@
         </div>
 
         <div class="work-frame glass-card" id="instaEmbed" data-reveal="zoom">
-          <!-- Elfsight Instagram Feed -->
-          <script src="https://elfsightcdn.com/platform.js" async></script>
-          <div class="elfsight-app-4c9d3efa-ba83-4e3d-b583-dcfd6adb4060" data-elfsight-app-lazy></div>
+          <!-- Live Instagram grid from /api/instagram; falls back to the Elfsight widget -->
+          <div class="insta-grid" id="instaGrid" aria-busy="true">
+            <span class="insta-skel"></span><span class="insta-skel"></span><span class="insta-skel"></span>
+            <span class="insta-skel"></span><span class="insta-skel"></span><span class="insta-skel"></span>
+          </div>
         </div>
       </div>
     </section>
@@ -553,6 +600,41 @@
     "servesCuisine": null,
     "sameAs": ["https://www.instagram.com/tattlabstudios"]
   }
+  </script>
+  <script>
+    /* Instagram: latest posts from our own API, Elfsight widget as a fallback */
+    (function () {
+      var grid = document.getElementById('instaGrid');
+      if (!grid) return;
+      function fallback() {
+        grid.className = 'insta-grid is-fallback';
+        grid.innerHTML = '<div class="elfsight-app-4c9d3efa-ba83-4e3d-b583-dcfd6adb4060" data-elfsight-app-lazy></div>';
+        var s = document.createElement('script');
+        s.src = 'https://elfsightcdn.com/platform.js'; s.async = true;
+        document.body.appendChild(s);
+        grid.removeAttribute('aria-busy');
+      }
+      function esc(t) { var d = document.createElement('div'); d.textContent = t || ''; return d.innerHTML; }
+      fetch('/api/instagram')
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          var posts = (data && data.posts) || [];
+          if (!posts.length) return fallback();
+          var cols = window.innerWidth <= 900 ? 3 : 4;
+          posts = posts.slice(0, Math.floor(posts.length / cols) * cols || posts.length);
+          grid.innerHTML = posts.map(function (p, i) {
+            var cap = (p.caption || '').split('\n')[0];
+            return '<a href="' + esc(p.permalink) + '" target="_blank" rel="noopener" style="--d:' + (i * 0.05).toFixed(2) + 's"'
+              + ' aria-label="' + esc(cap ? 'Instagram post: ' + cap : 'Open this post on Instagram') + '">'
+              + '<img src="' + esc(p.image) + '" alt="' + esc(cap || 'Tattoo by TattLabStudios') + '" loading="lazy" decoding="async"/>'
+              + (p.type === 'VIDEO' ? '<span class="reel" aria-hidden="true">▶</span>' : '')
+              + (cap ? '<span class="cap">' + esc(cap) + '</span>' : '')
+              + '</a>';
+          }).join('');
+          grid.removeAttribute('aria-busy');
+        })
+        .catch(fallback);
+    })();
   </script>
 </body>
 </html>
