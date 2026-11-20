@@ -22,10 +22,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-  <link rel="preload" as="image" href="/assets/hero-work.jpg"/>
-  <link rel="stylesheet" href="/shared.css?v=20261120b"/>
+  <link rel="stylesheet" href="/shared.css?v=20261120c"/>
   <script>document.documentElement.classList.add('js')</script>
-  <script src="/assets/site.js?v=20261120b" defer></script>
+  <script src="/assets/site.js?v=20261120c" defer></script>
+  <script src="/assets/lab-fx.js?v=20261120c" defer></script>
   <style>
     /* ══ HERO ══════════════════════════════════════════════════ */
     .hero {
@@ -37,33 +37,29 @@
       isolation: isolate;
     }
 
-    .hero-media {
-      position: absolute;
-      top: 0; bottom: 0; right: 0;
-      width: 58%;
-      z-index: -2;
-      overflow: hidden;
-    }
-    .hero-media img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: 50% 45%;
-      transform: translateY(var(--py, 0)) scale(1.08);
-      animation: heroImg 3.2s var(--ease-cine) 0.2s both;
-      will-change: transform;
-    }
-    @keyframes heroImg {
-      from { opacity: 0; transform: scale(1.3); filter: brightness(0.2) blur(8px); }
-      to   { opacity: 1; transform: translateY(var(--py, 0)) scale(1.08); filter: none; }
-    }
-    /* fade the photo into the dark page */
-    .hero-media::after {
-      content: '';
-      position: absolute; inset: 0;
+    /* readability veil between the lab animation and the headline */
+    .hero::before {
+      content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
       background:
-        linear-gradient(90deg, var(--bg) 0%, rgba(7,6,11,0.85) 18%, rgba(7,6,11,0.2) 55%, rgba(7,6,11,0.35) 100%),
-        linear-gradient(0deg, var(--bg) 0%, transparent 30%),
-        linear-gradient(180deg, rgba(7,6,11,0.6) 0%, transparent 25%);
+        radial-gradient(ellipse 60% 70% at 18% 55%, rgba(7,6,11,0.82), transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 40%, rgba(139,92,246,0.14), transparent 70%),
+        linear-gradient(0deg, var(--bg) 0%, transparent 22%);
+    }
+    .hero-copy { text-shadow: 0 2px 30px rgba(7,6,11,0.9); }
+    .hero::after {
+      /* faint lab grid */
+      content: ''; position: absolute; inset: 0; z-index: -3; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(167,139,250,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(167,139,250,0.06) 1px, transparent 1px);
+      background-size: 56px 56px;
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 60% 45%, #000, transparent 75%);
+              mask-image: radial-gradient(ellipse 80% 70% at 60% 45%, #000, transparent 75%);
+    }
+    .hero-hint {
+      margin-top: 18px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--text-dimmer);
+      animation: fadeUp 1s var(--ease-cine) 2.4s both;
     }
 
     /* Letterbox bars that open like a film starting */
@@ -279,11 +275,9 @@
     /* ══ RESPONSIVE ════════════════════════════════════════════ */
     @media (max-width: 900px) {
       .hero { align-items: flex-end; }
-      .hero-media { width: 100%; }
-      .hero-media img { object-position: 60% 30%; }
-      .hero-media::after {
+      .hero::before {
         background:
-          linear-gradient(0deg, var(--bg) 8%, rgba(7,6,11,0.78) 45%, rgba(7,6,11,0.35) 75%, rgba(7,6,11,0.7) 100%);
+          linear-gradient(0deg, var(--bg) 6%, rgba(7,6,11,0.86) 38%, rgba(7,6,11,0.25) 62%, transparent 80%);
       }
       .hero-inner { padding-bottom: 100px; }
       .letterbox { height: 9vh; }
@@ -331,12 +325,9 @@
 
   <main id="main">
     <!-- ═══ HERO ═══ -->
-    <section class="hero">
+    <section class="hero" data-lab-fx="full">
       <div class="letterbox top" aria-hidden="true"></div>
       <div class="letterbox bottom" aria-hidden="true"></div>
-      <div class="hero-media">
-        <img src="/assets/hero-work.jpg" alt="Blue and black realism Spartan skull tattoo on an upper arm, tattooed at TattLabStudios" data-parallax="0.12"/>
-      </div>
 
       <div class="hero-inner">
         <div class="hero-copy">
@@ -356,6 +347,7 @@
             <li>Walk-ins welcome</li>
             <li>0% finance available</li>
           </ul>
+          <p class="hero-hint" aria-hidden="true">⚗ Tap or click the lab to start a reaction</p>
         </div>
       </div>
 
