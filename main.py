@@ -27,7 +27,13 @@ async def bare_domain_to_www(request, call_next):
         from fastapi.responses import RedirectResponse
         url = "https://www.tattlabstudios.co.uk" + request.url.path + (("?" + request.url.query) if request.url.query else "")
         return RedirectResponse(url, status_code=301)
-    return await call_next(request)
+    response = await call_next(request)
+    # Make browsers re-check pages, CSS and JS on every visit so a new deploy shows
+    # immediately (an old cached shared.css once rendered the redesign unstyled).
+    ctype = response.headers.get("content-type", "")
+    if any(t in ctype for t in ("text/html", "text/css", "javascript")):
+        response.headers["Cache-Control"] = "no-cache"
+    return response
 
 # ── Twilio SMS ────────────────────────────────────────────────────────────────
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "")
