@@ -13,150 +13,283 @@
   <meta property="og:description" content="A realistic breakdown of tattoo pricing in London — small pieces to full sleeves. From TattLabStudios, Enfield."/>
   <meta property="og:url" content="https://www.tattlabstudios.co.uk/blog/how-much-does-a-tattoo-cost-in-london"/>
   <meta property="og:image" content="https://www.tattlabstudios.co.uk/assets/logo.png"/>
-  <link rel="icon" type="image/png" href="../assets/favicon-32.png"/>
+  <link rel="icon" type="image/png" href="/assets/favicon-32.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../shared.css"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/shared.css"/>
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="/assets/site.js" defer></script>
   <style>
-    .article-wrap { position:relative;z-index:1;max-width:740px;margin:0 auto;padding:120px 24px 100px; }
-    .article-header { margin-bottom:48px; }
-    .article-header .breadcrumb { font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--text-dimmer);margin-bottom:16px; }
-    .article-header .breadcrumb a { color:var(--accent-cyan);text-decoration:none;opacity:0.8; }
-    .article-header .tag { display:inline-block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent-cyan);background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2);padding:4px 12px;border-radius:999px;margin-bottom:16px;opacity:0.9; }
-    .article-header h1 { font-size:clamp(28px,4vw,44px);font-weight:900;letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px; }
-    .article-header .meta { font-size:13px;color:var(--text-dimmer);font-family:'Space Mono',monospace; }
-    .article-body h2 { font-size:22px;font-weight:800;letter-spacing:-0.02em;margin:40px 0 14px; }
-    .article-body h3 { font-size:17px;font-weight:700;margin:28px 0 10px;color:var(--accent-cyan); }
-    .article-body p { font-size:15px;color:var(--text-dim);line-height:1.8;margin-bottom:16px; }
-    .article-body ul, .article-body ol { padding-left:22px;margin-bottom:16px; }
-    .article-body li { font-size:15px;color:var(--text-dim);line-height:1.75;margin-bottom:8px; }
-    .article-body strong { color:var(--text);font-weight:600; }
-    .price-table { width:100%;border-collapse:collapse;margin:24px 0;font-size:14px; }
-    .price-table th { text-align:left;padding:12px 16px;background:rgba(139,92,246,0.1);color:var(--accent-cyan);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;border-bottom:1px solid rgba(139,92,246,0.2); }
-    .price-table td { padding:12px 16px;border-bottom:1px solid rgba(139,92,246,0.08);color:var(--text-dim); }
-    .price-table tr:last-child td { border-bottom:none; }
-    .price-table td:last-child { color:var(--accent-cyan);font-family:'Space Mono',monospace;font-size:13px; }
-    .tip-box { background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.2);border-radius:12px;padding:20px 24px;margin:24px 0; }
-    .tip-box p { font-size:14px;margin:0;color:var(--text-dim);line-height:1.7; }
-    .cta-inline { background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.2);border-radius:14px;padding:32px;text-align:center;margin:48px 0; }
-    .cta-inline h3 { font-size:20px;font-weight:800;margin-bottom:10px; }
-    .cta-inline p { font-size:14px;color:var(--text-dim);margin-bottom:20px; }
+    /* ══ ARTICLE HERO ═══════════════════════════════════════════ */
+    .article-hero { max-width: 748px; padding-bottom: 40px; }
+    .article-hero h1 {
+      font-size: clamp(46px, 8vw, 92px);
+      line-height: 0.94;
+      margin: 18px 0 22px;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      min-height: 44px; margin-bottom: 18px;
+      color: var(--text-dim); text-decoration: none;
+      font-size: 16px; font-weight: 500;
+      transition: color 0.25s;
+    }
+    .back-link:hover { color: var(--text); }
+    .back-link:hover .btn-arrow { transform: translateX(-4px); }
+    .article-hero .meta {
+      font-family: var(--font-mono);
+      font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-dimmer);
+    }
+
+    /* ══ READING COLUMN ═════════════════════════════════════════ */
+    .article {
+      position: relative; z-index: 1;
+      max-width: 748px; margin: 0 auto;
+      padding: 8px 24px clamp(64px, 9vw, 110px);
+    }
+    .article-body { font-size: 18px; line-height: 1.75; color: var(--text-dim); }
+    .article-body p { margin-bottom: 1.25em; }
+    .article-body h2 {
+      font-family: var(--font-display);
+      font-size: clamp(26px, 3.4vw, 32px); font-weight: 600;
+      letter-spacing: -0.015em; line-height: 1.2;
+      color: var(--text);
+      margin: 64px 0 18px; padding-top: 32px;
+      border-top: 1px solid var(--line);
+    }
+    .article-body h3 {
+      font-family: var(--font-display);
+      font-size: 21px; font-weight: 600; line-height: 1.3;
+      color: var(--text);
+      margin: 36px 0 10px;
+    }
+    .article-body ul, .article-body ol { padding-left: 1.3em; margin: 0 0 1.5em; }
+    .article-body li { margin-bottom: 0.65em; padding-left: 0.3em; }
+    .article-body ul li::marker { color: var(--accent-pink); }
+    .article-body ol li::marker { color: var(--accent-cyan); font-weight: 600; }
+    .article-body strong { color: var(--text); font-weight: 600; }
+
+    /* Tip box */
+    .tip-box {
+      background: var(--accent-soft);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      border-radius: 14px;
+      padding: 22px 26px;
+      margin: 32px 0;
+    }
+    .article-body .tip-box p { margin: 0; font-size: 17px; line-height: 1.7; color: var(--text); }
+
+    /* ══ BOOKING CTA ════════════════════════════════════════════ */
+    .cta-card {
+      position: relative; overflow: hidden;
+      text-align: center;
+      margin-top: 72px;
+      padding: clamp(40px, 6vw, 60px) clamp(24px, 5vw, 48px);
+      border-radius: 24px;
+    }
+    .cta-card::before {
+      content: ''; position: absolute; left: -20%; right: -20%; top: -70%; height: 130%;
+      background: radial-gradient(closest-side, var(--glow), transparent);
+      pointer-events: none;
+    }
+    .cta-card > * { position: relative; }
+    .cta-card h3 {
+      font-family: var(--font-cine); font-weight: 400;
+      text-transform: uppercase; letter-spacing: 0.01em;
+      font-size: clamp(42px, 6vw, 64px); line-height: 0.95;
+      margin-bottom: 16px;
+    }
+    .cta-card p { font-size: 17px; color: var(--text-dim); max-width: 460px; margin: 0 auto 28px; }
+
+    @media (max-width: 520px) {
+      .article-body { font-size: 17px; }
+      .tip-box { padding: 20px; }
+      .cta-card .btn-primary { width: 100%; }
+    }
+
+    /* Price table — scrolls inside its own wrapper on narrow screens */
+    .table-scroll {
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      margin: 28px 0 32px;
+      border: 1px solid var(--line); border-radius: 16px;
+      background: var(--surface);
+    }
+    .price-table { width: 100%; border-collapse: collapse; font-size: 16px; line-height: 1.45; }
+    .price-table th {
+      text-align: left; padding: 14px 18px;
+      background: var(--surface-2);
+      font-family: var(--font-mono); font-weight: 400;
+      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent-cyan);
+      border-bottom: 1px solid var(--line-strong);
+      white-space: nowrap;
+    }
+    .price-table td { padding: 14px 18px; border-bottom: 1px solid var(--line); color: var(--text-dim); vertical-align: top; }
+    .price-table tr:last-child td { border-bottom: none; }
+    .price-table td:first-child { color: var(--text); font-weight: 500; }
+    .price-table td:last-child { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    @media (max-width: 520px) {
+      .price-table th, .price-table td { padding: 12px 14px; }
+    }
   </style>
 </head>
 <body>
-  <div class="bg-blobs"></div>
-  <div class="bg-grid"></div>
-  <nav class="pill-nav">
-    <a href="/" class="logo-pill"><img src="../assets/logo.png" alt="TattLab"/></a>
-    <a href="/">Home</a>
-    <a href="/where-are-we">Find Us</a>
-    <a href="/finance">Finance</a>
-    <a href="/contact" class="book-btn">Book Now</a>
-  </nav>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <!--HEADER:START-->
+  <header class="site-header" id="siteHeader">
+    <a href="/" class="brand" aria-label="TattLabStudios home"><img src="/assets/logo.png" alt="TattLabStudios"/></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/">Home</a>
+      <a href="/where-are-we">Find Us</a>
+      <a href="/finance">Finance</a>
+      <a href="/blog" aria-current="page">Advice</a>
+    </nav>
+    <a href="/contact" class="btn-primary btn-sm header-cta">Book Now</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu"><span></span><span></span></button>
+  </header>
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav aria-label="Mobile">
+      <a href="/"><small>01</small>Home</a>
+      <a href="/contact"><small>02</small>Book Now</a>
+      <a href="/where-are-we"><small>03</small>Find Us</a>
+      <a href="/finance"><small>04</small>Finance</a>
+      <a href="/blog" aria-current="page"><small>05</small>Advice</a>
+    </nav>
+    <div class="mm-foot">
+      171 Chase Side, Enfield EN2 0PT<br/>
+      Mon–Sat 11am–7pm · Sun closed<br/>
+      <a href="https://instagram.com/tattlabstudios" target="_blank" rel="noopener">@tattlabstudios</a>
+    </div>
+  </div>
+  <!--HEADER:END-->
 
-  <div class="article-wrap">
-    <div class="article-header">
-      <p class="breadcrumb"><a href="/blog">Blog</a> / Pricing</p>
-      <span class="tag">Pricing</span>
-      <h1>How Much Does a Tattoo Cost in London? (2026 Guide)</h1>
-      <p class="meta">TattLabStudios &nbsp;·&nbsp; 5 min read &nbsp;·&nbsp; Enfield, North London</p>
+  <main id="main">
+    <div class="page-hero article-hero">
+      <a href="/blog" class="back-link"><span class="btn-arrow" aria-hidden="true">←</span> All guides</a>
+      <div data-reveal-lines>
+        <span class="eyebrow-label">Pricing</span>
+        <h1>
+          <span class="line"><span>How Much Does a Tattoo</span></span>
+          <span class="line" style="--d:.1s"><span>Cost in London?</span></span>
+          <span class="line" style="--d:.2s"><span><span class="grad-text">(2026 Guide)</span></span></span>
+        </h1>
+      </div>
+      <p class="meta" data-reveal="fade" style="--d:.3s">TattLabStudios &nbsp;·&nbsp; 5 min read &nbsp;·&nbsp; Enfield, North London</p>
     </div>
 
-    <div class="article-body">
-      <p>Tattoo pricing in London varies wildly — from £40 scratchers working out of their flat to £500+ per day at top-tier studios. The question isn't just "how much?" — it's "how much should I expect to pay for quality work that I'll be happy with in 10 years?"</p>
+    <article class="article">
+      <div class="article-body">
+        <p>Tattoo pricing in London varies wildly — from £40 scratchers working out of their flat to £500+ per day at top-tier studios. The question isn't just "how much?" — it's "how much should I expect to pay for quality work that I'll be happy with in 10 years?"</p>
 
-      <p>Here's an honest breakdown from our team at TattLabStudios in Enfield.</p>
+        <p>Here's an honest breakdown from our team at TattLabStudios in Enfield.</p>
 
-      <h2>Average Tattoo Prices in London (2026)</h2>
+        <h2>Average Tattoo Prices in London (2026)</h2>
 
-      <table class="price-table">
-        <thead>
-          <tr><th>Piece Size</th><th>Style</th><th>Typical Range</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Tiny (under 5cm)</td><td>Fine line / simple</td><td>£80–£150</td></tr>
-          <tr><td>Small (5–10cm)</td><td>Any style</td><td>£120–£250</td></tr>
-          <tr><td>Medium (10–15cm)</td><td>Any style</td><td>£200–£450</td></tr>
-          <tr><td>Large (15–25cm)</td><td>Realism / blackwork</td><td>£350–£800</td></tr>
-          <tr><td>Half sleeve</td><td>Any style</td><td>£800–£2,000+</td></tr>
-          <tr><td>Full sleeve</td><td>Any style</td><td>£2,000–£5,000+</td></tr>
-          <tr><td>Full back piece</td><td>Realism / blackwork</td><td>£3,000–£8,000+</td></tr>
-        </tbody>
-      </table>
+        <div class="table-scroll">
+        <table class="price-table">
+          <thead>
+            <tr><th>Piece Size</th><th>Style</th><th>Typical Range</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Tiny (under 5cm)</td><td>Fine line / simple</td><td>£80–£150</td></tr>
+            <tr><td>Small (5–10cm)</td><td>Any style</td><td>£120–£250</td></tr>
+            <tr><td>Medium (10–15cm)</td><td>Any style</td><td>£200–£450</td></tr>
+            <tr><td>Large (15–25cm)</td><td>Realism / blackwork</td><td>£350–£800</td></tr>
+            <tr><td>Half sleeve</td><td>Any style</td><td>£800–£2,000+</td></tr>
+            <tr><td>Full sleeve</td><td>Any style</td><td>£2,000–£5,000+</td></tr>
+            <tr><td>Full back piece</td><td>Realism / blackwork</td><td>£3,000–£8,000+</td></tr>
+          </tbody>
+        </table>
+        </div>
 
-      <p>These are London market rates for established, reputable studios. Artists in Zone 1 tend to charge more than those in Enfield or outer London — often for the same or lower quality work.</p>
+        <p>These are London market rates for established, reputable studios. Artists in Zone 1 tend to charge more than those in Enfield or outer London — often for the same or lower quality work.</p>
 
-      <h2>What Affects the Price?</h2>
+        <h2>What Affects the Price?</h2>
 
-      <h3>Artist Experience & Reputation</h3>
-      <p>An artist with 10 years of realism experience who has a full booking list will charge significantly more than someone who's been tattooing for 2 years. This is usually justified — their technical ability, knowledge of how ink settles, and design sense is demonstrably higher. You're paying for the hours of practice behind the piece, not just the hours in front of you.</p>
+        <h3>Artist Experience & Reputation</h3>
+        <p>An artist with 10 years of realism experience who has a full booking list will charge significantly more than someone who's been tattooing for 2 years. This is usually justified — their technical ability, knowledge of how ink settles, and design sense is demonstrably higher. You're paying for the hours of practice behind the piece, not just the hours in front of you.</p>
 
-      <h3>Style Complexity</h3>
-      <p>A full-colour portrait with 12 different skin tones and background work is more complex than a single-colour geometric shape of the same size. More complexity = more time = more cost. This is why a quote always requires seeing the design.</p>
+        <h3>Style Complexity</h3>
+        <p>A full-colour portrait with 12 different skin tones and background work is more complex than a single-colour geometric shape of the same size. More complexity = more time = more cost. This is why a quote always requires seeing the design.</p>
 
-      <h3>Placement</h3>
-      <p>Awkward placements — ribs, hands, feet, inner arm — are harder to tattoo and often harder to heal. Some artists charge a premium for these areas. Be upfront about placement when asking for quotes.</p>
+        <h3>Placement</h3>
+        <p>Awkward placements — ribs, hands, feet, inner arm — are harder to tattoo and often harder to heal. Some artists charge a premium for these areas. Be upfront about placement when asking for quotes.</p>
 
-      <h3>Size</h3>
-      <p>Most London artists charge by the hour (£100–£200/hr is typical at quality studios) or offer a day rate. The size of your piece determines how many hours are needed. Larger pieces = more sessions.</p>
+        <h3>Size</h3>
+        <p>Most London artists charge by the hour (£100–£200/hr is typical at quality studios) or offer a day rate. The size of your piece determines how many hours are needed. Larger pieces = more sessions.</p>
 
-      <h3>Studio Location</h3>
-      <p>Studios in central London (Soho, Shoreditch) carry higher overheads and typically charge more. Studios in Enfield, like TattLabStudios, can offer comparable or superior quality at more competitive rates because our rent is lower. You're paying for the art, not the postcode.</p>
+        <h3>Studio Location</h3>
+        <p>Studios in central London (Soho, Shoreditch) carry higher overheads and typically charge more. Studios in Enfield, like TattLabStudios, can offer comparable or superior quality at more competitive rates because our rent is lower. You're paying for the art, not the postcode.</p>
 
-      <h2>How to Budget for a Tattoo</h2>
-      <ol>
-        <li><strong>Start with your design and size</strong> — vague questions get vague quotes. Know roughly what you want before asking for a price.</li>
-        <li><strong>Book a consultation</strong> — most reputable studios will discuss your idea and give an honest quote before you commit.</li>
-        <li><strong>Don't automatically choose the cheapest option</strong> — a cheap tattoo done badly costs more to fix or cover up than getting it right the first time.</li>
-        <li><strong>Consider finance</strong> — if you want a large piece but budget is a barrier, spread the cost over time. We offer 0% finance at TattLabStudios.</li>
-      </ol>
+        <h2>How to Budget for a Tattoo</h2>
+        <ol>
+          <li><strong>Start with your design and size</strong> — vague questions get vague quotes. Know roughly what you want before asking for a price.</li>
+          <li><strong>Book a consultation</strong> — most reputable studios will discuss your idea and give an honest quote before you commit.</li>
+          <li><strong>Don't automatically choose the cheapest option</strong> — a cheap tattoo done badly costs more to fix or cover up than getting it right the first time.</li>
+          <li><strong>Consider finance</strong> — if you want a large piece but budget is a barrier, spread the cost over time. We offer 0% finance at TattLabStudios.</li>
+        </ol>
 
-      <div class="tip-box">
-        <p><strong>The golden rule:</strong> Good tattoos aren't cheap, and cheap tattoos aren't good. Set a realistic budget, find an artist whose work you love in your style, and trust the process. A well-executed tattoo is worth every penny.</p>
+        <div class="tip-box">
+          <p><strong>The golden rule:</strong> Good tattoos aren't cheap, and cheap tattoos aren't good. Set a realistic budget, find an artist whose work you love in your style, and trust the process. A well-executed tattoo is worth every penny.</p>
+        </div>
+
+        <h2>Finance Options at TattLabStudios</h2>
+        <p>We offer 0% finance and Klarna at TattLabStudios so budget doesn't have to limit the size or quality of your piece. You can spread the cost over several months with no interest. Ask us about it when you book.</p>
+
+        <h2>Getting a Quote from TattLabStudios</h2>
+        <p>Fill in our booking form with your idea, placement, and rough size reference. We'll come back with an accurate quote and recommended artist within 24 hours. No vague hourly estimates — we prefer to be upfront about cost before you commit.</p>
       </div>
 
-      <h2>Finance Options at TattLabStudios</h2>
-      <p>We offer 0% finance and Klarna at TattLabStudios so budget doesn't have to limit the size or quality of your piece. You can spread the cost over several months with no interest. Ask us about it when you book.</p>
-
-      <h2>Getting a Quote from TattLabStudios</h2>
-      <p>Fill in our booking form with your idea, placement, and rough size reference. We'll come back with an accurate quote and recommended artist within 24 hours. No vague hourly estimates — we prefer to be upfront about cost before you commit.</p>
-
-      <div class="cta-inline glass-card">
+      <div class="cta-card glass-card" data-reveal>
         <h3>Get a Quote from TattLabStudios</h3>
         <p>Tell us your idea and we'll give you an honest, accurate quote. Enfield's best — with finance available.</p>
-        <a href="/contact" class="btn-primary">Book / Get a Quote</a>
+        <a href="/contact" class="btn-primary">Book / Get a Quote <span class="btn-arrow">→</span></a>
       </div>
-    </div>
-  </div>
+    </article>
+  </main>
 
+  <!--FOOTER:START-->
   <footer>
-  <div class="footer-inner">
-    <div class="footer-col">
-      <h4>TattLabStudios</h4>
-      <p>171 Chase Side<br/>Enfield EN2 0PT</p>
-      <a href="https://instagram.com/tattlabstudios" target="_blank">@tattlabstudios</a>
-    </div>
-    <div class="footer-col">
-      <h4>Quick Links</h4>
-      <a href="/">Home</a>
-      <a href="/contact">Book Now</a>
-      <a href="/finance">Finance</a>
-      <a href="/where-are-we">Find Us</a>
-      <a href="/blog">Blog</a>
+    <div class="footer-cta">
+      <h2>Ready for<br/><span class="grad-text">your next piece?</span></h2>
+      <div class="fc-actions">
+        <a href="/contact" class="btn-primary">Book a Session <span class="btn-arrow">→</span></a>
+        <a href="/finance" class="btn-ghost">0% Finance</a>
       </div>
-    <div class="footer-col">
-      <h4>Areas We Serve</h4>
-      <a href="/tattoo-studio-north-london">North London</a>
-      <a href="/tattoo-studio-edmonton">Edmonton</a>
-      <a href="/tattoo-studio-barnet">Barnet</a>
-      <a href="/tattoo-studio-palmers-green">Palmers Green</a>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <span><span class="f-accent">TattLabStudios</span> &nbsp;·&nbsp; Where Science Meets Ink</span>
-    <span style="opacity:0.4;">© 2026 TattLabStudios. All rights reserved.</span>
-  </div>
-</footer>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <img src="/assets/logo.png" alt="TattLabStudios" class="footer-logo"/>
+        <p>171 Chase Side<br/>Enfield EN2 0PT<br/>Mon–Sat 11am–7pm</p>
+      </div>
+      <div class="footer-col">
+        <h4>Studio</h4>
+        <a href="/contact">Book Now</a>
+        <a href="/where-are-we">Find Us</a>
+        <a href="/finance">Finance</a>
+        <a href="/blog">Advice</a>
+      </div>
+      <div class="footer-col">
+        <h4>Areas We Serve</h4>
+        <a href="/tattoo-studio-north-london">North London</a>
+        <a href="/tattoo-studio-edmonton">Edmonton</a>
+        <a href="/tattoo-studio-barnet">Barnet</a>
+        <a href="/tattoo-studio-palmers-green">Palmers Green</a>
+      </div>
+      <div class="footer-col">
+        <h4>Follow</h4>
+        <a href="https://instagram.com/tattlabstudios" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span><span class="f-accent">TattLabStudios</span> · Where Science Meets Ink</span>
+      <span>© 2026 TattLabStudios. All rights reserved.</span>
+    </div>
+  </footer>
+  <!--FOOTER:END-->
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Article","headline":"How Much Does a Tattoo Cost in London? (2026 Guide)","author":{"@type":"Organization","name":"TattLabStudios"},"publisher":{"@type":"Organization","name":"TattLabStudios","logo":{"@type":"ImageObject","url":"https://www.tattlabstudios.co.uk/assets/logo.png"}},"url":"https://www.tattlabstudios.co.uk/blog/how-much-does-a-tattoo-cost-in-london"}
   </script>

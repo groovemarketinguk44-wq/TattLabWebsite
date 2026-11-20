@@ -12,323 +12,172 @@
   <meta property="og:description" content="171 Chase Side, Enfield EN2 0PT. Open Mon–Sat 11am–7pm."/>
   <meta property="og:url" content="https://www.tattlabstudios.co.uk/where-are-we"/>
   <meta property="og:image" content="https://www.tattlabstudios.co.uk/assets/logo.png"/>
-  <link rel="icon" type="image/png" href="assets/favicon-32.png"/>
+  <link rel="icon" type="image/png" href="/assets/favicon-32.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="shared.css"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/shared.css"/>
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="/assets/site.js" defer></script>
   <style>
-    .page-header {
-      padding: 140px 24px 60px;
-      max-width: 1100px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
+    .wa-section { position: relative; z-index: 1; max-width: var(--max); margin: 0 auto; padding: 0 24px clamp(64px, 9vw, 110px); }
 
-    .page-header h1 {
-      font-size: clamp(40px, 6vw, 72px);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      margin-bottom: 16px;
-    }
-
-    .page-header h1 span {
-      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .page-header p {
-      color: var(--text-dim);
-      font-size: 17px;
-      max-width: 520px;
-      line-height: 1.7;
-    }
-
-    /* Main layout */
-    .location-layout {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px 100px;
-      display: grid;
-      grid-template-columns: 1fr 1.3fr;
-      gap: 32px;
-      align-items: start;
-    }
-
-    /* Info panel */
-    .info-panel { display: flex; flex-direction: column; gap: 20px; }
-
-    .info-card {
-      padding: 28px;
-      border-radius: 16px;
-    }
-
-    .info-card .ic-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .info-card .ic-label .icon-wrap {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: rgba(139,92,246,0.12);
-      border: 1px solid rgba(139,92,246,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .info-card h3 {
-      font-size: 11px;
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-cyan);
-      opacity: 0.7;
-      font-weight: 400;
-      margin-bottom: 6px;
-    }
-
-    .info-card .value {
-      font-size: 18px;
-      font-weight: 600;
+    /* ── Address + hours ── */
+    .visit { display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    .visit-card { padding: clamp(28px, 4vw, 44px); border-radius: 24px; }
+    .visit-card h2 { margin-bottom: 18px; font-weight: 400; }
+    .visit-card .addr {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 3vw, 30px); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em;
       color: var(--text);
-      line-height: 1.4;
+      margin-bottom: 14px;
     }
+    .visit-card .note { font-size: 16px; color: var(--text-dim); line-height: 1.6; }
+    .visit-card .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
 
-    .info-card .value.mono {
-      font-family: 'Space Mono', monospace;
-      font-size: 15px;
+    /* Hours list (table kept so the "today" script keeps working) */
+    .hours-table { width: 100%; border-collapse: collapse; }
+    .hours-table tr { border-bottom: 1px solid var(--line); }
+    .hours-table tr:last-child { border-bottom: none; }
+    .hours-table td { padding: 13px 0; font-size: 16px; color: var(--text-dim); }
+    .hours-table td:last-child { text-align: right; color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .hours-table td.closed { color: var(--text-dimmer); }
+    .hours-table .today-row td { color: var(--text); font-weight: 600; }
+    .hours-table .today-row td:first-child::after {
+      content: 'Today'; margin-left: 10px;
+      font-family: var(--font-mono); font-size: 10px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-cyan);
+      vertical-align: 2px;
     }
+    .hours-note { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 16px; color: var(--text-dim); line-height: 1.6; }
 
-    .info-card .sub {
-      font-size: 13px;
-      color: var(--text-dim);
-      margin-top: 6px;
-      line-height: 1.5;
-    }
-
-    /* Hours table */
-    .hours-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 8px;
-    }
-
-    .hours-table tr {
-      border-bottom: 1px solid rgba(139,92,246,0.08);
-    }
-
-    .hours-table tr:last-child {
-      border-bottom: none;
-    }
-
-    .hours-table td {
-      padding: 10px 0;
-      font-size: 14px;
-    }
-
-    .hours-table td:first-child {
-      color: var(--text-dim);
-      font-family: 'Space Mono', monospace;
-      font-size: 12px;
-    }
-
-    .hours-table td:last-child {
-      text-align: right;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .hours-table .closed {
-      color: rgba(239,68,68,0.6) !important;
-    }
-
-    .hours-table .today-row td {
-      color: var(--accent-cyan) !important;
-    }
-
-    /* Map panel */
-    .map-panel {}
-
+    /* ── Map ── */
     .map-frame {
-      border-radius: 20px;
+      position: relative;
+      border-radius: 24px;
       overflow: hidden;
-      position: relative;
-      border: 1px solid rgba(139,92,246,0.25);
-      box-shadow: 0 0 40px rgba(139,92,246,0.12), 0 24px 48px rgba(0,0,0,0.5);
-      background: rgba(13,12,28,0.7);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      box-shadow: 0 30px 60px -30px rgba(0,0,0,0.8);
     }
-
     .map-frame iframe {
-      width: 100%;
-      height: 420px;
-      border: none;
       display: block;
-      filter: saturate(0.3) brightness(0.8) hue-rotate(220deg);
+      width: 100%; height: clamp(320px, 45vw, 480px);
+      border: 0;
+      filter: saturate(0.65) brightness(0.92);
     }
 
-    /* Corner markers on map */
-    .map-corner {
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      z-index: 2;
-      pointer-events: none;
+    /* ── Getting here ── */
+    .section-head { margin-bottom: clamp(32px, 5vw, 52px); }
+    .section-head h2 {
+      font-family: var(--font-cine); font-weight: 400; text-transform: uppercase;
+      font-size: clamp(48px, 7vw, 92px); line-height: 0.9;
+      margin-top: 16px;
     }
-    .map-corner.tl { top: 12px; left: 12px; border-top: 1.5px solid var(--accent-cyan); border-left: 1.5px solid var(--accent-cyan); opacity: 0.7; }
-    .map-corner.tr { top: 12px; right: 12px; border-top: 1.5px solid var(--accent-cyan); border-right: 1.5px solid var(--accent-cyan); opacity: 0.7; }
-    .map-corner.bl { bottom: 12px; left: 12px; border-bottom: 1.5px solid var(--accent-cyan); border-left: 1.5px solid var(--accent-cyan); opacity: 0.7; }
-    .map-corner.br { bottom: 12px; right: 12px; border-bottom: 1.5px solid var(--accent-cyan); border-right: 1.5px solid var(--accent-cyan); opacity: 0.7; }
-
-    .map-overlay-tag {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      z-index: 3;
-      background: rgba(6,6,16,0.88);
-      border: 1px solid rgba(139,92,246,0.3);
-      border-radius: 8px;
-      padding: 8px 14px;
-      backdrop-filter: blur(12px);
-    }
-
-    .map-overlay-tag span {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
+    .transport-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .transport-card { padding: 28px 26px; border-radius: 22px; }
+    .t-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent-soft); border: 1px solid var(--line);
       color: var(--accent-cyan);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      margin-bottom: 20px;
     }
+    .transport-card h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 10px; }
+    .transport-card p { font-size: 16px; color: var(--text-dim); line-height: 1.6; }
 
-    /* Transport section */
-    .transport-section {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px 100px;
+    /* ── Contact ── */
+    .contact-card {
+      display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+      padding: clamp(28px, 4vw, 44px); border-radius: 24px;
     }
+    .contact-card h2 { font-size: clamp(24px, 3vw, 30px); font-weight: 600; letter-spacing: -0.01em; margin: 14px 0 10px; }
+    .contact-card h2 a { color: var(--accent-cyan); text-decoration: none; }
+    .contact-card h2 a:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .contact-card p { font-size: 16px; color: var(--text-dim); max-width: 520px; }
 
-    .transport-section h2 {
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 28px;
-    }
-
-    .transport-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .transport-card {
-      padding: 24px 20px;
-      border-radius: 14px;
-    }
-
-    .transport-card .t-icon {
-      font-size: 24px;
-      margin-bottom: 12px;
-    }
-
-    .transport-card h4 {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: var(--text);
-    }
-
-    .transport-card p {
-      font-size: 13px;
-      color: var(--text-dim);
-      line-height: 1.5;
-    }
-
-    @media (max-width: 800px) {
-      .location-layout { grid-template-columns: 1fr; }
-      .transport-grid { grid-template-columns: 1fr; gap: 12px; }
+    @media (max-width: 1000px) { .transport-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 800px) { .visit { grid-template-columns: 1fr; } }
+    @media (max-width: 560px) {
+      .transport-grid { grid-template-columns: 1fr; gap: 14px; }
+      .visit-card .actions a, .contact-card .btn-primary { flex: 1 1 100%; width: 100%; }
+      .transport-card { padding: 24px 22px; }
     }
   </style>
 </head>
 <body>
-  <div class="bg-blobs"></div>
-  <div class="bg-grid"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <nav class="pill-nav">
-    <a href="/" class="logo-pill"><img src="assets/logo.png" alt="TattLab"/></a>
-    <a href="/">Home</a>
-    <a href="/where-are-we" class="active">Find Us</a>
-    <a href="/finance">Finance</a>
-    <a href="/contact" class="book-btn">Book Now</a>
-  </nav>
-
-  <div class="page-header">
-    <p class="lab-label" style="margin-bottom: 12px;">Location // TLS-LOC</p>
-    <h1>Find the <span>Lab</span></h1>
-    <p>We're based in Enfield, North London. Come in, have a look around, and meet the team. No appointment needed for a consult.</p>
+  <!--HEADER:START-->
+  <header class="site-header" id="siteHeader">
+    <a href="/" class="brand" aria-label="TattLabStudios home"><img src="/assets/logo.png" alt="TattLabStudios"/></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/">Home</a>
+      <a href="/where-are-we" aria-current="page">Find Us</a>
+      <a href="/finance">Finance</a>
+      <a href="/blog">Advice</a>
+    </nav>
+    <a href="/contact" class="btn-primary btn-sm header-cta">Book Now</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu"><span></span><span></span></button>
+  </header>
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav aria-label="Mobile">
+      <a href="/"><small>01</small>Home</a>
+      <a href="/contact"><small>02</small>Book Now</a>
+      <a href="/where-are-we" aria-current="page"><small>03</small>Find Us</a>
+      <a href="/finance"><small>04</small>Finance</a>
+      <a href="/blog"><small>05</small>Advice</a>
+    </nav>
+    <div class="mm-foot">
+      171 Chase Side, Enfield EN2 0PT<br/>
+      Mon–Sat 11am–7pm · Sun closed<br/>
+      <a href="https://instagram.com/tattlabstudios" target="_blank" rel="noopener">@tattlabstudios</a>
+    </div>
   </div>
+  <!--HEADER:END-->
 
-  <div class="location-layout">
-    <!-- Info -->
-    <div class="info-panel">
-
-      <div class="info-card glass-card">
-        <div class="ic-label">
-          <div class="icon-wrap">
-            <svg width="18" height="18" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
-          <span></span>
-        </div>
-        <h3>Address // Coordinates</h3>
-        <div class="value">TattLabStudios<br/>171 Chase Side<br/>Enfield EN2 0PT</div>
-        <div class="sub">North London — walk-ins welcome subject to availability.</div>
-        <a href="https://maps.google.com/?q=171+Chase+Side+Enfield+EN2+0PT" target="_blank" class="btn-ghost" style="margin-top: 16px; font-size: 13px; padding: 10px 20px; display: inline-flex;">Open in Maps →</a>
+  <main id="main">
+    <div class="page-hero">
+      <div data-reveal-lines>
+        <span class="eyebrow-label">Find us</span>
+        <h1>
+          <span class="line"><span>Find the</span></span>
+          <span class="line" style="--d:.1s"><span class="grad-text">Lab</span></span>
+        </h1>
       </div>
-
-      <div class="info-card glass-card">
-        <h3>Opening Hours // SCHEDULE</h3>
-        <table class="hours-table">
-          <tbody>
-            <tr><td>Mon</td><td>11:00 — 19:00</td></tr>
-            <tr><td>Tue</td><td>11:00 — 19:00</td></tr>
-            <tr><td>Wed</td><td>11:00 — 19:00</td></tr>
-            <tr><td>Thu</td><td>11:00 — 19:00</td></tr>
-            <tr><td>Fri</td><td>11:00 — 19:00</td></tr>
-            <tr><td>Sat</td><td>11:00 — 19:00</td></tr>
-            <tr><td>Sun</td><td class="closed">Closed</td></tr>
-          </tbody>
-        </table>
-        <div class="sub" style="margin-top: 12px;">Walk-ins welcome subject to availability. Last booking 1 hour before close.</div>
-      </div>
-
-      <div class="info-card glass-card">
-        <h3>Contact // Direct</h3>
-        <div class="value mono" style="margin-bottom: 8px; color: var(--accent-cyan);">Instagram: @tattlabstudios</div>
-        <div class="sub">Fastest way to reach us is via Instagram DM or the contact form. We respond within 24 hours.</div>
-        <a href="/contact" class="btn-primary" style="margin-top: 16px; font-size: 13px; padding: 10px 20px;">Send a Message →</a>
-      </div>
-
+      <p class="lead" data-reveal style="--d:.25s">We're based in Enfield, North London. Come in, have a look around, and meet the team. No appointment needed for a consult.</p>
     </div>
 
-    <!-- Map -->
-    <div class="map-panel">
-      <div class="map-frame">
-        <div class="map-corner tl"></div>
-        <div class="map-corner tr"></div>
-        <div class="map-corner bl"></div>
-        <div class="map-corner br"></div>
-        <div class="map-overlay-tag"><span>TLS // ENFIELD, LONDON</span></div>
+    <!-- Address · hours · map -->
+    <section class="wa-section" aria-label="Address, opening hours and map">
+      <div class="visit">
+        <div class="visit-card glass-card" data-reveal>
+          <h2 class="eyebrow-label">Address</h2>
+          <p class="addr">TattLabStudios<br/>171 Chase Side<br/>Enfield EN2 0PT</p>
+          <p class="note">North London — walk-ins welcome subject to availability.</p>
+          <div class="actions">
+            <a href="https://maps.google.com/?q=171+Chase+Side+Enfield+EN2+0PT" target="_blank" rel="noopener" class="btn-primary">Get directions <span class="btn-arrow">→</span></a>
+          </div>
+        </div>
+
+        <div class="visit-card glass-card" data-reveal style="--d:.12s">
+          <h2 class="eyebrow-label">Opening hours</h2>
+          <table class="hours-table">
+            <tbody>
+                <tr><td>Monday</td><td>11am – 7pm</td></tr>
+                <tr><td>Tuesday</td><td>11am – 7pm</td></tr>
+                <tr><td>Wednesday</td><td>11am – 7pm</td></tr>
+                <tr><td>Thursday</td><td>11am – 7pm</td></tr>
+                <tr><td>Friday</td><td>11am – 7pm</td></tr>
+                <tr><td>Saturday</td><td>11am – 7pm</td></tr>
+                <tr><td>Sunday</td><td class="closed">Closed</td></tr>
+            </tbody>
+          </table>
+          <p class="hours-note">Walk-ins welcome subject to availability. Last booking 1 hour before close.</p>
+        </div>
+      </div>
+
+      <div class="map-frame" data-reveal="zoom">
         <iframe
           title="TattLabStudios Location"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2474.3!2d-0.0847!3d51.6565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s171+Chase+Side%2C+Enfield+EN2+0PT!5e0!3m2!1sen!2suk!4v1714000000000!5m2!1sen!2suk"
@@ -336,71 +185,93 @@
           loading="lazy">
         </iframe>
       </div>
+    </section>
 
-      <!-- Parking note -->
-      <div class="glass-card" style="margin-top: 20px; padding: 20px 24px; border-radius: 14px; display: flex; gap: 16px; align-items: flex-start;">
-        <div style="width:36px;height:36px;border-radius:10px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="18" height="18" fill="none" stroke="#a78bfa" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17V7h4a3 3 0 010 6H9"/></svg>
+    <!-- Getting here -->
+    <section class="wa-section" aria-labelledby="getting-here">
+      <div class="section-head" data-reveal-lines>
+        <span class="eyebrow-label">Getting here</span>
+        <h2 id="getting-here">
+          <span class="line"><span>How to</span></span>
+          <span class="line" style="--d:.1s"><span class="grad-text">reach us</span></span>
+        </h2>
+      </div>
+      <div class="transport-grid">
+        <div class="transport-card glass-card" data-reveal>
+          <div class="t-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="13" rx="3"/><path d="M5 10h14M9 20l-2 2M15 20l2 2M8 16l-1 4h10l-1-4"/><circle cx="9" cy="13" r=".5"/><circle cx="15" cy="13" r=".5"/></svg></div>
+          <h3>Overground / Rail</h3>
+          <p>Enfield Town station (Greater Anglia) is a short walk away. Trains from Liverpool Street take approximately 35 minutes.</p>
         </div>
+        <div class="transport-card glass-card" data-reveal style="--d:.1s">
+          <div class="t-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M8 18v3M16 18v3"/><circle cx="8" cy="14.5" r=".5"/><circle cx="16" cy="14.5" r=".5"/></svg></div>
+          <h3>Bus</h3>
+          <p>Multiple bus routes serve Enfield Town centre. Routes 191, 307, and W8 stop nearby.</p>
+        </div>
+        <div class="transport-card glass-card" data-reveal style="--d:.2s">
+          <div class="t-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17h14v-5l-2-5H7l-2 5v5z"/><path d="M5 12h14"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/></svg></div>
+          <h3>Car</h3>
+          <p>Easy access via the A10. Parking available on adjacent streets and nearby public car parks.</p>
+        </div>
+        <div class="transport-card glass-card" data-reveal style="--d:.3s">
+          <div class="t-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17V7h4a3 3 0 010 6H9"/></svg></div>
+          <h3>Parking nearby</h3>
+          <p>Street parking available close to the studio. Enfield Town station is within walking distance.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="wa-section" aria-label="Contact">
+      <div class="contact-card glass-card" data-reveal>
         <div>
-          <div style="font-size:13px;font-weight:600;margin-bottom:4px;">Parking nearby</div>
-          <div style="font-size:13px;color:var(--text-dim);line-height:1.5;">Street parking available close to the studio. Enfield Town station is within walking distance.</div>
+          <span class="eyebrow-label">Questions?</span>
+          <h2>Instagram: <a href="https://instagram.com/tattlabstudios" target="_blank" rel="noopener">@tattlabstudios</a></h2>
+          <p>Fastest way to reach us is via Instagram DM or the contact form. We respond within 24 hours.</p>
         </div>
+        <a href="/contact" class="btn-primary">Send a Message <span class="btn-arrow">→</span></a>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
 
-  <!-- Transport -->
-  <div class="transport-section">
-    <p class="lab-label" style="margin-bottom: 12px;">Getting Here</p>
-    <h2>How to reach us</h2>
-    <div class="transport-grid">
-      <div class="transport-card glass-card">
-        <div class="t-icon">🚂</div>
-        <h4>Overground / Rail</h4>
-        <p>Enfield Town station (Greater Anglia) is a short walk away. Trains from Liverpool Street take approximately 35 minutes.</p>
-      </div>
-      <div class="transport-card glass-card">
-        <div class="t-icon">🚌</div>
-        <h4>Bus</h4>
-        <p>Multiple bus routes serve Enfield Town centre. Routes 191, 307, and W8 stop nearby.</p>
-      </div>
-      <div class="transport-card glass-card">
-        <div class="t-icon">🚗</div>
-        <h4>Car</h4>
-        <p>Easy access via the A10. Parking available on adjacent streets and nearby public car parks.</p>
-      </div>
-    </div>
-  </div>
-
+  <!--FOOTER:START-->
   <footer>
-  <div class="footer-inner">
-    <div class="footer-col">
-      <h4>TattLabStudios</h4>
-      <p>171 Chase Side<br/>Enfield EN2 0PT</p>
-      <a href="https://instagram.com/tattlabstudios" target="_blank">@tattlabstudios</a>
-    </div>
-    <div class="footer-col">
-      <h4>Quick Links</h4>
-      <a href="/">Home</a>
-      <a href="/contact">Book Now</a>
-      <a href="/finance">Finance</a>
-      <a href="/where-are-we">Find Us</a>
-      <a href="/blog">Blog</a>
+    <div class="footer-cta">
+      <h2>Ready for<br/><span class="grad-text">your next piece?</span></h2>
+      <div class="fc-actions">
+        <a href="/contact" class="btn-primary">Book a Session <span class="btn-arrow">→</span></a>
+        <a href="/finance" class="btn-ghost">0% Finance</a>
       </div>
-    <div class="footer-col">
-      <h4>Areas We Serve</h4>
-      <a href="/tattoo-studio-north-london">North London</a>
-      <a href="/tattoo-studio-edmonton">Edmonton</a>
-      <a href="/tattoo-studio-barnet">Barnet</a>
-      <a href="/tattoo-studio-palmers-green">Palmers Green</a>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <span><span class="f-accent">TattLabStudios</span> &nbsp;·&nbsp; Where Science Meets Ink</span>
-    <span style="opacity:0.4;">© 2026 TattLabStudios. All rights reserved.</span>
-  </div>
-</footer>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <img src="/assets/logo.png" alt="TattLabStudios" class="footer-logo"/>
+        <p>171 Chase Side<br/>Enfield EN2 0PT<br/>Mon–Sat 11am–7pm</p>
+      </div>
+      <div class="footer-col">
+        <h4>Studio</h4>
+        <a href="/contact">Book Now</a>
+        <a href="/where-are-we">Find Us</a>
+        <a href="/finance">Finance</a>
+        <a href="/blog">Advice</a>
+      </div>
+      <div class="footer-col">
+        <h4>Areas We Serve</h4>
+        <a href="/tattoo-studio-north-london">North London</a>
+        <a href="/tattoo-studio-edmonton">Edmonton</a>
+        <a href="/tattoo-studio-barnet">Barnet</a>
+        <a href="/tattoo-studio-palmers-green">Palmers Green</a>
+      </div>
+      <div class="footer-col">
+        <h4>Follow</h4>
+        <a href="https://instagram.com/tattlabstudios" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span><span class="f-accent">TattLabStudios</span> · Where Science Meets Ink</span>
+      <span>© 2026 TattLabStudios. All rights reserved.</span>
+    </div>
+  </footer>
+  <!--FOOTER:END-->
 
   <script>
     // highlight today's row dynamically

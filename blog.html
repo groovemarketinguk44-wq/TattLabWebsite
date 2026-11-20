@@ -12,106 +12,188 @@
   <meta property="og:description" content="Tattoo advice, aftercare guides, style inspiration and more from TattLabStudios, Enfield."/>
   <meta property="og:url" content="https://www.tattlabstudios.co.uk/blog"/>
   <meta property="og:image" content="https://www.tattlabstudios.co.uk/assets/logo.png"/>
-  <link rel="icon" type="image/png" href="assets/favicon-32.png"/>
+  <link rel="icon" type="image/png" href="/assets/favicon-32.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="shared.css"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/shared.css"/>
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="/assets/site.js" defer></script>
   <style>
-    .blog-wrap { position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:120px 24px 100px; }
-    .blog-header { margin-bottom:60px; }
-    .blog-header .eyebrow { font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent-cyan);opacity:0.8;margin-bottom:16px; }
-    .blog-header h1 { font-size:clamp(32px,4.5vw,52px);font-weight:900;letter-spacing:-0.03em;margin-bottom:12px; }
-    .blog-header h1 span { background:linear-gradient(135deg,#8b5cf6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
-    .blog-header p { font-size:16px;color:var(--text-dim);max-width:560px;line-height:1.7; }
-    .blog-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:24px; }
-    .post-card { border-radius:16px;overflow:hidden;text-decoration:none;color:var(--text);transition:transform 0.2s,box-shadow 0.2s;display:block; }
-    .post-card:hover { transform:translateY(-4px);box-shadow:0 20px 48px rgba(0,0,0,0.5),0 0 32px rgba(139,92,246,0.12); }
-    .post-thumb { aspect-ratio:16/9;background:rgba(139,92,246,0.08);border-bottom:1px solid rgba(139,92,246,0.15);display:flex;align-items:center;justify-content:center;font-size:40px; }
-    .post-body { padding:24px; }
-    .post-tag { font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent-cyan);opacity:0.7;margin-bottom:10px; }
-    .post-body h2 { font-size:17px;font-weight:700;letter-spacing:-0.01em;line-height:1.35;margin-bottom:10px; }
-    .post-body p { font-size:13px;color:var(--text-dim);line-height:1.65; }
-    .post-meta { display:flex;align-items:center;gap:8px;margin-top:16px;font-size:11px;color:var(--text-dimmer);font-family:'Space Mono',monospace; }
-    @media(max-width:760px){ .blog-grid{grid-template-columns:1fr;} }
-    @media(max-width:960px) and (min-width:761px){ .blog-grid{grid-template-columns:repeat(2,1fr);} }
+    .guides { position: relative; z-index: 1; max-width: var(--max); margin: 0 auto; padding: 0 24px clamp(72px, 10vw, 120px); }
+    .guide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .guide-item { display: flex; }
+
+    /* Whole card is one link */
+    .guide-card {
+      position: relative; overflow: hidden;
+      flex: 1;
+      display: flex; flex-direction: column;
+      padding: 32px 30px 28px;
+      border-radius: 22px;
+      color: var(--text); text-decoration: none;
+      transition: transform 0.6s var(--ease-cine), border-color 0.4s, box-shadow 0.6s var(--ease-cine);
+    }
+    .guide-card::after {
+      content: ''; position: absolute; inset: auto -30% -60% -30%; height: 80%;
+      background: radial-gradient(closest-side, var(--glow), transparent);
+      opacity: 0; transition: opacity 0.6s; pointer-events: none;
+    }
+    .guide-card:hover, .guide-card:focus-visible { transform: translateY(-6px); border-color: var(--line-strong); }
+    .guide-card:hover::after, .guide-card:focus-visible::after { opacity: 1; }
+
+    .guide-tag {
+      align-self: flex-start;
+      font-family: var(--font-mono);
+      font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent-cyan);
+      background: var(--accent-soft);
+      border: 1px solid var(--line);
+      padding: 5px 12px; border-radius: 999px;
+      margin-bottom: 22px;
+    }
+    .guide-card h2 {
+      font-size: 24px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25;
+      margin-bottom: 14px;
+    }
+    .guide-card p { font-size: 16px; line-height: 1.65; color: var(--text-dim); margin-bottom: 28px; }
+    .guide-foot {
+      position: relative; z-index: 1;
+      margin-top: auto;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+    .guide-read { color: var(--accent-cyan); font-weight: 600; font-size: 15px; display: inline-flex; gap: 8px; align-items: center; }
+    .guide-card:hover .btn-arrow { transform: translateX(4px); }
+    .guide-time { font-size: 14px; color: var(--text-dimmer); white-space: nowrap; }
+
+    @media (max-width: 960px) { .guide-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 680px) {
+      .guide-grid { grid-template-columns: 1fr; }
+      .guide-card { padding: 28px 24px 24px; }
+    }
   </style>
 </head>
 <body>
-  <div class="bg-blobs"></div>
-  <div class="bg-grid"></div>
-  <nav class="pill-nav">
-    <a href="/" class="logo-pill"><img src="assets/logo.png" alt="TattLab"/></a>
-    <a href="/">Home</a>
-    <a href="/where-are-we">Find Us</a>
-    <a href="/finance">Finance</a>
-    <a href="/contact" class="book-btn">Book Now</a>
-  </nav>
-
-  <div class="blog-wrap">
-    <div class="blog-header">
-      <p class="eyebrow">TattLab // Knowledge Base</p>
-      <h1>Tattoo <span>Guides & Advice</span></h1>
-      <p>Everything you need to know before, during, and after your tattoo — written by the team at TattLabStudios, Enfield.</p>
-    </div>
-
-    <div class="blog-grid">
-      <a href="/blog/how-to-choose-your-tattoo-style" class="post-card glass-card">
-        <div class="post-thumb">🎨</div>
-        <div class="post-body">
-          <p class="post-tag">Style Guide</p>
-          <h2>How to Choose the Right Tattoo Style for You</h2>
-          <p>From realism to fine line — a practical guide to finding the style that suits your vision, skin, and lifestyle.</p>
-          <div class="post-meta"><span>TattLabStudios</span><span>·</span><span>5 min read</span></div>
-        </div>
-      </a>
-      <a href="/blog/tattoo-aftercare-guide" class="post-card glass-card">
-        <div class="post-thumb">🩹</div>
-        <div class="post-body">
-          <p class="post-tag">Aftercare</p>
-          <h2>Tattoo Aftercare Guide: Everything You Need to Know</h2>
-          <p>The complete aftercare guide from our artists — day-by-day instructions for a clean, vibrant heal.</p>
-          <div class="post-meta"><span>TattLabStudios</span><span>·</span><span>6 min read</span></div>
-        </div>
-      </a>
-      <a href="/blog/how-much-does-a-tattoo-cost-in-london" class="post-card glass-card">
-        <div class="post-thumb">💷</div>
-        <div class="post-body">
-          <p class="post-tag">Pricing</p>
-          <h2>How Much Does a Tattoo Cost in London?</h2>
-          <p>A realistic breakdown of tattoo pricing in London — what affects the price, what to expect, and how to budget smart.</p>
-          <div class="post-meta"><span>TattLabStudios</span><span>·</span><span>5 min read</span></div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <footer>
-  <div class="footer-inner">
-    <div class="footer-col">
-      <h4>TattLabStudios</h4>
-      <p>171 Chase Side<br/>Enfield EN2 0PT</p>
-      <a href="https://instagram.com/tattlabstudios" target="_blank">@tattlabstudios</a>
-    </div>
-    <div class="footer-col">
-      <h4>Quick Links</h4>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <!--HEADER:START-->
+  <header class="site-header" id="siteHeader">
+    <a href="/" class="brand" aria-label="TattLabStudios home"><img src="/assets/logo.png" alt="TattLabStudios"/></a>
+    <nav class="site-nav" aria-label="Main">
       <a href="/">Home</a>
-      <a href="/contact">Book Now</a>
-      <a href="/finance">Finance</a>
       <a href="/where-are-we">Find Us</a>
-      <a href="/blog">Blog</a>
-      </div>
-    <div class="footer-col">
-      <h4>Areas We Serve</h4>
-      <a href="/tattoo-studio-north-london">North London</a>
-      <a href="/tattoo-studio-edmonton">Edmonton</a>
-      <a href="/tattoo-studio-barnet">Barnet</a>
-      <a href="/tattoo-studio-palmers-green">Palmers Green</a>
+      <a href="/finance">Finance</a>
+      <a href="/blog" aria-current="page">Advice</a>
+    </nav>
+    <a href="/contact" class="btn-primary btn-sm header-cta">Book Now</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu"><span></span><span></span></button>
+  </header>
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav aria-label="Mobile">
+      <a href="/"><small>01</small>Home</a>
+      <a href="/contact"><small>02</small>Book Now</a>
+      <a href="/where-are-we"><small>03</small>Find Us</a>
+      <a href="/finance"><small>04</small>Finance</a>
+      <a href="/blog" aria-current="page"><small>05</small>Advice</a>
+    </nav>
+    <div class="mm-foot">
+      171 Chase Side, Enfield EN2 0PT<br/>
+      Mon–Sat 11am–7pm · Sun closed<br/>
+      <a href="https://instagram.com/tattlabstudios" target="_blank" rel="noopener">@tattlabstudios</a>
     </div>
   </div>
-  <div class="footer-bottom">
-    <span><span class="f-accent">TattLabStudios</span> &nbsp;·&nbsp; Where Science Meets Ink</span>
-    <span style="opacity:0.4;">© 2026 TattLabStudios. All rights reserved.</span>
-  </div>
-</footer>
+  <!--HEADER:END-->
+
+  <main id="main">
+    <div class="page-hero">
+      <div data-reveal-lines>
+        <span class="eyebrow-label">Guides &amp; advice</span>
+        <h1>
+          <span class="line"><span>Tattoo</span></span>
+          <span class="line" style="--d:.1s"><span class="grad-text">Guides &amp; Advice</span></span>
+        </h1>
+      </div>
+      <p class="lead" data-reveal style="--d:.25s">Everything you need to know before, during, and after your tattoo — written by the team at TattLabStudios, Enfield.</p>
+    </div>
+
+    <section class="guides" aria-label="All guides">
+      <div class="guide-grid">
+        <div class="guide-item" data-reveal>
+          <a href="/blog/how-to-choose-your-tattoo-style" class="guide-card glass-card">
+            <span class="guide-tag">Style Guide</span>
+            <h2>How to Choose the Right Tattoo Style for You</h2>
+            <p>From realism to fine line — a practical guide to finding the style that suits your vision, skin, and lifestyle.</p>
+            <span class="guide-foot">
+              <span class="guide-read">Read guide <span class="btn-arrow" aria-hidden="true">→</span></span>
+              <span class="guide-time">5 min read</span>
+            </span>
+          </a>
+        </div>
+        <div class="guide-item" data-reveal style="--d:.12s">
+          <a href="/blog/tattoo-aftercare-guide" class="guide-card glass-card">
+            <span class="guide-tag">Aftercare</span>
+            <h2>Tattoo Aftercare Guide: Everything You Need to Know</h2>
+            <p>The complete aftercare guide from our artists — day-by-day instructions for a clean, vibrant heal.</p>
+            <span class="guide-foot">
+              <span class="guide-read">Read guide <span class="btn-arrow" aria-hidden="true">→</span></span>
+              <span class="guide-time">6 min read</span>
+            </span>
+          </a>
+        </div>
+        <div class="guide-item" data-reveal style="--d:.24s">
+          <a href="/blog/how-much-does-a-tattoo-cost-in-london" class="guide-card glass-card">
+            <span class="guide-tag">Pricing</span>
+            <h2>How Much Does a Tattoo Cost in London?</h2>
+            <p>A realistic breakdown of tattoo pricing in London — what affects the price, what to expect, and how to budget smart.</p>
+            <span class="guide-foot">
+              <span class="guide-read">Read guide <span class="btn-arrow" aria-hidden="true">→</span></span>
+              <span class="guide-time">5 min read</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!--FOOTER:START-->
+  <footer>
+    <div class="footer-cta">
+      <h2>Ready for<br/><span class="grad-text">your next piece?</span></h2>
+      <div class="fc-actions">
+        <a href="/contact" class="btn-primary">Book a Session <span class="btn-arrow">→</span></a>
+        <a href="/finance" class="btn-ghost">0% Finance</a>
+      </div>
+    </div>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <img src="/assets/logo.png" alt="TattLabStudios" class="footer-logo"/>
+        <p>171 Chase Side<br/>Enfield EN2 0PT<br/>Mon–Sat 11am–7pm</p>
+      </div>
+      <div class="footer-col">
+        <h4>Studio</h4>
+        <a href="/contact">Book Now</a>
+        <a href="/where-are-we">Find Us</a>
+        <a href="/finance">Finance</a>
+        <a href="/blog">Advice</a>
+      </div>
+      <div class="footer-col">
+        <h4>Areas We Serve</h4>
+        <a href="/tattoo-studio-north-london">North London</a>
+        <a href="/tattoo-studio-edmonton">Edmonton</a>
+        <a href="/tattoo-studio-barnet">Barnet</a>
+        <a href="/tattoo-studio-palmers-green">Palmers Green</a>
+      </div>
+      <div class="footer-col">
+        <h4>Follow</h4>
+        <a href="https://instagram.com/tattlabstudios" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span><span class="f-accent">TattLabStudios</span> · Where Science Meets Ink</span>
+      <span>© 2026 TattLabStudios. All rights reserved.</span>
+    </div>
+  </footer>
+  <!--FOOTER:END-->
 </body>
 </html>

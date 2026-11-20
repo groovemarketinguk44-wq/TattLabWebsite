@@ -12,208 +12,225 @@
   <meta property="og:description" content="Book your tattoo session at TattLabStudios, Enfield. Tell us your idea and we'll be in touch within 24 hours."/>
   <meta property="og:url" content="https://www.tattlabstudios.co.uk/contact"/>
   <meta property="og:image" content="https://www.tattlabstudios.co.uk/assets/logo.png"/>
-  <link rel="icon" type="image/png" href="assets/favicon-32.png"/>
+  <link rel="icon" type="image/png" href="/assets/favicon-32.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="shared.css"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/shared.css"/>
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="/assets/site.js" defer></script>
   <style>
+    /* ══ BOOKING PAGE ═════════════════════════════════════════ */
+    .page-hero { padding-bottom: 40px; }
+    .page-hero h1 { margin-bottom: 20px; }
+
     .contact-layout {
       position: relative;
       z-index: 1;
-      max-width: 1100px;
+      max-width: var(--max);
       margin: 0 auto;
-      padding: 140px 24px 100px;
+      padding: 0 24px clamp(72px, 10vw, 120px);
       display: grid;
-      grid-template-columns: 1fr 1.6fr;
-      gap: 64px;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: clamp(28px, 4vw, 56px);
       align-items: start;
     }
 
-    .contact-info h1 {
-      font-size: clamp(36px, 5vw, 60px);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      margin-bottom: 16px;
-    }
-
-    .contact-info h1 span {
-      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .contact-info .intro {
-      font-size: 16px;
-      color: var(--text-dim);
-      line-height: 1.7;
-      margin-bottom: 40px;
-      max-width: 340px;
-    }
+    /* ── Studio details (right column) ── */
+    .contact-info { position: sticky; top: calc(var(--header-h) + 24px); display: grid; gap: 16px; }
+    .info-card { padding: 28px; }
+    .info-card .eyebrow-label { margin-bottom: 18px; }
 
     .contact-detail {
       display: flex;
-      gap: 14px;
+      gap: 16px;
       align-items: flex-start;
-      margin-bottom: 24px;
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
     }
+    .contact-detail:first-of-type { border-top: none; padding-top: 0; }
 
     .contact-detail .cd-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: rgba(139,92,246,0.1);
-      border: 1px solid rgba(139,92,246,0.2);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      border: 1px solid var(--line);
+      color: var(--accent-cyan);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      margin-top: 2px;
     }
 
-    .contact-detail .cd-text h4 {
-      font-size: 11px;
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 0.1em;
+    .contact-detail .cd-text h3 {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--accent-cyan);
-      opacity: 0.7;
       margin-bottom: 4px;
-      font-weight: 400;
     }
+    .contact-detail .cd-text p { font-size: 16px; color: var(--text); font-weight: 500; line-height: 1.5; }
+    .contact-detail .cd-text a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--line-strong); }
+    .contact-detail .cd-text a:hover { border-bottom-color: var(--accent); }
+    .contact-detail .cd-note { display: block; font-size: 15px; font-weight: 400; color: var(--text-dim); }
 
-    .contact-detail .cd-text p {
-      font-size: 14px;
-      color: var(--text);
+    .finance-note { padding: 24px 28px; }
+    .finance-note p { font-size: 16px; color: var(--text-dim); line-height: 1.6; }
+    .finance-note a {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 14px; min-height: 44px;
+      font-size: 15px; font-weight: 600;
+      color: var(--accent-cyan); text-decoration: none;
+    }
+    .finance-note a:hover .btn-arrow { transform: translateX(4px); }
+
+    /* ── Form card ── */
+    .form-card { padding: clamp(24px, 4vw, 44px); }
+
+    .form-card h2 {
+      font-family: var(--font-cine);
+      font-weight: 400;
+      text-transform: uppercase;
+      font-size: clamp(40px, 6vw, 56px);
+      line-height: 0.95;
+      letter-spacing: 0.01em;
+      margin-bottom: 8px;
+    }
+    .form-card .form-sub { font-size: 15px; color: var(--text-dim); margin-bottom: 32px; }
+
+    .form-section-label {
+      display: flex; align-items: center; gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      margin-bottom: 20px;
+      padding: 0;
+    }
+    .form-section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+    .section-divider { height: 0; margin: 12px 0 24px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+    .form-field { margin-bottom: 22px; min-width: 0; }
+
+    .form-field label,
+    .field-label {
+      display: block;
+      font-size: 15px;
       font-weight: 500;
+      color: var(--text);
+      margin-bottom: 8px;
       line-height: 1.4;
     }
 
-    .contact-form-wrap { position: sticky; top: 100px; }
-
-    .form-card { padding: 40px 36px; border-radius: 20px; }
-
-    .form-card h2 {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 6px;
-    }
-
-    .form-card .form-sub {
-      font-size: 12px;
-      color: var(--text-dim);
-      margin-bottom: 32px;
-      font-family: 'Space Mono', monospace;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .form-field { margin-bottom: 18px; }
-
-    .form-field label {
-      display: block;
-      font-size: 11px;
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(139,92,246,0.7);
-      margin-bottom: 7px;
-    }
-
-    .form-field input:not([type="checkbox"]):not([type="radio"]),
+    .form-field input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
     .form-field select,
     .form-field textarea {
+      display: block;
       width: 100%;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(139,92,246,0.2);
-      border-radius: 10px;
+      min-height: 52px;
+      background: var(--surface-2);
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
       padding: 12px 16px;
       color: var(--text);
-      font-size: 14px;
-      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-family: var(--font-body);
+      line-height: 1.4;
       outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      color-scheme: dark;
+      transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
       appearance: none;
       -webkit-appearance: none;
     }
+    .form-field input[type="date"]::-webkit-date-and-time-value { text-align: left; }
 
     .form-field select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%238b5cf6' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23c4b5fd' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 36px;
+      background-position: right 16px center;
+      padding-right: 44px;
     }
 
-    .form-field input:not([type="checkbox"]):not([type="radio"])::placeholder,
-    .form-field textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: var(--text-dimmer); opacity: 1; }
 
-    .form-field input:not([type="checkbox"]):not([type="radio"]):focus,
+    .form-field input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):hover,
+    .form-field select:hover,
+    .form-field textarea:hover { border-color: rgba(255,255,255,0.28); }
+
+    .form-field input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus,
     .form-field select:focus,
     .form-field textarea:focus {
-      border-color: rgba(139,92,246,0.55);
-      box-shadow: 0 0 0 3px rgba(139,92,246,0.1);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft), 0 0 24px -6px var(--glow);
     }
 
-    .form-field select option { background: #0a0918; color: var(--text); }
-    .form-field textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+    .form-field select option { background: var(--surface-2); color: var(--text); }
+    .form-field textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
 
-    /* Contact method radio */
+    /* ── Contact method choice ── */
+    .cm-fieldset { border: none; padding: 0; margin: 0 0 28px; min-width: 0; }
+    .cm-fieldset legend { width: 100%; }
+
     .contact-method-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
     }
 
     .cm-opt {
-      padding: 11px 12px;
-      border-radius: 10px;
-      border: 1px solid rgba(139,92,246,0.2);
-      background: rgba(255,255,255,0.02);
+      position: relative;
+      min-height: 52px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-2);
       cursor: pointer;
-      text-align: center;
-      font-size: 13px;
+      font-size: 15px;
+      font-weight: 500;
       color: var(--text-dim);
-      transition: all 0.18s;
+      transition: border-color 0.25s, background 0.25s, color 0.25s, box-shadow 0.25s;
       user-select: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
+      gap: 8px;
+      text-align: center;
     }
+    .cm-opt svg { flex-shrink: 0; }
+    .cm-opt:hover { border-color: rgba(255,255,255,0.28); color: var(--text); }
 
-    .cm-opt:hover { border-color: rgba(139,92,246,0.4); color: var(--text); }
-
-    .cm-opt.selected {
-      border-color: rgba(139,92,246,0.7);
-      background: rgba(139,92,246,0.1);
+    .cm-opt.selected,
+    .cm-opt:has(input:checked) {
+      border-color: var(--accent);
+      background: var(--accent-soft);
       color: var(--text);
-      box-shadow: 0 0 12px rgba(139,92,246,0.15);
+      box-shadow: 0 0 0 1px var(--accent) inset;
     }
+    .cm-opt:focus-within { box-shadow: 0 0 0 4px var(--accent-soft); border-color: var(--accent); }
 
-    .cm-opt input { display: none; }
+    /* visually hidden but still keyboard-usable */
+    .cm-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
 
-    /* File upload */
+    /* ── File upload ── */
     .file-upload-wrap {
       position: relative;
-      border: 1px dashed rgba(139,92,246,0.3);
-      border-radius: 10px;
-      padding: 20px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 12px;
+      padding: 24px 20px;
       text-align: center;
       cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-      background: rgba(255,255,255,0.02);
+      transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+      background: var(--surface-2);
     }
-
-    .file-upload-wrap:hover {
-      border-color: rgba(139,92,246,0.55);
-      background: rgba(139,92,246,0.04);
-    }
+    .file-upload-wrap:hover { border-color: var(--accent); background: var(--accent-soft); }
+    .file-upload-wrap:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
 
     .file-upload-wrap input[type="file"] {
       position: absolute;
@@ -227,329 +244,339 @@
       background: none;
     }
 
-    .file-upload-wrap .fu-label {
-      font-size: 13px;
-      color: var(--text-dim);
-      pointer-events: none;
-    }
-
-    .file-upload-wrap .fu-label span {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .file-upload-wrap .fu-hint {
-      font-size: 11px;
-      color: var(--text-dimmer);
-      margin-top: 4px;
-      font-family: 'Space Mono', monospace;
-    }
+    .file-upload-wrap .fu-label { font-size: 16px; color: var(--text-dim); pointer-events: none; }
+    .file-upload-wrap .fu-label span { color: var(--accent-cyan); font-weight: 600; }
+    .file-upload-wrap .fu-hint { font-size: 14px; color: var(--text-dim); margin-top: 4px; pointer-events: none; }
 
     #fileName {
-      font-size: 12px;
-      color: var(--accent-cyan);
-      margin-top: 8px;
-      font-family: 'Space Mono', monospace;
-      min-height: 16px;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 15px;
-      background: linear-gradient(135deg, #7c3aed, #5b21b6);
-      color: #fff;
       font-size: 15px;
-      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-top: 10px;
+      min-height: 20px;
+      overflow-wrap: anywhere;
+    }
+
+    /* ── Submit ── */
+    .submit-btn {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      width: 100%;
+      min-height: 56px;
+      padding: 0 24px;
+      background: var(--grad);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
       border: none;
-      border-radius: 12px;
+      border-radius: 999px;
       cursor: pointer;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      box-shadow: 0 0 28px rgba(139,92,246,0.3);
-      transition: box-shadow 0.2s, transform 0.15s;
-      margin-top: 8px;
+      box-shadow: 0 10px 30px -10px rgba(168,85,247,0.7);
+      transition: box-shadow 0.35s, transform 0.35s var(--ease-cine), opacity 0.25s;
     }
-
-    .submit-btn:hover {
-      box-shadow: 0 0 48px rgba(139,92,246,0.5);
-      transform: translateY(-2px);
-    }
-
+    .submit-btn:hover { box-shadow: 0 16px 40px -10px rgba(168,85,247,0.85); transform: translateY(-2px); }
     .submit-btn:active { transform: scale(0.98); }
+    .submit-btn:disabled { opacity: 0.6; cursor: progress; transform: none; }
 
-    .success-state {
-      display: none;
-      text-align: center;
-      padding: 60px 20px;
-    }
-
+    /* ── Success ── */
+    .success-state { display: none; text-align: center; padding: 48px 8px; }
     .success-state .s-icon {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: rgba(139,92,246,0.1);
-      border: 1px solid rgba(139,92,246,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--accent-soft);
+      border: 1px solid var(--accent);
+      color: var(--accent-cyan);
+      display: flex; align-items: center; justify-content: center;
       margin: 0 auto 24px;
-      box-shadow: 0 0 40px rgba(139,92,246,0.2);
+      box-shadow: 0 0 40px -6px var(--glow);
     }
+    .success-state h3 {
+      font-family: var(--font-cine); font-weight: 400; text-transform: uppercase;
+      font-size: clamp(40px, 6vw, 56px); line-height: 0.95; margin-bottom: 14px;
+    }
+    .success-state p { font-size: 16px; color: var(--text-dim); line-height: 1.7; }
+    .success-state p a { color: var(--accent-cyan); text-decoration: none; }
+    .success-state .btn-ghost { margin-top: 28px; }
 
-    .success-state h3 { font-size: 24px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em; }
-    .success-state p { font-size: 14px; color: var(--text-dim); line-height: 1.7; }
+    /* ── Required / optional / errors ── */
+    .req { color: var(--accent-pink); margin-left: 2px; }
+    .optional-label { font-size: 14px; font-weight: 400; color: var(--text-dim); margin-left: 4px; }
 
-    .req { color: var(--accent-cyan); margin-left: 2px; opacity: 0.8; }
-
-    .field-error { font-size: 11px; color: rgba(239,68,68,0.8); margin-top: 5px; font-family: 'Space Mono', monospace; display: none; }
+    .field-error { font-size: 15px; color: #fca5a5; margin-top: 6px; display: none; }
     .form-field.error input,
     .form-field.error textarea,
-    .form-field.error select { border-color: rgba(239,68,68,0.5) !important; }
+    .form-field.error select { border-color: #f87171 !important; }
     .form-field.error .field-error { display: block; }
 
-    .section-divider {
-      height: 1px;
-      background: rgba(139,92,246,0.12);
-      margin: 24px 0 20px;
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: minmax(0, 1fr); }
+      .contact-info { position: static; }
     }
-
-    .form-section-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(139,92,246,0.45);
-      margin-bottom: 16px;
+    @media (max-width: 600px) {
+      .contact-layout { padding-left: 16px; padding-right: 16px; }
+      .form-row { grid-template-columns: minmax(0, 1fr); }
+      .info-card, .finance-note { padding: 24px 20px; }
     }
-
-    @media (max-width: 860px) {
-      .contact-layout { grid-template-columns: 1fr; gap: 48px; padding-top: 120px; }
-      .contact-form-wrap { position: static; }
-      .form-row { grid-template-columns: 1fr; }
-      .contact-method-grid { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 360px) {
+      .contact-method-grid { grid-template-columns: minmax(0, 1fr); }
     }
-
-    /* ── Optional label ── */
-    .optional-label {
-      font-size: 10px;
-      color: var(--text-dimmer);
-      font-family: 'Space Mono', monospace;
-      margin-left: 4px;
-      text-transform: none;
-      letter-spacing: 0;
-      font-weight: 400;
-    }
-
   </style>
 </head>
 <body>
-  <div class="bg-blobs"></div>
-  <div class="bg-grid"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <nav class="pill-nav">
-    <a href="/" class="logo-pill"><img src="assets/logo.png" alt="TattLab"/></a>
-    <a href="/">Home</a>
-    <a href="/where-are-we">Find Us</a>
-    <a href="/finance">Finance</a>
-    <a href="/contact" class="book-btn" style="background: linear-gradient(135deg,rgba(139,92,246,0.6),rgba(91,33,182,0.4));">Book Now</a>
-  </nav>
-
-  <div class="contact-layout">
-    <!-- Left info -->
-    <div class="contact-info">
-      <p class="lab-label" style="margin-bottom:12px;">Contact // TLS-MSG</p>
-      <h1>Let's talk<br/><span>about your ink.</span></h1>
-      <p class="intro">Tell us your idea, placement, and budget. We'll get back to you within 24 hours to arrange a consultation or book you straight in.</p>
-
-      <div class="contact-detail">
-        <div class="cd-icon">
-          <svg width="18" height="18" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <div class="cd-text">
-          <h4>Location</h4>
-          <p>171 Chase Side<br/>Enfield EN2 0PT</p>
-        </div>
-      </div>
-
-      <div class="contact-detail">
-        <div class="cd-icon">
-          <svg width="18" height="18" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m22 3-10 9L2 3"/></svg>
-        </div>
-        <div class="cd-text">
-          <h4>Instagram</h4>
-          <p>@tattlabstudios<br/><span style="color:var(--text-dim);font-weight:400;font-size:13px;">DMs open — fastest response</span></p>
-        </div>
-      </div>
-
-      <div class="contact-detail">
-        <div class="cd-icon">
-          <svg width="18" height="18" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div class="cd-text">
-          <h4>Hours</h4>
-          <p>Mon–Sat: 11am – 7pm<br/><span style="color:rgba(239,68,68,0.6);font-size:13px;font-weight:400;">Sunday: Closed</span></p>
-        </div>
-      </div>
-
-      <div class="glass-card" style="padding:20px 22px;border-radius:14px;margin-top:16px;">
-        <div style="font-size:12px;font-family:'Space Mono',monospace;color:var(--accent-cyan);opacity:0.7;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">Finance available</div>
-        <div style="font-size:14px;color:var(--text-dim);line-height:1.5;">Need help spreading the cost? Ask us about our payment plans — 0% options available.</div>
-        <a href="/finance" style="display:inline-block;margin-top:12px;font-size:12px;color:var(--accent);text-decoration:none;font-weight:600;">View finance options →</a>
-      </div>
-    </div>
-
-    <!-- Right form -->
-    <div class="contact-form-wrap">
-      <div class="form-card glass-card">
-        <h2>Book a session</h2>
-        <p class="form-sub">Fields marked <span style="color:var(--accent-cyan)">*</span> are required</p>
-
-        <form id="contactForm" novalidate>
-
-          <p class="form-section-label">Your details</p>
-          <div class="form-row">
-            <div class="form-field" id="field-fname">
-              <label>First name <span class="req">*</span></label>
-              <input type="text" name="fname" placeholder="First name" autocomplete="given-name"/>
-              <div class="field-error">Required</div>
-            </div>
-            <div class="form-field" id="field-lname">
-              <label>Last name <span class="req">*</span></label>
-              <input type="text" name="lname" placeholder="Last name" autocomplete="family-name"/>
-              <div class="field-error">Required</div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-field" id="field-email">
-              <label>Email <span class="req">*</span></label>
-              <input type="email" name="email" placeholder="your@email.com" autocomplete="email"/>
-              <div class="field-error">Valid email required</div>
-            </div>
-            <div class="form-field" id="field-phone">
-              <label>Phone <span class="req">*</span></label>
-              <input type="tel" name="phone" placeholder="+44 7700 000000" autocomplete="tel"/>
-              <div class="field-error">Required</div>
-            </div>
-          </div>
-
-          <div class="section-divider"></div>
-          <p class="form-section-label">Appointment details</p>
-
-          <div class="form-field" id="field-date">
-            <label>Preferred date of appointment <span class="req">*</span></label>
-            <input type="date" name="preferred_date"/>
-            <div class="field-error">Required</div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-field" id="field-size">
-              <label>Rough size <span class="req">*</span></label>
-              <input type="text" name="size" placeholder="e.g. 10cm × 8cm"/>
-              <div class="field-error">Required</div>
-            </div>
-            <div class="form-field" id="field-placement">
-              <label>Rough placement <span class="req">*</span></label>
-              <input type="text" name="placement" placeholder="e.g. forearm, ribs"/>
-              <div class="field-error">Required</div>
-            </div>
-          </div>
-
-          <div class="form-field" id="field-desc">
-            <label>Description of desired tattoo <span class="req">*</span></label>
-            <textarea name="description" placeholder="Describe your idea — style, references, inspiration, colours, details..."></textarea>
-            <div class="field-error">Please describe your idea</div>
-          </div>
-
-          <div class="form-field">
-            <label>Preferred artist <span class="optional-label">(optional — type a name if you have one)</span></label>
-            <input type="text" name="artist" placeholder="Leave blank if no preference"/>
-          </div>
-
-          <div class="section-divider"></div>
-          <p class="form-section-label">Design reference</p>
-
-          <div class="form-field">
-            <label>Upload your design (optional)</label>
-            <div class="file-upload-wrap">
-              <input type="file" id="designUpload" name="design" accept="image/*,.pdf"/>
-              <p class="fu-label"><span>Click to upload</span> or drag and drop</p>
-              <p class="fu-hint">PNG, JPG, PDF — max 10MB</p>
-            </div>
-            <div id="fileName"></div>
-          </div>
-
-          <div class="section-divider"></div>
-          <p class="form-section-label">Preferred contact method <span class="req">*</span></p>
-
-          <div class="contact-method-grid" id="contactMethodGrid" style="margin-bottom:20px;">
-            <label class="cm-opt selected" data-val="phone">
-              <input type="radio" name="contact_method" value="phone" checked/>
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-              Phone Call
-            </label>
-            <label class="cm-opt" data-val="whatsapp">
-              <input type="radio" name="contact_method" value="whatsapp"/>
-              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.122 1.526 5.854L.053 23.5a.5.5 0 00.624.624l5.688-1.485A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.65-.51-5.17-1.402l-.37-.222-3.375.881.901-3.289-.242-.381A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-              WhatsApp
-            </label>
-            <label class="cm-opt" data-val="email">
-              <input type="radio" name="contact_method" value="email"/>
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m22 3-10 9L2 3"/></svg>
-              Email
-            </label>
-            <label class="cm-opt" data-val="text">
-              <input type="radio" name="contact_method" value="text"/>
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-              Text Message
-            </label>
-          </div>
-
-          <button type="submit" class="submit-btn">Send Message</button>
-
-        </form>
-
-        <!-- Final success -->
-        <div class="success-state" id="successState">
-          <div class="s-icon">
-            <svg width="32" height="32" fill="none" stroke="#8b5cf6" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <h3>All done!</h3>
-          <p>We'll be in touch within 24 hours via your preferred contact method.<br/>Follow us on Instagram<br/><span style="color:var(--accent);">@tattlabstudios</span></p>
-          <a href="/" class="btn-ghost" style="margin-top:28px;display:inline-flex;">← Back to home</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-  <div class="footer-inner">
-    <div class="footer-col">
-      <h4>TattLabStudios</h4>
-      <p>171 Chase Side<br/>Enfield EN2 0PT</p>
-      <a href="https://instagram.com/tattlabstudios" target="_blank">@tattlabstudios</a>
-    </div>
-    <div class="footer-col">
-      <h4>Quick Links</h4>
+  <!--HEADER:START-->
+  <header class="site-header" id="siteHeader">
+    <a href="/" class="brand" aria-label="TattLabStudios home"><img src="/assets/logo.png" alt="TattLabStudios"/></a>
+    <nav class="site-nav" aria-label="Main">
       <a href="/">Home</a>
-      <a href="/contact">Book Now</a>
-      <a href="/finance">Finance</a>
       <a href="/where-are-we">Find Us</a>
-      <a href="/blog">Blog</a>
-      </div>
-    <div class="footer-col">
-      <h4>Areas We Serve</h4>
-      <a href="/tattoo-studio-north-london">North London</a>
-      <a href="/tattoo-studio-edmonton">Edmonton</a>
-      <a href="/tattoo-studio-barnet">Barnet</a>
-      <a href="/tattoo-studio-palmers-green">Palmers Green</a>
+      <a href="/finance">Finance</a>
+      <a href="/blog">Advice</a>
+    </nav>
+    <a href="/contact" class="btn-primary btn-sm header-cta" aria-current="page">Book Now</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu"><span></span><span></span></button>
+  </header>
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav aria-label="Mobile">
+      <a href="/"><small>01</small>Home</a>
+      <a href="/contact" aria-current="page"><small>02</small>Book Now</a>
+      <a href="/where-are-we"><small>03</small>Find Us</a>
+      <a href="/finance"><small>04</small>Finance</a>
+      <a href="/blog"><small>05</small>Advice</a>
+    </nav>
+    <div class="mm-foot">
+      171 Chase Side, Enfield EN2 0PT<br/>
+      Mon–Sat 11am–7pm · Sun closed<br/>
+      <a href="https://instagram.com/tattlabstudios" target="_blank" rel="noopener">@tattlabstudios</a>
     </div>
   </div>
-  <div class="footer-bottom">
-    <span><span class="f-accent">TattLabStudios</span> &nbsp;·&nbsp; Where Science Meets Ink</span>
-    <span style="opacity:0.4;">© 2026 TattLabStudios. All rights reserved.</span>
-  </div>
-</footer>
+  <!--HEADER:END-->
+
+  <main id="main">
+
+    <section class="page-hero">
+      <span class="eyebrow-label" data-reveal="fade">Book a session</span>
+      <h1 data-reveal-lines>
+        <span class="line"><span>Let's talk</span></span>
+        <span class="line" style="--d:.1s"><span class="grad-text">about your ink.</span></span>
+      </h1>
+      <p class="lead" data-reveal style="--d:.25s">Tell us your idea, placement, and budget. We'll get back to you within 24 hours to arrange a consultation or book you straight in.</p>
+    </section>
+
+    <div class="contact-layout">
+
+      <!-- Booking form -->
+      <div class="contact-form-wrap">
+        <div class="form-card glass-card" data-reveal style="--d:.1s">
+          <h2>Book a session</h2>
+          <p class="form-sub">Fields marked <span class="req" aria-hidden="true">*</span> are required.</p>
+
+          <form id="contactForm" novalidate>
+
+            <p class="form-section-label">Your details</p>
+            <div class="form-row">
+              <div class="form-field" id="field-fname">
+                <label for="cf-fname">First name <span class="req">*</span></label>
+                <input type="text" id="cf-fname" name="fname" placeholder="First name" autocomplete="given-name"/>
+                <div class="field-error">Required</div>
+              </div>
+              <div class="form-field" id="field-lname">
+                <label for="cf-lname">Last name <span class="req">*</span></label>
+                <input type="text" id="cf-lname" name="lname" placeholder="Last name" autocomplete="family-name"/>
+                <div class="field-error">Required</div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field" id="field-email">
+                <label for="cf-email">Email <span class="req">*</span></label>
+                <input type="email" id="cf-email" name="email" placeholder="your@email.com" autocomplete="email"/>
+                <div class="field-error">Valid email required</div>
+              </div>
+              <div class="form-field" id="field-phone">
+                <label for="cf-phone">Phone <span class="req">*</span></label>
+                <input type="tel" id="cf-phone" name="phone" placeholder="+44 7700 000000" autocomplete="tel"/>
+                <div class="field-error">Required</div>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+            <p class="form-section-label">Appointment details</p>
+
+            <div class="form-field" id="field-date">
+              <label for="cf-date">Preferred date of appointment <span class="req">*</span></label>
+              <input type="date" id="cf-date" name="preferred_date"/>
+              <div class="field-error">Required</div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field" id="field-size">
+                <label for="cf-size">Rough size <span class="req">*</span></label>
+                <input type="text" id="cf-size" name="size" placeholder="e.g. 10cm × 8cm"/>
+                <div class="field-error">Required</div>
+              </div>
+              <div class="form-field" id="field-placement">
+                <label for="cf-placement">Rough placement <span class="req">*</span></label>
+                <input type="text" id="cf-placement" name="placement" placeholder="e.g. forearm, ribs"/>
+                <div class="field-error">Required</div>
+              </div>
+            </div>
+
+            <div class="form-field" id="field-desc">
+              <label for="cf-desc">Description of desired tattoo <span class="req">*</span></label>
+              <textarea id="cf-desc" name="description" placeholder="Describe your idea — style, references, inspiration, colours, details..."></textarea>
+              <div class="field-error">Please describe your idea</div>
+            </div>
+
+            <div class="form-field">
+              <label for="cf-artist">Preferred artist <span class="optional-label">(optional — type a name if you have one)</span></label>
+              <input type="text" id="cf-artist" name="artist" placeholder="Leave blank if no preference"/>
+            </div>
+
+            <div class="section-divider"></div>
+            <p class="form-section-label">Design reference</p>
+
+            <div class="form-field">
+              <label for="designUpload">Upload your design <span class="optional-label">(optional)</span></label>
+              <div class="file-upload-wrap">
+                <input type="file" id="designUpload" name="design" accept="image/*,.pdf"/>
+                <p class="fu-label"><span>Click to upload</span> or drag and drop</p>
+                <p class="fu-hint">PNG, JPG, PDF — max 10MB</p>
+              </div>
+              <div id="fileName" aria-live="polite"></div>
+            </div>
+
+            <div class="section-divider"></div>
+            <fieldset class="cm-fieldset">
+              <legend class="form-section-label">Preferred contact method <span class="req">*</span></legend>
+
+              <div class="contact-method-grid" id="contactMethodGrid">
+                <label class="cm-opt selected" data-val="phone">
+                  <input type="radio" name="contact_method" value="phone" checked/>
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                  Phone Call
+                </label>
+                <label class="cm-opt" data-val="whatsapp">
+                  <input type="radio" name="contact_method" value="whatsapp"/>
+                  <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.122 1.526 5.854L.053 23.5a.5.5 0 00.624.624l5.688-1.485A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.65-.51-5.17-1.402l-.37-.222-3.375.881.901-3.289-.242-.381A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+                  WhatsApp
+                </label>
+                <label class="cm-opt" data-val="email">
+                  <input type="radio" name="contact_method" value="email"/>
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m22 3-10 9L2 3"/></svg>
+                  Email
+                </label>
+                <label class="cm-opt" data-val="text">
+                  <input type="radio" name="contact_method" value="text"/>
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                  Text Message
+                </label>
+              </div>
+            </fieldset>
+
+            <button type="submit" class="submit-btn">Send Message</button>
+
+          </form>
+
+          <!-- Final success -->
+          <div class="success-state" id="successState" role="status">
+            <div class="s-icon">
+              <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3>All done!</h3>
+            <p>We'll be in touch within 24 hours via your preferred contact method.<br/>Follow us on Instagram<br/><a href="https://instagram.com/tattlabstudios" target="_blank" rel="noopener">@tattlabstudios</a></p>
+            <a href="/" class="btn-ghost">← Back to home</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Studio details -->
+      <aside class="contact-info" aria-label="Studio details">
+        <div class="info-card glass-card" data-reveal style="--d:.2s">
+          <span class="eyebrow-label">The studio</span>
+
+          <div class="contact-detail">
+            <div class="cd-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="cd-text">
+              <h3>Location</h3>
+              <p>171 Chase Side<br/>Enfield EN2 0PT</p>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="cd-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m22 3-10 9L2 3"/></svg>
+            </div>
+            <div class="cd-text">
+              <h3>Instagram</h3>
+              <p><a href="https://instagram.com/tattlabstudios" target="_blank" rel="noopener">@tattlabstudios</a><span class="cd-note">DMs open — fastest response</span></p>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="cd-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="cd-text">
+              <h3>Hours</h3>
+              <p>Mon–Sat: 11am – 7pm<span class="cd-note">Sunday: Closed</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="finance-note glass-card" data-reveal style="--d:.3s">
+          <span class="eyebrow-label">Finance available</span>
+          <p style="margin-top:12px;">Need help spreading the cost? Ask us about our payment plans — 0% options available.</p>
+          <a href="/finance">View finance options <span class="btn-arrow">→</span></a>
+        </div>
+      </aside>
+
+    </div>
+
+  </main>
+
+  <!--FOOTER:START-->
+  <footer>
+    <div class="footer-cta">
+      <h2>Ready for<br/><span class="grad-text">your next piece?</span></h2>
+      <div class="fc-actions">
+        <a href="/contact" class="btn-primary">Book a Session <span class="btn-arrow">→</span></a>
+        <a href="/finance" class="btn-ghost">0% Finance</a>
+      </div>
+    </div>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <img src="/assets/logo.png" alt="TattLabStudios" class="footer-logo"/>
+        <p>171 Chase Side<br/>Enfield EN2 0PT<br/>Mon–Sat 11am–7pm</p>
+      </div>
+      <div class="footer-col">
+        <h4>Studio</h4>
+        <a href="/contact">Book Now</a>
+        <a href="/where-are-we">Find Us</a>
+        <a href="/finance">Finance</a>
+        <a href="/blog">Advice</a>
+      </div>
+      <div class="footer-col">
+        <h4>Areas We Serve</h4>
+        <a href="/tattoo-studio-north-london">North London</a>
+        <a href="/tattoo-studio-edmonton">Edmonton</a>
+        <a href="/tattoo-studio-barnet">Barnet</a>
+        <a href="/tattoo-studio-palmers-green">Palmers Green</a>
+      </div>
+      <div class="footer-col">
+        <h4>Follow</h4>
+        <a href="https://instagram.com/tattlabstudios" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span><span class="f-accent">TattLabStudios</span> · Where Science Meets Ink</span>
+      <span>© 2026 TattLabStudios. All rights reserved.</span>
+    </div>
+  </footer>
+  <!--FOOTER:END-->
 
   <script>
     // Contact method selector
