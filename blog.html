@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -12,6 +12,7 @@
   <meta property="og:description" content="Tattoo advice, aftercare guides, style inspiration and more from TattLabStudios, Enfield."/>
   <meta property="og:url" content="https://www.tattlabstudios.co.uk/blog"/>
   <meta property="og:image" content="https://www.tattlabstudios.co.uk/assets/logo.png"/>
+  <meta name="twitter:card" content="summary"/>
   <link rel="icon" type="image/png" href="/assets/favicon-32.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -73,6 +74,12 @@
       .guide-grid { grid-template-columns: 1fr; }
       .guide-card { padding: 28px 24px 24px; }
     }
+      .before-book { position: relative; z-index: 1; max-width: var(--max); margin: 0 auto; padding: 0 24px clamp(64px, 9vw, 110px); }
+    .bb-inner { padding: clamp(28px, 5vw, 56px); border-radius: 24px; max-width: 860px; }
+    .bb-inner h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 600; letter-spacing: -0.02em; margin: 14px 0 16px; }
+    .bb-inner p { font-size: 17px; color: var(--text-dim); line-height: 1.75; }
+    .bb-inner p + p { margin-top: 14px; }
+    .bb-inner a { color: var(--accent-cyan); }
   </style>
 </head>
 <body>
@@ -152,6 +159,15 @@
             </span>
           </a>
         </div>
+      </div>
+    </section>
+
+    <section class="before-book" aria-labelledby="before-book">
+      <div class="bb-inner glass-card" data-reveal>
+        <span class="eyebrow-label">Before you book</span>
+        <h2 id="before-book">Straight answers from the studio</h2>
+        <p>Getting a tattoo raises the same questions every time: which style suits the idea, how long healing really takes, and what it will cost. These guides answer them plainly, from the artists at our studio on Chase Side in Enfield, so you can walk into your consultation knowing what to ask. New guides are added as clients bring us new questions, so check back before your next piece.</p>
+        <p>Ready to talk about your own piece? <a href="/contact">Send us your idea</a> and we'll reply within 24 hours, or drop in during opening hours, as walk-ins are welcome subject to availability. If you'd like to spread the cost, payment plans run from 1 to 12 months, with <a href="/finance">0% options available</a>.</p>
       </div>
     </section>
   </main>

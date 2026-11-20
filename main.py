@@ -19,6 +19,16 @@ from fpdf import FPDF
 
 app = FastAPI()
 
+
+@app.middleware("http")
+async def bare_domain_to_www(request, call_next):
+    # tattlabstudios.co.uk → https://www.tattlabstudios.co.uk in one 301 (keeps path + query)
+    if (request.headers.get("host") or "").split(":")[0] == "tattlabstudios.co.uk":
+        from fastapi.responses import RedirectResponse
+        url = "https://www.tattlabstudios.co.uk" + request.url.path + (("?" + request.url.query) if request.url.query else "")
+        return RedirectResponse(url, status_code=301)
+    return await call_next(request)
+
 # ── Twilio SMS ────────────────────────────────────────────────────────────────
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "")
 TWILIO_AUTH_TOKEN  = os.environ.get("TWILIO_AUTH_TOKEN",  "")
@@ -384,6 +394,9 @@ def blog_aftercare(): return FileResponse("blog/tattoo-aftercare-guide.html")
 
 @app.get("/blog/how-much-does-a-tattoo-cost-in-london")
 def blog_cost(): return FileResponse("blog/how-much-does-a-tattoo-cost-in-london.html")
+
+@app.get("/llms.txt")
+def llms(): return FileResponse("llms.txt", media_type="text/plain; charset=utf-8")
 
 @app.get("/robots.txt")
 def robots(): return FileResponse("robots.txt", media_type="text/plain")
