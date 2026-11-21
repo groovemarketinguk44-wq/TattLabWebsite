@@ -22,10 +22,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/shared.css?v=20261121c"/>
+  <link rel="stylesheet" href="/shared.css?v=20261121d"/>
   <script>document.documentElement.classList.add('js')</script>
-  <script src="/assets/site.js?v=20261121c" defer></script>
-  <script src="/assets/lab-fx.js?v=20261121c" defer></script>
+  <script src="/assets/site.js?v=20261121d" defer></script>
+  <script src="/assets/lab-fx.js?v=20261121d" defer></script>
   <style>
     /* ══ HERO ══════════════════════════════════════════════════ */
     .hero {
@@ -95,9 +95,9 @@
       animation-delay: calc(0.3s + var(--i) * 0.25s);
     }
     @keyframes orbitDraw { to { stroke-dashoffset: 0; } }
-    .emblem-atom .electron { fill: #22d3ee; filter: drop-shadow(0 0 4px #22d3ee); opacity: 0; transition: opacity 0.8s ease; }
-    .emblem-atom .e2 { fill: #e879f9; filter: drop-shadow(0 0 4px #e879f9); }
-    .emblem-atom .e3 { fill: #fff; filter: drop-shadow(0 0 4px #a78bfa); }
+    .emblem-atom .electron { fill: #22d3ee; opacity: 0; transition: opacity 0.8s ease; }
+    .emblem-atom .e2 { fill: #e879f9; }
+    .emblem-atom .e3 { fill: #fff; }
     .lab-emblem.is-formed .electron { opacity: 1; }
     .emblem-logo {
       position: absolute; left: 50%; top: 50%; width: 80%; height: auto;
@@ -132,18 +132,25 @@
     .ink-formula .arrow { color: var(--accent-pink); }
     .ink-formula .ink { color: #fff; font-weight: 700; letter-spacing: 0.12em; text-shadow: 0 0 18px rgba(232,121,249,0.8); }
 
-    /* scroll: the hero writing dissolves, each piece drifting up and blurring like ink in water */
+    /* scroll: the headline letters drift apart like ink in water (transform + opacity only: cheap) */
     .dz {
       display: inline-block;
       transform: translate(calc(var(--sp, 0) * var(--dx)), calc(var(--sp, 0) * var(--dy))) rotate(calc(var(--sp, 0) * var(--rz)));
-      filter: blur(calc(var(--sp, 0) * var(--bl)));
       opacity: calc(1 - var(--sp, 0) * var(--fo));
-      will-change: transform, opacity, filter;
+    }
+    /* the smaller copy fades as whole blocks (fill-mode backwards so the intro animation hands over cleanly) */
+    .hero .eyebrow-label, .hero-lead, .hero-facts, .hero-hint {
+      animation-fill-mode: backwards !important;
+      opacity: calc(1 - var(--sp, 0) * 1.8);
+      translate: 0 calc(var(--sp, 0) * -40px);
     }
     .dz-word { white-space: nowrap; }
-    .dz-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .dz-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; clip-path: inset(50%); }
+    /* each letter carries its own gradient once split, so the parent must not paint one (it leaked through the hidden copy) */
+    .hero h1 .grad-text:has(.dz) { background: none; }
     .hero h1 .grad-text .dz {
       background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: none;   /* a shadow would paint over gradient lettering */
     }
 
     /* Letterbox bars that open like a film starting */
@@ -274,14 +281,16 @@
     .step a:hover .btn-arrow { transform: translateX(4px); }
 
     /* ── Marquee of styles ── */
+    /* styles marquee: a tilted tattoo banner across the page */
     .marquee {
       position: relative; z-index: 1;
       overflow: hidden;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      padding: 26px 0;
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-      mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+      width: 106%; margin: 30px -3%;
+      padding: 16px 0;
+      background: var(--grad);
+      border-top: 3px solid #120c1c; border-bottom: 3px solid #120c1c;
+      box-shadow: 0 0 0 1.5px rgba(233,213,255,0.6), 0 24px 60px -20px rgba(168,85,247,0.6);
+      transform: rotate(-2deg);
     }
     .marquee-track {
       display: flex; width: max-content;
@@ -293,12 +302,12 @@
       line-height: 1;
       text-transform: uppercase;
       padding: 0 28px;
-      color: var(--text);
+      color: #120c1c;
       white-space: nowrap;
       display: inline-flex; align-items: center; gap: 56px;
     }
-    .marquee span:nth-child(even) { color: transparent; -webkit-text-stroke: 1px rgba(245,243,250,0.45); }
-    .marquee span::after { content: '✦'; font-size: 0.4em; color: var(--accent-pink); -webkit-text-stroke: 0; }
+    .marquee span:nth-child(even) { color: transparent; -webkit-text-stroke: 1.5px #120c1c; }
+    .marquee span::after { content: '✦'; font-size: 0.45em; color: #fff; -webkit-text-stroke: 0; }
     @keyframes marquee { to { transform: translateX(-50%); } }
 
     /* ── Instagram work ── */
@@ -487,18 +496,18 @@
           <p class="ink-formula" data-dissolve="words" title="Black tattoo ink: carbon black pigment in a glycerin and water carrier">
             <span class="f">C + C₃H₈O₃ + H₂O</span> <span class="arrow">→</span> <span class="f ink">INK</span>
           </p>
-          <span class="eyebrow-label" data-dissolve="words"><span>Tattoo studio · Enfield, North London</span></span>
+          <span class="eyebrow-label"><span>Tattoo studio · Enfield, North London</span></span>
           <h1 data-dissolve="letters">
             <span class="line"><span>Where</span></span>
             <span class="line"><span class="grad-text">Science</span></span>
             <span class="line"><span>Meets Ink.</span></span>
           </h1>
-          <p class="hero-lead" data-dissolve="words">Custom tattoos designed with you and done properly. Book online, walk in, or spread the cost with 0% finance.</p>
+          <p class="hero-lead">Custom tattoos designed with you and done properly. Book online, walk in, or spread the cost with 0% finance.</p>
           <div class="hero-ctas">
             <a href="/contact" class="btn-primary">Book a Session <span class="btn-arrow">→</span></a>
             <a href="#work" class="btn-ghost">See Our Work</a>
           </div>
-          <ul class="hero-facts" data-dissolve="words">
+          <ul class="hero-facts">
             <li><span>Open Mon–Sat, 11am–7pm</span></li>
             <li><span>Walk-ins welcome</span></li>
             <li><span>0% finance available</span></li>
@@ -526,19 +535,19 @@
 
         <div class="steps">
           <article class="step glass-card" data-reveal>
-            <span class="step-num">01</span>
+            <span class="el-tile" aria-hidden="true"><b>1</b><strong>Id</strong><small>Idea</small></span>
             <h3>Tell us your idea</h3>
             <p>Fill in the short booking form with your idea, size and placement. Or just walk in during opening hours.</p>
             <a href="/contact">Book online <span class="btn-arrow">→</span></a>
           </article>
           <article class="step glass-card" data-reveal style="--d:.12s">
-            <span class="step-num">02</span>
+            <span class="el-tile" aria-hidden="true"><b>2</b><strong>Ds</strong><small>Design</small></span>
             <h3>We design it with you</h3>
             <p>Your artist builds a custom design from your brief and refines it with you until it's right. Nothing generic.</p>
             <a href="/where-are-we">Visit the studio <span class="btn-arrow">→</span></a>
           </article>
           <article class="step glass-card" data-reveal style="--d:.24s">
-            <span class="step-num">03</span>
+            <span class="el-tile" aria-hidden="true"><b>3</b><strong>Tt</strong><small>Tattoo</small></span>
             <h3>Get tattooed</h3>
             <p>Sit back in the chair. Want to spread the cost? Payment plans from 1–12 months are available.</p>
             <a href="/finance">Finance options <span class="btn-arrow">→</span></a>
@@ -582,8 +591,10 @@
       </div>
     </section>
 
+    <div class="flash-divider" aria-hidden="true"><img src="/assets/flash-flask.svg" alt="" width="120" height="120" loading="lazy"/></div>
+
     <!-- ═══ FINANCE ═══ -->
-    <section class="section" style="padding-top:0">
+    <section class="section" style="padding-top:clamp(56px, 8vw, 96px)">
       <div class="section-inner">
         <div class="finance-feature glass-card" data-reveal>
           <div class="big-zero">0%<small>Finance</small></div>

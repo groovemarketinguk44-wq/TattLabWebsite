@@ -68,37 +68,28 @@
     update();
   }
 
-  /* ── Cinematic page transitions between internal pages ── */
-  if (!reduceMotion) {
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('a');
-      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      if (a.target === '_blank' || a.hasAttribute('download')) return;
-      const url = new URL(a.href, location.href);
-      if (url.origin !== location.origin) return;
-      if (url.pathname === location.pathname && url.hash) return; // in-page anchor
-      e.preventDefault();
-      body.classList.add('is-leaving');
-      setTimeout(() => { location.href = url.href; }, 320);
-    });
-    // Coming back via the back button: make sure the page is visible again
-    window.addEventListener('pageshow', (e) => {
-      if (e.persisted) body.classList.remove('is-leaving');
-    });
-  }
+  /* Page-to-page transitions are handled natively by the browser (CSS @view-transition),
+     so links open immediately with no artificial delay. */
 
   /* ── Scroll progress: a thin "fluid" bar filling across the top ── */
   const bar = document.createElement('div');
   bar.className = 'scroll-progress';
   bar.setAttribute('aria-hidden', 'true');
   body.appendChild(bar);
+  // measure the page height only on resize, never during scroll (avoids layout thrash)
+  let maxScroll = 1, barTick = false;
+  const measure = () => { maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight); setBar(); };
   const setBar = () => {
-    const max = doc.scrollHeight - window.innerHeight;
-    bar.style.transform = `scaleX(${max > 0 ? Math.min(1, window.scrollY / max) : 0})`;
+    barTick = false;
+    bar.style.transform = `scaleX(${Math.min(1, window.scrollY / maxScroll).toFixed(4)})`;
   };
-  window.addEventListener('scroll', setBar, { passive: true });
-  window.addEventListener('resize', setBar);
-  setBar();
+  window.addEventListener('scroll', () => {
+    if (!barTick) { barTick = true; requestAnimationFrame(setBar); }
+  }, { passive: true });
+  window.addEventListener('resize', measure);
+  window.addEventListener('load', measure);
+  if ('ResizeObserver' in window) new ResizeObserver(measure).observe(body);
+  measure();
 
   if (!reduceMotion) {
     /* ── Tap / click burst on every button and link: a little "pop" ── */
