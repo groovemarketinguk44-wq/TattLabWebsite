@@ -22,10 +22,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/shared.css?v=20261121a"/>
+  <link rel="stylesheet" href="/shared.css?v=20261121b"/>
   <script>document.documentElement.classList.add('js')</script>
-  <script src="/assets/site.js?v=20261121a" defer></script>
-  <script src="/assets/lab-fx.js?v=20261121a" defer></script>
+  <script src="/assets/site.js?v=20261121b" defer></script>
+  <script src="/assets/lab-fx.js?v=20261121b" defer></script>
   <style>
     /* ══ HERO ══════════════════════════════════════════════════ */
     .hero {
@@ -65,8 +65,8 @@
     /* ══ LAB EMBLEM: logo inside a benzene ring, synthesised on load ══ */
     .lab-emblem {
       position: relative;
-      width: clamp(120px, 15vw, 200px); aspect-ratio: 1;
-      margin: 0 0 22px 8px;
+      width: clamp(190px, 22vw, 290px); aspect-ratio: 1;
+      margin: 4px 0 34px 22px;
       transform-origin: 30% 50%;
       transform: translateY(calc(var(--sp, 0) * -70px)) scale(calc(1 - var(--sp, 0) * 0.4));
       opacity: calc(1 - var(--sp, 0) * 1.2);
@@ -119,6 +119,30 @@
       .emblem-svg .hex { stroke-dashoffset: 0; animation: none; }
       .emblem-svg .vtx circle { transform: none; animation: none; }
       .emblem-svg .dbl line, .emblem-svg .sub, .emblem-svg .sub-label { opacity: 1; animation: none; }
+    }
+
+    /* tattoo ink "equation" under the emblem */
+    .ink-formula {
+      font-family: var(--font-mono); font-size: clamp(14px, 1.6vw, 17px); letter-spacing: 0.04em;
+      color: var(--text-dim); margin: -6px 0 26px;
+      animation: fadeUp 1s var(--ease-cine) 2s both;
+    }
+    .ink-formula .arrow { color: var(--accent-pink); }
+    .ink-formula .ink { color: #fff; font-weight: 700; letter-spacing: 0.12em; text-shadow: 0 0 18px rgba(232,121,249,0.8); }
+    .ink-formula small { display: block; margin-top: 6px; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dimmer); }
+
+    /* scroll: the hero writing dissolves, each piece drifting up and blurring like ink in water */
+    .dz {
+      display: inline-block;
+      transform: translate(calc(var(--sp, 0) * var(--dx)), calc(var(--sp, 0) * var(--dy))) rotate(calc(var(--sp, 0) * var(--rz)));
+      filter: blur(calc(var(--sp, 0) * var(--bl)));
+      opacity: calc(1 - var(--sp, 0) * var(--fo));
+      will-change: transform, opacity, filter;
+    }
+    .dz-word { white-space: nowrap; }
+    .dz-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .hero h1 .grad-text .dz {
+      background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
     }
 
     /* Letterbox bars that open like a film starting */
@@ -460,7 +484,7 @@
                   <line x1="35.9" y1="123.7" x2="35.9" y2="76.3"/>
                 </g>
                 <line class="sub" x1="176.2" y1="56" x2="200" y2="42"/>
-                <text class="sub-label" x="203" y="40">Ink</text>
+                <text class="sub-label" x="203" y="40">C</text>
                 <g class="vtx">
                   <circle cx="100" cy="12" r="4.5" style="--i:0"/><circle cx="176.2" cy="56" r="4.5" style="--i:1"/>
                   <circle cx="176.2" cy="144" r="4.5" style="--i:2"/><circle cx="100" cy="188" r="4.5" style="--i:3"/>
@@ -470,21 +494,25 @@
             </svg>
             <img class="emblem-logo" src="/assets/logo-transparent.png?v=1" alt="" width="192" height="163"/>
           </div>
-          <span class="eyebrow-label">Tattoo studio · Enfield, North London</span>
-          <h1>
+          <p class="ink-formula" data-dissolve="words" title="Black tattoo ink: carbon black pigment in a glycerin and water carrier">
+            <span class="f">C + C₃H₈O₃ + H₂O</span> <span class="arrow">→</span> <span class="f ink">INK</span>
+            <small>carbon black · glycerin · water</small>
+          </p>
+          <span class="eyebrow-label" data-dissolve="words"><span>Tattoo studio · Enfield, North London</span></span>
+          <h1 data-dissolve="letters">
             <span class="line"><span>Where</span></span>
             <span class="line"><span class="grad-text">Science</span></span>
             <span class="line"><span>Meets Ink.</span></span>
           </h1>
-          <p class="hero-lead">Custom tattoos designed with you and done properly. Book online, walk in, or spread the cost with 0% finance.</p>
+          <p class="hero-lead" data-dissolve="words">Custom tattoos designed with you and done properly. Book online, walk in, or spread the cost with 0% finance.</p>
           <div class="hero-ctas">
             <a href="/contact" class="btn-primary">Book a Session <span class="btn-arrow">→</span></a>
             <a href="#work" class="btn-ghost">See Our Work</a>
           </div>
-          <ul class="hero-facts">
-            <li>Open Mon–Sat, 11am–7pm</li>
-            <li>Walk-ins welcome</li>
-            <li>0% finance available</li>
+          <ul class="hero-facts" data-dissolve="words">
+            <li><span>Open Mon–Sat, 11am–7pm</span></li>
+            <li><span>Walk-ins welcome</span></li>
+            <li><span>0% finance available</span></li>
           </ul>
           <p class="hero-hint" aria-hidden="true">⚗ Tap the lab to start a reaction · scroll to heat it up</p>
         </div>
@@ -694,6 +722,53 @@
     "servesCuisine": null,
     "sameAs": ["https://www.instagram.com/tattlabstudios"]
   }
+  </script>
+  <script>
+    /* Split the hero writing into letters / words so it can dissolve on scroll (lab-fx.js drives --sp) */
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var R = function (a, b) { return a + Math.random() * (b - a); };
+      function piece(text, cls) {
+        var s = document.createElement('span');
+        s.className = 'dz' + (cls ? ' ' + cls : '');
+        s.textContent = text;
+        s.style.setProperty('--dx', R(-70, 70).toFixed(0) + 'px');
+        s.style.setProperty('--dy', R(-160, -30).toFixed(0) + 'px');
+        s.style.setProperty('--rz', R(-45, 45).toFixed(0) + 'deg');
+        s.style.setProperty('--bl', R(4, 12).toFixed(1) + 'px');
+        s.style.setProperty('--fo', R(1.2, 2).toFixed(2));
+        s.setAttribute('aria-hidden', 'true');
+        return s;
+      }
+      function split(node, mode) {
+        Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+          if (child.nodeType === 1) {
+            if (child.tagName === 'SMALL' || child.tagName === 'LI' || child.tagName === 'SPAN' && !child.classList.contains('dz')) split(child, mode);
+            return;
+          }
+          if (child.nodeType !== 3 || !child.textContent.trim()) return;
+          var frag = document.createDocumentFragment();
+          child.textContent.split(/(\s+)/).forEach(function (w) {
+            if (!w) return;
+            if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(' ')); return; }
+            if (mode === 'letters') {
+              var word = document.createElement('span');
+              word.className = 'dz-word';
+              Array.from(w).forEach(function (ch) { word.appendChild(piece(ch)); });
+              frag.appendChild(word);
+            } else frag.appendChild(piece(w));
+          });
+          var sr = document.createElement('span');
+          sr.className = 'dz-sr';
+          sr.textContent = child.textContent;
+          frag.insertBefore(sr, frag.firstChild);
+          child.parentNode.replaceChild(frag, child);
+        });
+      }
+      document.querySelectorAll('.hero [data-dissolve]').forEach(function (el) {
+        split(el, el.getAttribute('data-dissolve'));
+      });
+    })();
   </script>
   <script>
     /* Instagram: latest posts from our own API, Elfsight widget as a fallback */
