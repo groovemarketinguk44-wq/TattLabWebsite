@@ -1,10 +1,15 @@
 /* TattLabStudios — live "lab" backdrop
    Drifting molecules with bonds and orbiting electrons, floating chemical
-   equations, rising bubbles that pop, and reactions that flash, shockwave and
-   throw sparks. Tap / click anywhere on it to set off your own reaction.
+   equations and rising bubbles. Reactions look like real chemistry: two atoms
+   pull together, bond, and release a slow cloud of coloured ink that diffuses
+   like a drop in water, with a fizz of bubbles and the product formula.
 
-   Usage: add data-lab-fx="full" (homepage hero) or data-lab-fx="lite"
-   (inner page headers) to any element. */
+   - On load (homepage): particles converge and "synthesise" the logo emblem.
+   - On scroll: the lab heats up (molecules agitate, more fizz and reactions)
+     and the emblem's benzene ring turns with the page.
+   - Tap / click: drops a bead of ink that catalyses nearby atoms.
+
+   Usage: data-lab-fx="full" (homepage hero) or "lite" (inner page headers). */
 (function () {
   const hosts = document.querySelectorAll('[data-lab-fx]');
   if (!hosts.length) return;
@@ -28,29 +33,39 @@
     'Zn + 2HCl → ZnCl₂ + H₂↑',
     'CaCO₃ → CaO + CO₂↑',
   ];
-  const PRODUCTS = ['H₂O', 'CO₂↑', 'O₂↑', 'NaCl', 'NH₃', '+ΔE', 'H₂↑', 'ΔH < 0', 'Fe', 'INK'];
+  const PRODUCTS = ['H₂O', 'CO₂', 'O₂', 'NaCl', 'NH₃', 'C₆H₆', 'Fe₂O₃', 'TiO₂', 'CH₄', 'H₂O₂'];
 
   const R = (a, b) => a + Math.random() * (b - a);
   const pick = (arr) => arr[(Math.random() * arr.length) | 0];
+  const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+  const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
-  /* Pre-rendered glow sprites: far cheaper than canvas shadowBlur */
+  /* Pre-rendered sprites (cheaper than shadowBlur): a bright atom glow and a soft ink cloud */
   const sprites = {};
-  function glow(color) {
-    if (sprites[color]) return sprites[color];
+  function sprite(color, soft) {
+    const key = color + (soft ? 's' : 'g');
+    if (sprites[key]) return sprites[key];
     const c = document.createElement('canvas');
-    c.width = c.height = 64;
+    c.width = c.height = 128;
     const g = c.getContext('2d');
-    const grd = g.createRadialGradient(32, 32, 0, 32, 32, 32);
-    grd.addColorStop(0, color);
-    grd.addColorStop(0.22, color + 'aa');
-    grd.addColorStop(1, color + '00');
+    const grd = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    if (soft) {
+      grd.addColorStop(0, color + '70');
+      grd.addColorStop(0.45, color + '30');
+      grd.addColorStop(1, color + '00');
+    } else {
+      grd.addColorStop(0, color);
+      grd.addColorStop(0.22, color + 'aa');
+      grd.addColorStop(1, color + '00');
+    }
     g.fillStyle = grd;
-    g.fillRect(0, 0, 64, 64);
-    return (sprites[color] = c);
+    g.fillRect(0, 0, 128, 128);
+    return (sprites[key] = c);
   }
 
   function Lab(host) {
     const full = host.dataset.labFx !== 'lite';
+    const emblem = host.querySelector('.lab-emblem');
     const canvas = document.createElement('canvas');
     canvas.className = 'lab-canvas';
     canvas.setAttribute('aria-hidden', 'true');
@@ -58,9 +73,9 @@
     const ctx = canvas.getContext('2d');
 
     let W = 0, H = 0, mobile = false, D = 120;
-    const atoms = [], eqs = [], bubbles = [], sparks = [], rings = [], flashes = [], labels = [];
+    const atoms = [], eqs = [], bubbles = [], clouds = [], ripples = [], labels = [], links = [], seeds = [];
     const pointer = { x: -9999, y: -9999, on: false, lastTrail: 0 };
-    let raf = 0, last = 0, now = 0, nextReaction = 2600, nextBubble = 0, inView = true;
+    let raf = 0, last = 0, now = 0, nextReaction = 3200, nextBubble = 0, inView = true, energy = 0;
 
     /* ── factories ── */
     const makeAtom = () => ({
@@ -68,7 +83,7 @@
       vx: R(-0.25, 0.25), vy: R(-0.25, 0.25),
       r: R(3, full ? 9.5 : 7.5),
       el: pick(ELEMENTS), c: pick(COLORS),
-      spin: R(-1, 1), tilt: R(0, Math.PI),
+      spin: R(-1, 1), tilt: R(0, Math.PI), busy: false,
     });
 
     function makeEq(initial) {
@@ -77,7 +92,7 @@
       const text = pick(EQUATIONS);
       const w = ctx.measureText(text).width;
       return {
-        text, size, w,
+        text, size,
         x: R(8, Math.max(9, W - w - 8)),
         y: initial ? R(H * 0.1, H) : H + 20,
         vy: -R(0.12, 0.28),
@@ -87,63 +102,109 @@
       };
     }
 
-    function focusPoint() {
-      // keep the big reactions away from the headline so the text stays readable
-      if (mobile) return { x: R(0.1, 0.9) * W, y: R(0.1, full ? 0.4 : 0.85) * H };
-      return { x: R(0.55, 0.94) * W, y: R(0.18, 0.82) * H };
-    }
-
-    /* ── a reaction: flash + shockwave + sparks + product label ── */
-    function bang(x, y, power) {
+    /* ── chemistry ── */
+    // a slow cloud of ink diffusing outwards, like a drop in water
+    function bloom(x, y, c1, c2, power) {
       power = power || 1;
-      flashes.push({ x, y, r: 60 * power, life: 0, max: 520 });
-      rings.push({ x, y, max: 110 * power, life: 0, dur: 760, w: 2.6 });
-      rings.push({ x, y, max: 70 * power, life: -120, dur: 640, w: 1.6 });
-      const n = Math.round((mobile ? 16 : 26) * power);
-      for (let i = 0; i < n && sparks.length < 420; i++) {
-        const a = R(0, Math.PI * 2), s = R(1.2, 5.2) * Math.sqrt(power);
-        sparks.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 0, max: R(450, 1100), c: pick(COLORS), size: R(1, 2.6) });
+      for (let i = 0; i < 4; i++) {
+        clouds.push({
+          x: x + R(-10, 10) * power, y: y + R(-10, 10) * power,
+          vx: R(-0.12, 0.12), vy: R(-0.22, 0.02),
+          r0: 6, r1: R(60, 110) * power,
+          life: 0, max: R(2600, 3800),
+          c: i % 2 ? c1 : c2,
+        });
       }
-      labels.push({ x, y, text: pick(PRODUCTS), life: 0, max: 1500, c: pick(COLORS) });
-      // push nearby atoms away
-      const reach = 170 * power;
-      atoms.forEach((a) => {
-        const dx = a.x - x, dy = a.y - y, d = Math.hypot(dx, dy) || 1;
-        if (d < reach) {
-          const f = (1 - d / reach) * 3.2 * power;
-          a.vx += (dx / d) * f; a.vy += (dy / d) * f;
-        }
-      });
+      ripples.push({ x, y, max: 55 * power, life: 0, dur: 1400 });
       start();
     }
 
-    function popBubble(b) {
-      rings.push({ x: b.x, y: b.y, max: b.r * 4 + 8, life: 0, dur: 380, w: 1.2 });
-      for (let i = 0; i < 6; i++) {
-        const a = R(0, Math.PI * 2), s = R(0.6, 1.8);
-        sparks.push({ x: b.x, y: b.y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 0, max: R(250, 500), c: b.c, size: R(0.8, 1.6) });
+    // effervescence: a burst of small bubbles rising from a point
+    function fizz(x, y, n) {
+      for (let i = 0; i < n; i++) {
+        bubbles.push({
+          x: x + R(-12, 12), y: y + R(-6, 6), r: R(1.2, 3.4),
+          vy: -R(0.5, 1.5), wob: R(0, 6.28), popAt: y - R(30, 140), c: pick(COLORS),
+        });
       }
     }
 
+    function label(x, y, text, c) {
+      labels.push({ x, y, text, c, life: 0, max: 2200 });
+    }
+
+    // two atoms attract, bond, then react
+    function react(a, b) {
+      if (a.busy || b.busy) return;
+      a.busy = b.busy = true;
+      links.push({ a, b, life: 0, max: 900 });
+      start();
+    }
+    function finishReaction(lk) {
+      const { a, b } = lk;
+      a.busy = b.busy = false;
+      const x = (a.x + b.x) / 2, y = (a.y + b.y) / 2;
+      bloom(x, y, a.c, b.c, 1);
+      fizz(x, y, mobile ? 6 : 9);
+      label(x, y, pick(PRODUCTS), pick(COLORS));
+      // products drift apart, recoloured
+      const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1;
+      a.vx -= (dx / d) * 0.8; a.vy -= (dy / d) * 0.8;
+      b.vx += (dx / d) * 0.8; b.vy += (dy / d) * 0.8;
+      a.el = pick(ELEMENTS); b.el = pick(ELEMENTS);
+      const nc = pick(COLORS); a.c = nc; b.c = nc;
+    }
+
     function ambientReaction() {
-      // prefer two atoms that are already bonded inside the focus area: they "react"
-      let best = null;
-      for (let i = 0; i < atoms.length && !best; i++) {
+      let best = null, bestD = Infinity;
+      for (let i = 0; i < atoms.length; i++) {
+        const a = atoms[i];
+        if (a.busy) continue;
         for (let j = i + 1; j < atoms.length; j++) {
-          const a = atoms[i], b = atoms[j];
+          const b = atoms[j];
+          if (b.busy) continue;
           const d = Math.hypot(a.x - b.x, a.y - b.y);
-          const inFocus = mobile ? a.y < H * (full ? 0.45 : 0.9) : a.x > W * 0.5;
-          if (d < D * 0.55 && inFocus) { best = [a, b]; break; }
+          if (d < D * 0.9 && d < bestD && Math.random() < 0.5) { best = [a, b]; bestD = d; }
         }
       }
-      if (best) {
-        const [a, b] = best;
-        a.el = pick(ELEMENTS); b.el = pick(ELEMENTS); a.c = pick(COLORS); b.c = pick(COLORS);
-        bang((a.x + b.x) / 2, (a.y + b.y) / 2, R(0.8, 1.2));
-      } else {
-        const p = focusPoint();
-        bang(p.x, p.y, R(0.7, 1.1));
+      if (best) react(best[0], best[1]);
+    }
+
+    // tap: drop a bead of ink that catalyses nearby atoms
+    function catalyse(x, y) {
+      bloom(x, y, pick(COLORS), pick(COLORS), 1.4);
+      fizz(x, y, mobile ? 10 : 14);
+      label(x, y, pick(PRODUCTS), '#22d3ee');
+      const near = atoms
+        .filter((a) => !a.busy && Math.hypot(a.x - x, a.y - y) < 170)
+        .sort((a, b) => Math.hypot(a.x - x, a.y - y) - Math.hypot(b.x - x, b.y - y));
+      for (let i = 0; i + 1 < near.length && i < 4; i += 2) react(near[i], near[i + 1]);
+    }
+
+    // page load: particles converge and "synthesise" the emblem
+    function synthesise() {
+      if (!emblem) return;
+      const er = emblem.getBoundingClientRect(), cr = canvas.getBoundingClientRect();
+      const tx = er.left - cr.left + er.width / 2, ty = er.top - cr.top + er.height / 2;
+      const rad = er.width * 0.42;
+      const n = mobile ? 46 : 70;
+      for (let i = 0; i < n; i++) {
+        const ang = R(0, Math.PI * 2), dist = R(Math.max(W, H) * 0.35, Math.max(W, H) * 0.75);
+        const sx = tx + Math.cos(ang) * dist, sy = ty + Math.sin(ang) * dist;
+        const ta = R(0, Math.PI * 2), tr = R(0, rad);
+        seeds.push({
+          sx, sy,
+          cx: (sx + tx) / 2 + R(-160, 160), cy: (sy + ty) / 2 + R(-160, 160),
+          tx: tx + Math.cos(ta) * tr, ty: ty + Math.sin(ta) * tr,
+          life: -R(0, 500), max: R(1100, 1500), c: pick(COLORS),
+        });
       }
+      setTimeout(() => {
+        bloom(tx, ty, '#a78bfa', '#e879f9', 1.8);
+        fizz(tx, ty + er.height * 0.3, 16);
+        emblem.classList.add('is-formed');
+      }, 1650);
+      start();
     }
 
     /* ── sizing ── */
@@ -158,8 +219,8 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       const nAtoms = full ? (mobile ? 26 : 46) : (mobile ? 12 : 22);
+      if (atoms.length > nAtoms && !atoms.some((a) => a.busy)) atoms.length = nAtoms;
       while (atoms.length < nAtoms) atoms.push(makeAtom());
-      atoms.length = nAtoms;
       atoms.forEach((a) => { if (a.x > W) a.x = R(0, W); if (a.y > H) a.y = R(0, H); });
 
       const nEqs = full ? (mobile ? 4 : 7) : (mobile ? 2 : 4);
@@ -172,14 +233,15 @@
     /* ── simulation ── */
     function update(dt) {
       const k = dt / 16.67;
+      energy *= Math.pow(0.95, k);
+      const heat = Math.min(energy, 3);
 
       atoms.forEach((a) => {
-        // pointer repels atoms, so the molecules "react" to your finger / cursor
         if (pointer.on) {
           const dx = a.x - pointer.x, dy = a.y - pointer.y, d = Math.hypot(dx, dy) || 1;
-          if (d < 120) { const f = (1 - d / 120) * 0.35 * k; a.vx += (dx / d) * f; a.vy += (dy / d) * f; }
+          if (d < 120) { const f = (1 - d / 120) * 0.3 * k; a.vx += (dx / d) * f; a.vy += (dy / d) * f; }
         }
-        // settle back to a slow drift after being pushed
+        if (heat > 0.05) { a.vx += R(-1, 1) * heat * 0.1 * k; a.vy += R(-1, 1) * heat * 0.1 * k; }  // heated by scrolling
         const sp = Math.hypot(a.vx, a.vy);
         if (sp > 0.35) { const damp = Math.pow(0.965, k); a.vx *= damp; a.vy *= damp; }
         a.x += a.vx * k; a.y += a.vy * k;
@@ -188,40 +250,53 @@
         if (a.y < -m) a.y = H + m; else if (a.y > H + m) a.y = -m;
       });
 
+      for (let i = links.length - 1; i >= 0; i--) {
+        const lk = links[i];
+        lk.life += dt;
+        const dx = lk.b.x - lk.a.x, dy = lk.b.y - lk.a.y, d = Math.hypot(dx, dy) || 1;
+        if (d > 14) {
+          const f = 0.09 * k;
+          lk.a.vx += (dx / d) * f; lk.a.vy += (dy / d) * f;
+          lk.b.vx -= (dx / d) * f; lk.b.vy -= (dy / d) * f;
+        }
+        if (lk.life > lk.max || d < 14) { links.splice(i, 1); finishReaction(lk); }
+      }
+
       for (let i = 0; i < eqs.length; i++) {
         const e = eqs[i];
-        e.y += e.vy * k; e.life += dt;
+        e.y += e.vy * k * (1 + heat); e.life += dt;
         if (e.life > e.max || e.y < -30) eqs[i] = makeEq(false);
       }
 
       if (now > nextBubble) {
-        bubbles.push({ x: R(0, W), y: H + 10, r: R(2, 7), vy: -R(0.4, 1.2), wob: R(0, 6.28), popAt: R(0.05, 0.75) * H, c: pick(COLORS) });
-        nextBubble = now + (full ? R(180, 420) : R(600, 1200));
+        bubbles.push({ x: R(0, W), y: H + 10, r: R(2, 6), vy: -R(0.4, 1.2), wob: R(0, 6.28), popAt: R(0.05, 0.75) * H, c: pick(COLORS) });
+        nextBubble = now + (full ? R(220, 480) : R(600, 1200)) / (1 + heat * 3);
       }
       for (let i = bubbles.length - 1; i >= 0; i--) {
         const b = bubbles[i];
-        b.y += b.vy * k;
+        b.y += b.vy * k * (1 + heat * 0.5);
         b.x += Math.sin(now / 500 + b.wob) * 0.35 * k;
-        if (b.y < b.popAt) { popBubble(b); bubbles.splice(i, 1); }
+        if (b.y < b.popAt) {
+          ripples.push({ x: b.x, y: b.y, max: b.r * 3 + 6, life: 0, dur: 420 });
+          bubbles.splice(i, 1);
+        }
       }
+      if (bubbles.length > 220) bubbles.splice(0, bubbles.length - 220);
 
-      for (let i = sparks.length - 1; i >= 0; i--) {
-        const s = sparks[i];
-        const drag = Math.pow(0.94, k);
-        s.vx *= drag; s.vy = s.vy * drag + 0.03 * k;
-        s.x += s.vx * k; s.y += s.vy * k; s.life += dt;
-        if (s.life > s.max) sparks.splice(i, 1);
-      }
-      [rings, flashes, labels].forEach((list) => {
+      clouds.forEach((c) => { c.x += c.vx * k; c.y += c.vy * k; });
+      seeds.forEach((s) => { s.life += dt; });
+      for (let i = seeds.length - 1; i >= 0; i--) if (seeds[i].life > seeds[i].max) seeds.splice(i, 1);
+      [clouds, ripples, labels].forEach((list) => {
         for (let i = list.length - 1; i >= 0; i--) {
           list[i].life += dt;
           if (list[i].life > (list[i].dur || list[i].max)) list.splice(i, 1);
         }
       });
 
+      nextReaction -= dt * heat * 1.5;                         // scrolling speeds reactions up
       if (now > nextReaction) {
         ambientReaction();
-        nextReaction = now + (full ? R(1600, 3800) : R(3500, 7500));
+        nextReaction = now + (full ? R(1800, 3600) : R(3500, 7000));
       }
     }
 
@@ -229,6 +304,17 @@
     function draw() {
       ctx.clearRect(0, 0, W, H);
       const bondAlpha = full ? 0.5 : 0.32;
+
+      // ink clouds sit underneath everything
+      ctx.globalCompositeOperation = 'lighter';
+      clouds.forEach((c) => {
+        const p = c.life / c.max;
+        const s = c.r0 + (c.r1 - c.r0) * easeOut(p);
+        ctx.globalAlpha = Math.min(1, p / 0.08) * Math.pow(1 - p, 1.3) * (full ? 0.9 : 0.6);
+        ctx.drawImage(sprite(c.c, true), c.x - s, c.y - s, s * 2, s * 2);
+      });
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = 'source-over';
 
       // bonds
       ctx.lineWidth = 1;
@@ -243,19 +329,32 @@
           const al = (1 - d / D) * bondAlpha;
           ctx.strokeStyle = `rgba(167,139,250,${al.toFixed(3)})`;
           ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-          if (d < D * 0.42 && (i + j) % 3 === 0) {           // double bond
+          if (d < D * 0.42 && (i + j) % 3 === 0) {
             const ox = (-dy / d) * 3, oy = (dx / d) * 3;
             ctx.beginPath(); ctx.moveTo(a.x + ox, a.y + oy); ctx.lineTo(b.x + ox, b.y + oy); ctx.stroke();
           }
         }
-        if (pointer.on) {                                      // bonds to your finger / cursor
+        if (pointer.on) {
           const d = Math.hypot(a.x - pointer.x, a.y - pointer.y);
           if (d < 160) {
-            ctx.strokeStyle = `rgba(34,211,238,${((1 - d / 160) * 0.7).toFixed(3)})`;
+            ctx.strokeStyle = `rgba(34,211,238,${((1 - d / 160) * 0.6).toFixed(3)})`;
             ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(pointer.x, pointer.y); ctx.stroke();
           }
         }
       }
+
+      // bonds that are forming right now: bright, pulsing
+      links.forEach((lk) => {
+        const p = lk.life / lk.max;
+        ctx.strokeStyle = '#f5d0fe';
+        ctx.globalAlpha = 0.35 + 0.5 * Math.abs(Math.sin(p * Math.PI * 3));
+        ctx.lineWidth = 1.6;
+        ctx.setLineDash([4, 4]);
+        ctx.lineDashOffset = -now / 30;
+        ctx.beginPath(); ctx.moveTo(lk.a.x, lk.a.y); ctx.lineTo(lk.b.x, lk.b.y); ctx.stroke();
+        ctx.setLineDash([]);
+      });
+      ctx.globalAlpha = 1;
 
       // equations
       eqs.forEach((e) => {
@@ -277,13 +376,23 @@
         ctx.beginPath(); ctx.arc(b.x - b.r * 0.35, b.y - b.r * 0.35, b.r * 0.22, 0, Math.PI * 2); ctx.fill();
       });
 
+      // ripples (popped bubbles, reaction points): thin, quiet rings
+      ripples.forEach((r) => {
+        const p = Math.min(1, r.life / r.dur);
+        ctx.globalAlpha = (1 - p) * 0.6;
+        ctx.strokeStyle = '#c4b5fd';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(r.x, r.y, r.max * easeOut(p), 0, Math.PI * 2); ctx.stroke();
+      });
+      ctx.globalAlpha = 1;
+
       ctx.globalCompositeOperation = 'lighter';
 
       // atoms (+ electron orbits on the bigger ones)
       atoms.forEach((a) => {
         const s = a.r * 6;
-        ctx.globalAlpha = full ? 0.85 : 0.6;
-        ctx.drawImage(glow(a.c), a.x - s / 2, a.y - s / 2, s, s);
+        ctx.globalAlpha = (full ? 0.85 : 0.6) * (a.busy ? 1.3 : 1);
+        ctx.drawImage(sprite(a.c), a.x - s / 2, a.y - s / 2, s, s);
         ctx.globalAlpha = 1;
         ctx.fillStyle = a.c;
         ctx.beginPath(); ctx.arc(a.x, a.y, a.r * 0.55, 0, Math.PI * 2); ctx.fill();
@@ -300,47 +409,29 @@
         }
       });
 
-      // flashes
-      flashes.forEach((f) => {
-        const p = f.life / f.max;
-        const s = f.r * (0.6 + p * 1.6) * 2;
-        ctx.globalAlpha = Math.max(0, 1 - p);
-        ctx.drawImage(glow('#fdf4ff'), f.x - s / 2, f.y - s / 2, s, s);
-        ctx.drawImage(glow('#e879f9'), f.x - s, f.y - s, s * 2, s * 2);
+      // converging particles that build the emblem
+      seeds.forEach((s) => {
+        if (s.life < 0) return;
+        const p = easeInOut(Math.min(1, s.life / s.max));
+        const u = 1 - p;
+        const x = u * u * s.sx + 2 * u * p * s.cx + p * p * s.tx;
+        const y = u * u * s.sy + 2 * u * p * s.cy + p * p * s.ty;
+        ctx.globalAlpha = Math.min(1, s.life / 200) * (p > 0.85 ? (1 - p) / 0.15 : 1);
+        ctx.drawImage(sprite(s.c), x - 7, y - 7, 14, 14);
+        ctx.fillStyle = '#fff';
+        ctx.beginPath(); ctx.arc(x, y, 1.3, 0, Math.PI * 2); ctx.fill();
       });
-
-      // shockwaves
-      rings.forEach((r) => {
-        if (r.life < 0) return;
-        const p = Math.min(1, r.life / r.dur);
-        const e = 1 - Math.pow(1 - p, 3);
-        ctx.globalAlpha = 1 - p;
-        ctx.strokeStyle = '#c4b5fd';
-        ctx.lineWidth = r.w * (1 - p) + 0.3;
-        ctx.beginPath(); ctx.arc(r.x, r.y, r.max * e, 0, Math.PI * 2); ctx.stroke();
-      });
-
-      // sparks (streaks + glow)
-      sparks.forEach((s) => {
-        const p = s.life / s.max;
-        ctx.globalAlpha = Math.max(0, 1 - p);
-        ctx.strokeStyle = s.c;
-        ctx.lineWidth = s.size;
-        ctx.beginPath(); ctx.moveTo(s.x - s.vx * 3, s.y - s.vy * 3); ctx.lineTo(s.x, s.y); ctx.stroke();
-        const g = s.size * 6;
-        ctx.drawImage(glow(s.c), s.x - g / 2, s.y - g / 2, g, g);
-      });
-
+      ctx.globalAlpha = 1;
       ctx.globalCompositeOperation = 'source-over';
 
-      // product labels floating out of each reaction
+      // product formulas rising out of each reaction
       labels.forEach((l) => {
         const p = l.life / l.max;
-        ctx.globalAlpha = Math.max(0, p < 0.15 ? p / 0.15 : 1 - (p - 0.15) / 0.85);
-        ctx.font = `600 ${mobile ? 14 : 17}px "Space Grotesk", sans-serif`;
+        ctx.globalAlpha = Math.max(0, p < 0.15 ? p / 0.15 : 1 - (p - 0.15) / 0.85) * 0.9;
+        ctx.font = `600 ${mobile ? 14 : 16}px "Space Mono", monospace`;
         ctx.fillStyle = l.c;
         ctx.textAlign = 'center';
-        ctx.fillText(l.text, l.x, l.y - 18 - p * 46);
+        ctx.fillText(l.text, l.x, l.y - 16 - p * 40);
         ctx.textAlign = 'start';
       });
       ctx.globalAlpha = 1;
@@ -373,10 +464,9 @@
     }
     host.addEventListener('pointermove', (e) => {
       setPointer(e);
-      if (!reduce && now - pointer.lastTrail > 45) {             // sparkle trail
+      if (!reduce && now - pointer.lastTrail > 90) {            // a trail of tiny bubbles
         pointer.lastTrail = now;
-        const a = R(0, Math.PI * 2);
-        sparks.push({ x: pointer.x, y: pointer.y, vx: Math.cos(a) * 0.8, vy: Math.sin(a) * 0.8, life: 0, max: 500, c: '#22d3ee', size: 1.2 });
+        fizz(pointer.x, pointer.y, 1);
       }
     }, { passive: true });
     host.addEventListener('pointerleave', () => { pointer.on = false; });
@@ -384,12 +474,30 @@
     host.addEventListener('pointerdown', (e) => {
       if (reduce || e.target.closest('a, button, input, textarea, select, label, summary, iframe')) return;
       setPointer(e);
-      bang(pointer.x, pointer.y, full ? 1.7 : 1.3);
-      host.classList.remove('lab-shake');
-      void host.offsetWidth;                                       // restart the shake animation
-      host.classList.add('lab-shake');
+      catalyse(pointer.x, pointer.y);
     });
-    host.addEventListener('animationend', (e) => { if (e.animationName === 'labShake') host.classList.remove('lab-shake'); });
+
+    /* scrolling heats the lab, and turns the emblem */
+    let lastY = window.scrollY, scrollTick = false;
+    function onScroll() {
+      const y = window.scrollY;
+      energy = Math.min(4, energy + Math.abs(y - lastY) / 70);
+      lastY = y;
+      if (!scrollTick) {
+        scrollTick = true;
+        requestAnimationFrame(() => {
+          scrollTick = false;
+          if (!emblem) return;
+          const r = host.getBoundingClientRect();
+          const sp = Math.max(0, Math.min(1, -r.top / (r.height * 0.6)));
+          host.style.setProperty('--sp', sp.toFixed(3));
+          document.body.classList.toggle('emblem-away', sp > 0.35);
+        });
+      }
+      start();
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    if (emblem) document.body.classList.add('has-emblem');
 
     if ('ResizeObserver' in window) new ResizeObserver(resize).observe(canvas);
     else window.addEventListener('resize', resize);
@@ -404,14 +512,10 @@
     resize();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (!raf) draw(); });
     start();
+    onScroll();
 
-    // opening "ignition": a chain of reactions as the page appears
-    if (!reduce && full) {
-      const p = focusPoint();
-      setTimeout(() => bang(p.x, p.y, 2.4), 1250);
-      setTimeout(() => { const q = focusPoint(); bang(q.x, q.y, 1.3); }, 1600);
-      setTimeout(() => { const q = focusPoint(); bang(q.x, q.y, 1); }, 1950);
-    }
+    if (reduce) { if (emblem) emblem.classList.add('is-formed'); }
+    else if (full) setTimeout(synthesise, 200);
   }
 
   hosts.forEach((h) => Lab(h));

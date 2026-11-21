@@ -538,3 +538,7 @@ textarea:-webkit-autofill {
   .btn-primary { animation: none; }
   .lab-canvas { animation: none; }
 }
+
+/* homepage: the header logo waits until the hero emblem scrolls away */
+.site-header .brand { transition: opacity 0.5s var(--ease-soft), transform 0.6s var(--ease-cine); }
+.has-emblem:not(.emblem-away) .site-header .brand { opacity: 0; transform: translateY(-6px) scale(0.9); pointer-events: none; }
