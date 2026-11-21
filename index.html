@@ -22,10 +22,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/shared.css?v=20261121b"/>
+  <link rel="stylesheet" href="/shared.css?v=20261121c"/>
   <script>document.documentElement.classList.add('js')</script>
-  <script src="/assets/site.js?v=20261121b" defer></script>
-  <script src="/assets/lab-fx.js?v=20261121b" defer></script>
+  <script src="/assets/site.js?v=20261121c" defer></script>
+  <script src="/assets/lab-fx.js?v=20261121c" defer></script>
   <style>
     /* ══ HERO ══════════════════════════════════════════════════ */
     .hero {
@@ -102,15 +102,16 @@
     .emblem-logo {
       position: absolute; left: 50%; top: 50%; width: 80%; height: auto;
       transform: translate(-50%, -50%);
-      filter: drop-shadow(0 0 14px rgba(167,139,250,0.5));
-      transition: opacity 0.9s var(--ease-cine), filter 1.2s var(--ease-cine), transform 1.2s var(--ease-cine);
+      filter: blur(0px) drop-shadow(0 0 12px rgba(167,139,250,0.55));
     }
-    /* before the particles arrive, the logo is a blurred "solution" */
-    .js .lab-emblem:not(.is-formed) .emblem-logo {
-      opacity: 0; filter: blur(14px); transform: translate(-50%, -50%) scale(1.3);
-      animation: emblemFallback 0s 4s forwards;  /* safety net if the script never runs */
+    /* before the particles arrive the logo is hidden; it then precipitates into focus */
+    .js .lab-emblem:not(.is-formed) .emblem-logo { opacity: 0; animation: emblemFallback 0.6s ease 3.5s forwards; }
+    .lab-emblem.is-formed .emblem-logo { animation: logoForm 1.1s var(--ease-cine) both; }
+    @keyframes logoForm {
+      from { opacity: 0; transform: translate(-50%, -50%) scale(1.25); filter: blur(12px) drop-shadow(0 0 0 rgba(167,139,250,0)); }
+      to   { opacity: 1; transform: translate(-50%, -50%); filter: blur(0px) drop-shadow(0 0 12px rgba(167,139,250,0.55)); }
     }
-    @keyframes emblemFallback { to { opacity: 1; filter: none; transform: translate(-50%, -50%); } }
+    @keyframes emblemFallback { to { opacity: 1; } }
     .lab-emblem.is-formed::after {
       content: ''; position: absolute; inset: -30%; border-radius: 50%; pointer-events: none;
       background: radial-gradient(closest-side, rgba(232,121,249,0.35), transparent);
@@ -130,7 +131,6 @@
     }
     .ink-formula .arrow { color: var(--accent-pink); }
     .ink-formula .ink { color: #fff; font-weight: 700; letter-spacing: 0.12em; text-shadow: 0 0 18px rgba(232,121,249,0.8); }
-    .ink-formula small { display: block; margin-top: 6px; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dimmer); }
 
     /* scroll: the hero writing dissolves, each piece drifting up and blurring like ink in water */
     .dz {
@@ -486,7 +486,6 @@
           </div>
           <p class="ink-formula" data-dissolve="words" title="Black tattoo ink: carbon black pigment in a glycerin and water carrier">
             <span class="f">C + C₃H₈O₃ + H₂O</span> <span class="arrow">→</span> <span class="f ink">INK</span>
-            <small>carbon black · glycerin · water</small>
           </p>
           <span class="eyebrow-label" data-dissolve="words"><span>Tattoo studio · Enfield, North London</span></span>
           <h1 data-dissolve="letters">
