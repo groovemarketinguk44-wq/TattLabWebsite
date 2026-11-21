@@ -83,6 +83,25 @@
     return (sprites[color] = c);
   }
 
+  /* four-point "flash" sparkle, the classic traditional-tattoo star */
+  let sparkleSprite = null;
+  function sparkle() {
+    if (sparkleSprite) return sparkleSprite;
+    const c = document.createElement('canvas');
+    c.width = c.height = 32;
+    const g = c.getContext('2d');
+    g.translate(16, 16);
+    g.beginPath();
+    g.moveTo(0, -15);
+    g.quadraticCurveTo(2, -2, 15, 0);
+    g.quadraticCurveTo(2, 2, 0, 15);
+    g.quadraticCurveTo(-2, 2, -15, 0);
+    g.quadraticCurveTo(-2, -2, 0, -15);
+    g.fillStyle = '#e9d5ff';
+    g.fill();
+    return (sparkleSprite = c);
+  }
+
   function Lab(host) {
     const full = host.dataset.labFx !== 'lite';
     const emblem = host.querySelector('.lab-emblem');
@@ -92,10 +111,10 @@
     host.prepend(canvas);
     const ctx = canvas.getContext('2d');
 
-    let W = 0, H = 0, mobile = false;
+    let W = 0, H = 0, mobile = false, lowPower = !full;
     const mols = [], dust = [], eqs = [], clouds = [], seeds = [];
     const pointer = { x: -9999, y: -9999, on: false };
-    let raf = 0, last = 0, now = 0, nextCloud = 2500, inView = true, energy = 0;
+    let raf = 0, last = 0, now = 0, nextCloud = 2500, inView = true, energy = 0, scrollingUntil = 0;
 
     const makeMol = (anywhere) => ({
       tpl: pick(MOLECULES),
@@ -105,7 +124,10 @@
       vx: R(-0.06, 0.06), vy: -R(0.04, 0.14),
       tint: pick(TINTS), glow: 0,
     });
-    const makeDust = () => ({ x: R(0, W), y: R(0, H), r: R(0.4, 1.3), vy: -R(0.03, 0.15), vx: R(-0.04, 0.04), a: R(0.12, 0.45), tw: R(0, 6.28) });
+    const makeDust = () => ({
+      x: R(0, W), y: R(0, H), r: R(0.4, 1.3), vy: -R(0.03, 0.15), vx: R(-0.04, 0.04), a: R(0.12, 0.45), tw: R(0, 6.28),
+      star: Math.random() < 0.14 ? R(5, 11) : 0,           // some specks are tattoo-flash sparkles
+    });
     function makeEq(anywhere) {
       const size = R(10, 13);
       ctx.font = `${size}px "Space Mono", monospace`;
@@ -154,8 +176,10 @@
     function resize() {
       const r = canvas.getBoundingClientRect();
       if (!r.width || !r.height) return;
+      if (Math.abs(r.width - W) < 1 && Math.abs(r.height - H) < 1) return;   // nothing changed
       W = r.width; H = r.height; mobile = W < 700;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      lowPower = !full || mobile;
+      const dpr = mobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);   // it's a soft backdrop: low res is fine
       canvas.width = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -258,11 +282,19 @@
       ctx.globalCompositeOperation = 'source-over';
 
       // dust
+      ctx.fillStyle = 'rgb(221,214,254)';
       dust.forEach((p) => {
         const tw = 0.6 + 0.4 * Math.sin(now / 900 + p.tw);
-        ctx.fillStyle = `rgba(221,214,254,${(p.a * tw).toFixed(3)})`;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+        if (p.star) {
+          const s = p.star * (0.75 + 0.25 * tw);
+          ctx.globalAlpha = Math.min(1, p.a * tw * 1.3);
+          ctx.drawImage(sparkle(), p.x - s, p.y - s, s * 2, s * 2);
+        } else {
+          ctx.globalAlpha = p.a * tw;
+          ctx.fillRect(p.x - p.r, p.y - p.r, p.r * 2, p.r * 2);
+        }
       });
+      ctx.globalAlpha = 1;
 
       mols.forEach(drawMol);
 
@@ -291,6 +323,8 @@
 
     function frame(t) {
       raf = requestAnimationFrame(frame);
+      if (t < scrollingUntil) { last = t; return; }            // hold still while the page scrolls: scrolling stays smooth
+      if (lowPower && last && t - last < 30) return;           // phones + inner pages: ~30fps is plenty
       const dt = Math.min(48, last ? t - last : 16.67);
       last = t; now = t;
       update(dt);
@@ -321,10 +355,11 @@
       inkDrop(pointer.x, pointer.y, full ? 170 : 130, false);
     });
 
-    let lastY = window.scrollY, scrollTick = false;
+    let lastY = window.scrollY, scrollTick = false, lastSp = -1;
     function onScroll() {
       const y = window.scrollY;
       energy = Math.min(4, energy + Math.abs(y - lastY) / 80);
+      scrollingUntil = performance.now() + 160;
       lastY = y;
       if (!scrollTick) {
         scrollTick = true;
@@ -332,8 +367,10 @@
           scrollTick = false;
           if (!emblem) return;
           const r = host.getBoundingClientRect();
-          const sp = Math.max(0, Math.min(1, -r.top / (r.height * 0.6)));
-          host.style.setProperty('--sp', sp.toFixed(3));
+          const sp = Math.round(Math.max(0, Math.min(1, -r.top / (r.height * 0.6))) * 200) / 200;
+          if (sp === lastSp) return;                             // only touch styles when it changes
+          lastSp = sp;
+          host.style.setProperty('--sp', sp);
           document.body.classList.toggle('emblem-away', sp > 0.35);
         });
       }

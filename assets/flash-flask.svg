@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -12 144 144" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- TattLabStudios flash: a lab flask pierced by a dagger, with tattoo sparkles -->
+  <defs>
+    <linearGradient id="liq" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8b5cf6"/><stop offset=".55" stop-color="#a855f7"/><stop offset="1" stop-color="#e879f9"/>
+    </linearGradient>
+  </defs>
+  <!-- dagger (behind the flask) -->
+  <g transform="rotate(-45 60 60)" stroke="#e9d5ff" stroke-width="2.4">
+    <circle cx="60" cy="-2" r="5" fill="#07060b"/>
+    <rect x="55" y="3" width="10" height="23" rx="3" fill="#07060b"/>
+    <path d="M55 10h10M55 15.5h10M55 21h10" stroke-width="1.6"/>
+    <rect x="38" y="26" width="44" height="7" rx="3.5" fill="#07060b"/>
+    <circle cx="36" cy="29.5" r="3.6" fill="#07060b"/>
+    <circle cx="84" cy="29.5" r="3.6" fill="#07060b"/>
+    <path d="M53 33v86l7 21 7-21V33z" fill="#07060b"/>
+    <path d="M60 37v96" stroke-width="1.4"/>
+  </g>
+  <!-- flask -->
+  <path d="M50 16v32L24 94q-4 8 5 8h62q9 0 5-8L70 48V16" fill="#07060b" stroke="#e9d5ff" stroke-width="2.6"/>
+  <path d="M44 16h32" stroke="#e9d5ff" stroke-width="3.4"/>
+  <path d="M34.2 76q6.5-6 12.9 0t12.9 0 12.9 0 12.9 0L96 94q4 8-5 8H29q-9 0-5-8z" fill="url(#liq)" opacity=".85"/>
+  <path d="M34.2 76q6.5-6 12.9 0t12.9 0 12.9 0 12.9 0" stroke="#f5d0fe" stroke-width="1.6"/>
+  <!-- dotwork shading -->
+  <g fill="#e9d5ff" opacity=".7">
+    <circle cx="47" cy="54" r="1"/><circle cx="44" cy="59" r="1"/><circle cx="41.5" cy="64" r="1"/>
+    <circle cx="48" cy="61" r=".8"/><circle cx="45" cy="66" r=".8"/><circle cx="39" cy="69" r="1"/>
+    <circle cx="43" cy="71" r=".8"/><circle cx="53" cy="22" r=".9"/><circle cx="53" cy="28" r=".9"/><circle cx="53" cy="34" r=".9"/>
+  </g>
+  <!-- bubbles -->
+  <g stroke="#e9d5ff" stroke-width="1.6">
+    <circle cx="51" cy="89" r="3.2"/><circle cx="68" cy="85" r="2.2"/><circle cx="61" cy="66" r="2.4"/><circle cx="58" cy="54" r="1.6"/><circle cx="63" cy="40" r="2"/>
+  </g>
+  <!-- flash sparkles -->
+  <g fill="#e879f9">
+    <path d="M108 6q1.6 8.4 10 10-8.4 1.6-10 10-1.6-8.4-10-10 8.4-1.6 10-10z"/>
+    <path d="M6 96q1.2 6.3 7.5 7.5-6.3 1.2-7.5 7.5-1.2-6.3-7.5-7.5 6.3-1.2 7.5-7.5z"/>
+  </g>
+  <g fill="#c4b5fd">
+    <path d="M100 42q.8 4.2 5 5-4.2.8-5 5-.8-4.2-5-5 4.2-.8 5-5z"/>
+    <path d="M14 34q.8 4.2 5 5-4.2.8-5 5-.8-4.2-5-5 4.2-.8 5-5z"/>
+  </g>
+</svg>
