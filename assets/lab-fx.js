@@ -17,23 +17,24 @@
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const COLORS = ['#a78bfa', '#e879f9', '#22d3ee', '#8b5cf6', '#c084fc'];
   const ELEMENTS = ['C', 'C', 'C', 'H', 'H', 'O', 'O', 'N', 'Na', 'Cl', 'Fe', 'S'];
+  // the real chemistry of tattoo ink: pigments suspended in a carrier
   const EQUATIONS = [
-    '2H₂ + O₂ → 2H₂O',
-    'NaHCO₃ + CH₃COOH → CO₂↑',
-    'C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O',
+    'C + C₃H₈O₃ + H₂O → INK',
+    'C · carbon black pigment',
+    'Fe₃O₄ · black iron oxide',
+    'Fe₂O₃ · red iron oxide',
+    'TiO₂ · titanium white',
+    'C₃₂H₁₆CuN₈ · phthalo blue',
+    'C₃₂HCl₁₅CuN₈ · phthalo green',
+    'C₃H₈O₃ · glycerin carrier',
+    'C₂H₅OH · ethanol carrier',
+    'FeO(OH) · yellow ochre',
+    'pigment + carrier → INK',
+    'particle Ø 0.1–1 µm',
     '2H₂O₂ → 2H₂O + O₂↑',
-    'Fe₂O₃ + 2Al → Al₂O₃ + 2Fe',
-    'CH₄ + 2O₂ → CO₂ + 2H₂O',
-    'N₂ + 3H₂ ⇌ 2NH₃',
-    '2Na + Cl₂ → 2NaCl',
-    'PV = nRT',
-    'ΔG = ΔH − TΔS',
-    'pH = −log[H⁺]',
-    'TiO₂ · Fe₃O₄ · C',
-    'Zn + 2HCl → ZnCl₂ + H₂↑',
-    'CaCO₃ → CaO + CO₂↑',
+    'pH 6.5–7.5',
   ];
-  const PRODUCTS = ['H₂O', 'CO₂', 'O₂', 'NaCl', 'NH₃', 'C₆H₆', 'Fe₂O₃', 'TiO₂', 'CH₄', 'H₂O₂'];
+  const PRODUCTS = ['INK', 'C', 'TiO₂', 'Fe₃O₄', 'Fe₂O₃', 'C₃H₈O₃', 'H₂O', 'FeO(OH)', 'Cu²⁺', 'INK'];
 
   const R = (a, b) => a + Math.random() * (b - a);
   const pick = (arr) => arr[(Math.random() * arr.length) | 0];
